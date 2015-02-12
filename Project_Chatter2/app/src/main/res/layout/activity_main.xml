@@ -11,18 +11,18 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/SignIn"
+        android:text="@string/signIn"
         android:onClick="onClick"
-        android:id="@+id/Signin_button"
+        android:id="@+id/signInButton"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/LogIn"
-        android:id="@+id/Login_button"
-        android:layout_below="@+id/Signin_button"
+        android:text="@string/logIn"
+        android:id="@+id/logInButton"
+        android:layout_below="@+id/signInButton"
         android:onClick="onClick"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>

@@ -1,3 +1,4 @@
+<<<<<<< Original
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.l7.project_chatter" >
@@ -16,16 +17,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ValidationActivity" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
+        <activity android:name=".SignInActivity"
+                  android:label="SignInActivity">
 
         </activity>
-
-
     </application>
 
 </manifest>
+
+=======
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <application>
+        <activity android:name="com.example.l7.project_chatter.SignInActivity"
+            android:label="@string/title_activity_sign_in"
+            >
+        </activity>
+    </application>
+
+</manifest>
+>>>>>>> Added

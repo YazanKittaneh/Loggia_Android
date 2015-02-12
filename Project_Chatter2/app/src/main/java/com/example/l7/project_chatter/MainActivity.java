@@ -3,11 +3,10 @@ package com.example.l7.project_chatter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import com.parse.*;
+
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
@@ -15,8 +14,8 @@ import com.parse.ParseCrashReporting;
 
 public class MainActivity extends ActionBarActivity {
 
-    Button SignIn_Button;
-    Button LogIn_Button;
+    Button signInButton;
+    Button logInButton;
     private String TYPE = "Type";
 
     @Override
@@ -24,8 +23,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SignIn_Button = (Button) findViewById(R.id.Signin_button);
-        LogIn_Button = (Button) findViewById(R.id.Login_button);
+        signInButton = (Button) findViewById(R.id.signInButton);
+        logInButton = (Button) findViewById(R.id.logInButton);
 
         // Initialize Crash Reporting.
         ParseCrashReporting.enable(this);
@@ -35,10 +34,21 @@ public class MainActivity extends ActionBarActivity {
         ParseACL defaultACL = new ParseACL();
 
         ParseACL.setDefaultACL(defaultACL, true);
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+
+                Intent validationIntent = new Intent(v.getContext(), ValidationActivity.class);
+                validationIntent.putExtra(TYPE, b.getText().toString());
+                startActivity(validationIntent);
+            }
+        });
     }
 
 
-
+/*
     public void onClick(View v)
     {
         Button b = (Button) v;
@@ -47,6 +57,7 @@ public class MainActivity extends ActionBarActivity {
         validationIntent.putExtra(TYPE, b.getText().toString());
         startActivity(validationIntent);
     }
+    */
 
     /*
 
