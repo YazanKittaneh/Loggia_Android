@@ -44,7 +44,7 @@ public class SignUpActivity extends ActionBarActivity {
                 else
                     Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             }
-        });t
+        });
 
     }
 
