@@ -35,16 +35,20 @@ public class MainActivity extends ActionBarActivity {
 
         ParseACL.setDefaultACL(defaultACL, true);
 
+        /*
+         * On click listener for signing in
+         */
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button b = (Button) v;
 
-                Intent validationIntent = new Intent(v.getContext(), ValidationActivity.class);
+                Intent validationIntent = new Intent(v.getContext(), SignUpActivity.class);
                 validationIntent.putExtra(TYPE, b.getText().toString());
                 startActivity(validationIntent);
             }
         });
+
     }
 
 

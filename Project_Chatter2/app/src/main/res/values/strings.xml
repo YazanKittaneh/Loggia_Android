@@ -8,5 +8,6 @@
     <string name="logIn">LogIn</string>
     <string name="Button_name"></string>
     <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="title_activity_log_in">LogInActivity</string>
 
 </resources>
