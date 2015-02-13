@@ -14,7 +14,7 @@ import com.parse.ParseCrashReporting;
 
 public class MainActivity extends ActionBarActivity {
 
-    Button signInButton;
+    Button signUpButton;
     Button logInButton;
     private String TYPE = "Type";
 
@@ -23,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        signInButton = (Button) findViewById(R.id.signInButton);
+        signUpButton = (Button) findViewById(R.id.signUpButton);
         logInButton = (Button) findViewById(R.id.logInButton);
 
         // Initialize Crash Reporting.
@@ -38,13 +38,22 @@ public class MainActivity extends ActionBarActivity {
         /*
          * On click listener for signing in
          */
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button b = (Button) v;
 
                 Intent validationIntent = new Intent(v.getContext(), SignUpActivity.class);
-                validationIntent.putExtra(TYPE, b.getText().toString());
+                startActivity(validationIntent);
+            }
+        });
+
+        logInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+
+                Intent validationIntent = new Intent(v.getContext(), LogInActivity.class);
                 startActivity(validationIntent);
             }
         });

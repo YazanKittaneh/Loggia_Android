@@ -4,10 +4,10 @@
     <string name="app_name">Chatter</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="signIn">SignIn</string>
+    <string name="signUp">SignUp</string>
     <string name="logIn">LogIn</string>
     <string name="Button_name"></string>
-    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_log_in">LogInActivity</string>
 
 </resources>

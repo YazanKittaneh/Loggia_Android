@@ -4,14 +4,48 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class SignUpActivity extends ActionBarActivity {
+
+    private EditText mUserName;
+    private EditText mEmailInput;
+    private EditText mPassword;
+    private EditText mPasswordValidation;
+    private Button mSignUpButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        mUserName = (EditText) findViewById(R.id.User_Name);
+        mEmailInput = (EditText) findViewById(R.id.Email_Text);
+        mPassword = (EditText) findViewById(R.id.Password_Text);
+        mPasswordValidation = (EditText) findViewById(R.id.Password_Validation_);
+        mSignUpButton = (Button) findViewById(R.id.Sign_up_button);
+
+        mSignUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               SignUpController signUpController = new SignUpController();
+                //Toast.makeText(SignUpActivity.this, "jaljglkajg", Toast.LENGTH_SHORT).show();
+
+
+                if(mPasswordValidation.getText().toString() == mPassword.getText().toString()) {
+                    Toast.makeText(SignUpActivity.this, "jaljglkajg", Toast.LENGTH_SHORT).show();
+                    signUpController.signUp(mUserName.getText().toString(), mEmailInput.getText().toString(), mPassword.getText().toString());
+                }
+                else
+                    Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 
