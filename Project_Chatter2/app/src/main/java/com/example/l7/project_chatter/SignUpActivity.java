@@ -29,7 +29,7 @@ public class SignUpActivity extends ActionBarActivity {
         mEmailInput = (EditText) findViewById(R.id.Email_Text);
         mPassword = (EditText) findViewById(R.id.Password_Text);
         mPasswordValidation = (EditText) findViewById(R.id.Password_Validation);
-        mSignUpController = new SignUpController();
+        mSignUpController = new SignUpController(this);
     }
 
 
@@ -58,10 +58,7 @@ public class SignUpActivity extends ActionBarActivity {
     public void signUp(View view)
     {
         if(mPasswordValidation.getText().toString().compareTo(mPassword.getText().toString()) == 0) {
-            if(mSignUpController.signUp(mUserName.getText().toString(), mEmailInput.getText().toString(), mPassword.getText().toString()))
-                Log.d(TAG, "Worked!");
-            else
-                Log.d(TAG, ":c didn't work");
+            mSignUpController.signUp(mUserName.getText().toString(), mEmailInput.getText().toString(), mPassword.getText().toString());
         }
         else
             Log.d(TAG, "Passwords didn't match");

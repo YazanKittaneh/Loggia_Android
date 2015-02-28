@@ -29,14 +29,14 @@ public class HomepageActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Toolbar Title");
         getSupportActionBar().setSubtitle("Toolbar Subtitle");
-
+        //getSupportActionBar().setLogo(R.drawable.ic_launcher);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_homepage, menu);
+        getMenuInflater().inflate(R.menu.menu_homepage, menu);
         return true;
     }
 
@@ -103,4 +103,7 @@ public class HomepageActivity extends ActionBarActivity {
             return rootView;
         }
     }*/
+    public void sendMessage(View v) {
+
+    }
 }

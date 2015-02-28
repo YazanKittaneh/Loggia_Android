@@ -3,6 +3,7 @@ package com.example.l7.project_chatter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,10 @@ import android.widget.Button;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
+import com.parse.ParseException;
+import com.parse.ParsePush;
+import com.parse.PushService;
+import com.parse.SaveCallback;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -36,6 +41,8 @@ public class MainActivity extends ActionBarActivity {
 
         ParseACL.setDefaultACL(defaultACL, true);
 
+        PushService.setDefaultPushCallback(this, MainActivity.class);
+
         /*
          * On click listener for signing in
          */
@@ -58,7 +65,6 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(validationIntent);
             }
         });
-
     }
 
 
