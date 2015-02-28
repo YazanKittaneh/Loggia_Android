@@ -1,39 +1,34 @@
 package com.example.l7.project_chatter;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseUser;
+import android.widget.TextView;
 
 
-public class LogInActivity extends ActionBarActivity {
+public class EventActivity extends ActionBarActivity {
 
-    EditText mUsername, mPassword;
-
-    LogInController mLogIn;
+    String mEventName;
+    String mEventTime;
+    String mEventCategory;
+    String mEventLocation;
+    TextView mEventCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in);
-        mUsername = (EditText) findViewById(R.id.Username_Text);
-        mPassword = (EditText) findViewById(R.id.Password_Text);
-        mLogIn = new LogInController(this);
+        setContentView(R.layout.activity_event);
+        mEventName = getIntent().getExtras().get("name").toString();
+        mEventCounter = (TextView) findViewById(R.id.counters);
+        mEventCounter.setText("");
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_log_in, menu);
+        getMenuInflater().inflate(R.menu.menu_event, menu);
         return true;
     }
 
@@ -51,11 +46,4 @@ public class LogInActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void login(View view) {
-        String username = mUsername.getText().toString();
-        String password = mPassword.getText().toString();
-        mLogIn.initiateLogIn(username, password);
-    }
 }
-
