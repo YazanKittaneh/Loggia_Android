@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.parse.ParseUser;
+
 
 public class LogInActivity extends ActionBarActivity {
 
@@ -60,4 +62,6 @@ public class LogInActivity extends ActionBarActivity {
 
         }
     }
-}
+
+    }
+

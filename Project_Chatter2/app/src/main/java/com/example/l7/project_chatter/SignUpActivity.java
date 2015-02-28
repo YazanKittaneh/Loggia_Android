@@ -1,7 +1,9 @@
 package com.example.l7.project_chatter;
 
+import android.nfc.Tag;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,36 +18,18 @@ public class SignUpActivity extends ActionBarActivity {
     private EditText mEmailInput;
     private EditText mPassword;
     private EditText mPasswordValidation;
-    private Button mSignUpButton;
-
+    private SignUpController mSignUpController;
+    private static final String TAG = SignUpActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
         mUserName = (EditText) findViewById(R.id.User_Name);
         mEmailInput = (EditText) findViewById(R.id.Email_Text);
         mPassword = (EditText) findViewById(R.id.Password_Text);
         mPasswordValidation = (EditText) findViewById(R.id.Password_Validation);
-        mSignUpButton = (Button) findViewById(R.id.Sign_up_button);
-
-        mSignUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               SignUpController signUpController = new SignUpController();
-                //Toast.makeText(SignUpActivity.this, "jaljglkajg", Toast.LENGTH_SHORT).show();
-
-
-                if(mPasswordValidation.getText().toString() == mPassword.getText().toString()) {
-                    Toast.makeText(SignUpActivity.this, "jaljglkajg", Toast.LENGTH_SHORT).show();
-                    signUpController.signUp(mUserName.getText().toString(), mEmailInput.getText().toString(), mPassword.getText().toString());
-                }
-                else
-                    Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        mSignUpController = new SignUpController();
     }
 
 
@@ -70,4 +54,17 @@ public class SignUpActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void signUp(View view)
+    {
+        if(mPasswordValidation.getText().toString().compareTo(mPassword.getText().toString()) == 0) {
+            if(mSignUpController.signUp(mUserName.getText().toString(), mEmailInput.getText().toString(), mPassword.getText().toString()))
+                Log.d(TAG, "Worked!");
+            else
+                Log.d(TAG, ":c didn't work");
+        }
+        else
+            Log.d(TAG, "Passwords didn't match");
+    }
+
 }

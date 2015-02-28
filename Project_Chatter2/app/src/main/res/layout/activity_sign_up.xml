@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:text="Sign Up!"
         android:id="@+id/Sign_up_button"
+        android:onClick="signUp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>

@@ -12,31 +12,27 @@ import com.parse.ParseUser.*;
 
 public class SignUpController {
 
+    boolean check = false;
 
-    public void signUp(String mUserName, String mEmail, String mPassword) {
-
-        final SignUpActivity activity = new SignUpActivity();
-
+    public boolean signUp(String mUserName, String mEmail, String mPassword) {
         ParseUser user = new ParseUser();
         user.setUsername(mUserName);
         user.setPassword(mPassword);
         user.setEmail(mEmail);
-
-        //user.put("phone", "<a style="cursor:pointer ">650-253-0000</a>");
-
         user.signUpInBackground(new
 
                                         SignUpCallback() {
                                             public void done(ParseException e) {
                                                 if (e == null) {
-                                                    Toast.makeText(activity.getApplicationContext(), "Worked!", Toast.LENGTH_SHORT).show();
+                                                    check = true;
                                                 } else {
-                                                    Toast.makeText(activity.getApplicationContext(), "Didn't work!", Toast.LENGTH_SHORT).show();
-
+                                                    e.printStackTrace();
+                                                    check = false;
                                                 }
                                             }
                                         }
 
         );
+        return check;
     }
 }
