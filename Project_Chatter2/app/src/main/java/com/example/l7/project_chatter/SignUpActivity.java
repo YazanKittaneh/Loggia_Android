@@ -27,7 +27,7 @@ public class SignUpActivity extends ActionBarActivity {
         mUserName = (EditText) findViewById(R.id.User_Name);
         mEmailInput = (EditText) findViewById(R.id.Email_Text);
         mPassword = (EditText) findViewById(R.id.Password_Text);
-        mPasswordValidation = (EditText) findViewById(R.id.Password_Validation_);
+        mPasswordValidation = (EditText) findViewById(R.id.Password_Validation);
         mSignUpButton = (Button) findViewById(R.id.Sign_up_button);
 
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +44,7 @@ public class SignUpActivity extends ActionBarActivity {
                 else
                     Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             }
-        });t
+        });
 
     }
 
