@@ -27,6 +27,9 @@ public class LogInController {
             }
         });
     }
+
+
+
     public LogInController(Activity a) {
         parent = (LogInActivity) a;
     }
