@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.parse.ParseUser;
+
 
 public class LogInActivity extends ActionBarActivity {
 
@@ -48,4 +50,6 @@ public class LogInActivity extends ActionBarActivity {
     public void login(View view) {
         mLogIn.initiateLogIn(mUsername.getText().toString(), mPassword.getText().toString());
     }
-}
+
+    }
+

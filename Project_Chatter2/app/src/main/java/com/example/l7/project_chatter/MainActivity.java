@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
+import com.parse.ParseUser;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -21,12 +22,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        signUpButton = (Button) findViewById(R.id.signUpButton);
-        logInButton = (Button) findViewById(R.id.logInButton);
-
-        // Initialize Crash Reporting.
         ParseCrashReporting.enable(this);
 
         // Add your initialization code here
@@ -34,53 +29,40 @@ public class MainActivity extends ActionBarActivity {
         ParseACL defaultACL = new ParseACL();
 
         ParseACL.setDefaultACL(defaultACL, true);
+        if (checkCurrentUser()) {
+            setContentView(R.layout.activity_main);
+            signUpButton = (Button) findViewById(R.id.signUpButton);
+            logInButton = (Button) findViewById(R.id.logInButton);
+
 
         /*
          * On click listener for signing in
          */
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Button b = (Button) v;
+            signUpButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Button b = (Button) v;
 
-                Intent validationIntent = new Intent(v.getContext(), SignUpActivity.class);
-                startActivity(validationIntent);
-            }
-        });
+                    Intent validationIntent = new Intent(v.getContext(), SignUpActivity.class);
+                    startActivity(validationIntent);
+                }
+            });
 
-        logInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Button b = (Button) v;
+            logInButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Button b = (Button) v;
 
-                Intent validationIntent = new Intent(v.getContext(), LogInActivity.class);
-                startActivity(validationIntent);
-            }
-        });
-
+                    Intent validationIntent = new Intent(v.getContext(), LogInActivity.class);
+                    startActivity(validationIntent);
+                }
+            });
+        } else {
+            Intent validationIntent = new Intent(this.getApplicationContext(), LogInActivity.class);
+            startActivity(validationIntent);
+        }
     }
 
-
-/*
-    public void onClick(View v)
-    {
-        Button b = (Button) v;
-
-        Intent validationIntent = new Intent(v.getContext(), ValidationActivity.class);
-        validationIntent.putExtra(TYPE, b.getText().toString());
-        startActivity(validationIntent);
-    }
-    */
-
-    /*
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_signup, menu);
-        return true;
-    }
-    */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -95,5 +77,14 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean checkCurrentUser() {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
