@@ -55,6 +55,7 @@ public class LogInActivity extends ActionBarActivity {
     public void login(View view) {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
+
         mLogIn.initiateLogIn(username, password);
     }
 }
