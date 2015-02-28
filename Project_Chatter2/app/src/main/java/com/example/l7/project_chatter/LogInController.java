@@ -1,5 +1,10 @@
 package com.example.l7.project_chatter;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
+import android.view.View;
+
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -9,18 +14,18 @@ import com.parse.ParseUser;
  */
 
 public class LogInController {
-    public int result = 0;
-    public int initiateLogIn(String username, String password) {
+    public boolean result = false;
+    Activity parent;
+    public void initiateLogIn(String username, String password, final View v, final Activity a) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
                 if (parseUser != null)
-                    result = 1;
+                    a.startActivity(new Intent(v.getContext(), HomepageActivity.class));
                 else
-                    e.printStackTrace();
+                    Log.e("AJSODASG", "AJSDGL");
             }
         });
-        return result;
     }
     public LogInController() {
 

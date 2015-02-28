@@ -1,10 +1,13 @@
 package com.example.l7.project_chatter;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 
@@ -26,7 +29,7 @@ public class LogInActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_log_in, menu);
+        //getMenuInflater().inflate(R.menu.menu_log_in, menu);
         return true;
     }
 
@@ -46,6 +49,15 @@ public class LogInActivity extends ActionBarActivity {
     }
 
     public void login(View view) {
-        mLogIn.initiateLogIn(mUsername.getText().toString(), mPassword.getText().toString());
+        String username = mUsername.getText().toString();
+        String password = mPassword.getText().toString();
+        mLogIn.initiateLogIn(username, password, view, this);
+    }
+
+    public void showError(int ERROR) {
+        switch (ERROR) {
+            case 0:
+
+        }
     }
 }
