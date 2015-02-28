@@ -33,6 +33,6 @@
             android:name=".LogInActivity"
             android:label="@string/title_activity_log_in" >
         </activity>
-
+    </application>
 
 </manifest>

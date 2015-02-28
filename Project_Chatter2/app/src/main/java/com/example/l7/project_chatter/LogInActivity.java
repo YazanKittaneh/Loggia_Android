@@ -4,16 +4,24 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 
 public class LogInActivity extends ActionBarActivity {
+
+    EditText mUsername, mPassword;
+
+    LogInController mLogIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        mUsername = (EditText) findViewById(R.id.Username_Text);
+        mPassword = (EditText) findViewById(R.id.Password_Text);
+        mLogIn = new LogInController();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,5 +43,9 @@ public class LogInActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void login(View view) {
+        mLogIn.initiateLogIn(mUsername.getText().toString(), mPassword.getText().toString());
     }
 }
