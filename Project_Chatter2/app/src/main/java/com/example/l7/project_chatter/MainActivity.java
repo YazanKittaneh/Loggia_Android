@@ -12,14 +12,10 @@ import android.widget.Button;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
-<<<<<<< HEAD
-import com.parse.ParseUser;
-=======
 import com.parse.ParseException;
 import com.parse.ParsePush;
 import com.parse.PushService;
 import com.parse.SaveCallback;
->>>>>>> 6700b63daef39eb7c1925b4c115bf344b0702a35
 
 
 public class MainActivity extends ActionBarActivity {
@@ -48,8 +44,6 @@ public class MainActivity extends ActionBarActivity {
 
         ParseACL.setDefaultACL(defaultACL, true);
 
-<<<<<<< HEAD
-
 
         //ParseUser currentUser = ParseUser.getCurrentUser();
         //if (currentUser != null) {
@@ -57,10 +51,7 @@ public class MainActivity extends ActionBarActivity {
         //} else {
             //show the signup or login screen
             setContentView(R.layout.activity_main);
-=======
         PushService.setDefaultPushCallback(this, MainActivity.class);
-
->>>>>>> 6700b63daef39eb7c1925b4c115bf344b0702a35
         /*
          * On click listener for signing in
          */
@@ -76,27 +67,15 @@ public class MainActivity extends ActionBarActivity {
                 }
             });
 
-<<<<<<< HEAD
             logInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Button b = (Button) v;
-=======
-                Intent validationIntent = new Intent(v.getContext(), LogInActivity.class);
-                startActivity(validationIntent);
-            }
-        });
-    }
->>>>>>> 6700b63daef39eb7c1925b4c115bf344b0702a35
-
                     Intent validationIntent = new Intent(v.getContext(), LogInActivity.class);
                     startActivity(validationIntent);
                 }
             });
-
-
-        //}
-    }
+        }
 
 
     @Override
