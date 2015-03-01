@@ -49,7 +49,7 @@
             android:label="SignUpActivity" >
         </activity>
         <activity
-            android:name=".HomepageActivity"
+            android:name=".CreateEventActivity"
             android:label="@string/title_activity_homepage" >
         </activity>
         <service android:name="com.parse.PushService" />

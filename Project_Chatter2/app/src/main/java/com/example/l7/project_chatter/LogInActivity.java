@@ -17,9 +17,11 @@ import com.parse.ParseUser;
 
 public class LogInActivity extends ActionBarActivity {
 
+    //Declarations
     EditText mUsername, mPassword;
-
     LogInController mLogIn;
+    //Declarations
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,13 @@ public class LogInActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /**
+     * An onClick method. When the LogIn Button is clicked, it will pass in
+     * username and password parameters into controller
+     * @param view
+     *      Button being clicked
+     */
     public void login(View view) {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();

@@ -26,6 +26,8 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * onCreate method initiallizes parse with key and sets up parameters
+     *
+     * TODO:
      * Checks:
      *      If there is a current user cashed: Send to main page
      *      else: Send to logIn/signUp page
@@ -35,26 +37,17 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Initialize Crash Reporting.
-        ParseCrashReporting.enable(this);
+        setContentView(R.layout.activity_main);
 
-        // Add your initialization code here
+        // Parse initialization.
+        ParseCrashReporting.enable(this);
         Parse.initialize(this.getApplicationContext(), "pq4DTXVfCwDskh0CBEfBhwkrDLzBqmo0Q0Fqu8Om", "5mkjDImOD21MhGM6Brzh7lOriLpfrxj9w47FWCL0");
         ParseACL defaultACL = new ParseACL();
-
         ParseACL.setDefaultACL(defaultACL, true);
-
-
-        //ParseUser currentUser = ParseUser.getCurrentUser();
-        //if (currentUser != null) {
-        //    startActivity(new Intent(this.getApplicationContext(), HomepageActivity.class));
-        //} else {
-            //show the signup or login screen
-            setContentView(R.layout.activity_main);
         PushService.setDefaultPushCallback(this, MainActivity.class);
-        /*
-         * On click listener for signing in
-         */
+        // Parse initialization.
+
+        // Listeners
         signUpButton = (Button) findViewById(R.id.signUpButton);
         logInButton = (Button) findViewById(R.id.logInButton);
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -75,29 +68,9 @@ public class MainActivity extends ActionBarActivity {
                     startActivity(validationIntent);
                 }
             });
-        }
+        // Listeners
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sign_in, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        ParsePush.subscribeInBackground("Chatters");
     }
 
 }
