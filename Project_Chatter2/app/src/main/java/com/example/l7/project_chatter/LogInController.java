@@ -29,10 +29,8 @@ public class LogInController {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
                 if (parseUser != null) {
-                    Intent intent = new Intent(parent, EventActivity.class);
-                    intent.putExtra("name", "PARTY");
+                    Intent intent = new Intent(parent, HomepageActivity.class);
                     parent.startActivity(intent);
-                    dialog.setMessage("SUCCESS");
                 }
                 else {
                     Log.e("AJSODASG", "AJSDGL");

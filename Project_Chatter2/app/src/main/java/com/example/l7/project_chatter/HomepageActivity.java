@@ -2,6 +2,7 @@ package com.example.l7.project_chatter;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -29,8 +31,9 @@ import com.parse.SendCallback;
 
 public class HomepageActivity extends ActionBarActivity {
 
-    EditText message;
-    EditText recepient;
+    Button mCreateEventButton;
+    Button mViewEventButton;
+    Button mSendEventButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +44,7 @@ public class HomepageActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Toolbar Title");
         getSupportActionBar().setSubtitle("Toolbar Subtitle");
-        message = (EditText) findViewById(R.id.editText);
-        recepient = (EditText) findViewById(R.id.editText2);
+
         //getSupportActionBar().setLogo(R.drawable.ic_launcher);
     }
 
@@ -69,16 +71,20 @@ public class HomepageActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage(View v) {
-        ParseQuery user = ParseUser.getQuery();
-        user.whereEqualTo("username", recepient.getText().toString());
-        ParseQuery query = ParseInstallation.getQuery();
-        query.whereMatchesQuery("user", user);
-        ParsePush push = new ParsePush();
-        push.setQuery(query);
-        //push.setChannel("Chatters");
-        push.setMessage(message.getText().toString());
-        push.sendInBackground();
-        Log.i(recepient.getText().toString(), message.getText().toString());
+    public void createEvent(View view) {
+        Intent intent = new Intent(this, CreateEventActivity.class);
+        startActivity(intent);
     }
+
+    public void viewEvent(View view) {
+        Intent intent = new Intent(this, EventActivity.class);
+        intent.putExtra("name", "Thing");
+        startActivity(intent);
+    }
+
+    public void sendEvent(View view) {
+        Intent intent = new Intent(this, SendEventActivity.class);
+        startActivity(intent);
+    }
+
 }

@@ -11,5 +11,6 @@
     <string name="title_activity_log_in">Log In</string>
     <string name="title_activity_event">EventQ</string>
     <string name="title_activity_homepage">Homepage</string>
+    <string name="title_activity_send_event">SendEventActivity</string>
 
 </resources>
