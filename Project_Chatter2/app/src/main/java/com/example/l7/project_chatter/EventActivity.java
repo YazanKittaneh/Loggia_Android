@@ -6,6 +6,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * NOT IMPLEMENTED YET
+ *
+ * TODO:
+ *      Make layout for Event
+ *      Take in ID
+ *      Get parse object
+ */
+
 
 public class EventActivity extends ActionBarActivity {
 

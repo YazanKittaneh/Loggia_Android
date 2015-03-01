@@ -20,6 +20,13 @@ import com.parse.PushService;
 import com.parse.SaveCallback;
 
 
+/**
+ * Main Activity that will be displayed to the user prompting them to logIn
+ * or SignUp
+ *
+ * Theoretically, this should be skipped if the user had already logged in
+ * or has their user cached
+ */
 public class MainActivity extends ActionBarActivity {
 
     Button signUpButton;

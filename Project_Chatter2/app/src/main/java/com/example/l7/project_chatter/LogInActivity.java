@@ -15,6 +15,9 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 
+/**
+ * Where the user will enter login information
+ */
 public class LogInActivity extends ActionBarActivity {
 
     //Declarations

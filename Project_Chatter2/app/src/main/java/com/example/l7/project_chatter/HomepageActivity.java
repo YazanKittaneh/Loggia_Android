@@ -29,6 +29,13 @@ import com.parse.ParseUser;
 import com.parse.SendCallback;
 
 
+/**
+ * Activity that will be displayed after login
+ *
+ * This is where the events will all reside, from here you can get to any
+ * other feature
+ */
+
 public class HomepageActivity extends ActionBarActivity {
 
     Button mCreateEventButton;
