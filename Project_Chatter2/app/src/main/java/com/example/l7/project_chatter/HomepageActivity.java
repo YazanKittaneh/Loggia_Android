@@ -10,15 +10,27 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SendCallback;
 
 
 public class HomepageActivity extends ActionBarActivity {
+
+    EditText message;
+    EditText recepient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +41,8 @@ public class HomepageActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Toolbar Title");
         getSupportActionBar().setSubtitle("Toolbar Subtitle");
+        message = (EditText) findViewById(R.id.editText);
+        recepient = (EditText) findViewById(R.id.editText2);
         //getSupportActionBar().setLogo(R.drawable.ic_launcher);
     }
 
@@ -54,56 +68,17 @@ public class HomepageActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    /*public class Tab extends FragmentActivity {
 
-        ViewPager mViewPager;
-        TabPagerAdapter mTabAdapter;
-
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_tab);
-
-            // ViewPager and its adapters use support library
-            // fragments, so use getSupportFragmentManager.
-            mTabAdapter = new TabPagerAdapter(getSupportFragmentManager());
-            mViewPager = (ViewPager) findViewById(R.id.pager);
-            mViewPager.setAdapter(mTabAdapter);
-        }
-    }
-    public class TabPagerAdapter extends FragmentPagerAdapter {
-
-        public TabPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Fragment fragment = new TabFragment();
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    }
-    public static class TabFragment extends Fragment {
-        public static final String ARG_OBJECT = "object";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater,
-                                 ViewGroup container, Bundle savedInstanceState) {
-            // The last two arguments ensure LayoutParams are inflated
-            // properly.
-            View rootView = inflater.inflate(
-                    R.layout.fragment_collection_object, container, false);
-            Bundle args = getArguments();
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                    Integer.toString(args.getInt(ARG_OBJECT)));
-            return rootView;
-        }
-    }*/
     public void sendMessage(View v) {
-
+        ParseQuery user = ParseUser.getQuery();
+        user.whereEqualTo("username", recepient.getText().toString());
+        ParseQuery query = ParseInstallation.getQuery();
+        query.whereMatchesQuery("user", user);
+        ParsePush push = new ParsePush();
+        push.setQuery(query);
+        //push.setChannel("Chatters");
+        push.setMessage(message.getText().toString());
+        push.sendInBackground();
+        Log.i(recepient.getText().toString(), message.getText().toString());
     }
 }

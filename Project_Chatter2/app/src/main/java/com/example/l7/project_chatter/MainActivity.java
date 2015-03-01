@@ -13,7 +13,9 @@ import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParsePush;
+import com.parse.ParseUser;
 import com.parse.PushService;
 import com.parse.SaveCallback;
 
@@ -65,6 +67,12 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(validationIntent);
             }
         });
+
+        ParsePush.subscribeInBackground("Chatters");
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("user", ParseUser.getCurrentUser());
+        installation.saveInBackground();
+        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
 
