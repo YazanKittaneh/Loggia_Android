@@ -55,6 +55,11 @@ public class SignUpActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /**
+     * OnClick method to
+     * @param view
+     */
     public void signUp(View view)
     {
         if(mPasswordValidation.getText().toString().compareTo(mPassword.getText().toString()) == 0) {
