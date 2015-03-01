@@ -21,7 +21,11 @@
     <permission android:protectionLevel="signature"
         android:name="com.example.l7.project_chatter.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.example.l7.project_chatter.permission.C2D_MESSAGE" />
->>>>>>> 6700b63daef39eb7c1925b4c115bf344b0702a35
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" /> <!-- To retrieve the account name (email) as part of sign-in: -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
