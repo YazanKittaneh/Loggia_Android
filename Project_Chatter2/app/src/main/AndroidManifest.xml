@@ -35,7 +35,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,19 +44,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LogInActivity"
+            android:name=".Activity.LogInActivity"
             android:label="@string/title_activity_log_in" >
         </activity>
         <activity
-            android:name=".EventActivity"
+            android:name=".Activity.DisplayEventActivity"
             android:label="@string/title_activity_event" >
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Activity.SignUpActivity"
             android:label="SignUpActivity" >
         </activity>
         <activity
-            android:name=".CreateEventActivity"
+            android:name=".Activity.CreateEventActivity"
             android:label="@string/title_activity_homepage" >
         </activity>
 
@@ -74,7 +74,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-<!--                   IMPORTANT: Change "com.parse.tutorials.pushnotifications" to match your app's package name. -->
+                <!-- IMPORTANT: Change "com.parse.tutorials.pushnotifications" to match your app's package name. -->
                 <category android:name="com.example.l7.project_chatter" />
             </intent-filter>
         </receiver>
@@ -93,14 +93,13 @@
             android:resource="@drawable/powered_by_google_light" />
 
         <activity
-            android:name=".SendEventActivity"
+            android:name=".Activity.SendEventActivity"
             android:label="@string/title_activity_send_event" >
         </activity>
-
-        <activity android:name=".HomepageActivity"
-                  android:label="HomepageActivity">
-
-                  </activity>
+        <activity
+            android:name=".Activity.HomepageActivity"
+            android:label="HomepageActivity" >
+        </activity>
     </application>
 
 </manifest>
