@@ -46,7 +46,7 @@ public class CreateEventActivity extends ActionBarActivity {
         mEventHost = (TextView) findViewById(R.id.Create_Event_Host);
         mEventLocation = (TextView) findViewById(R.id.Create_Event_Location);
         mEventDescription = (TextView) findViewById(R.id.Create_Event_Description);
-        mCreateButton = (Button) findViewById(R.id.Event_Create_Button);
+        mCreateButton = (Button) findViewById(R.id.Create_Event_Create_Button);
         mEventUploadImage = (Button) findViewById(R.id.Create_Event_Upload_Image_Button);
 
 
