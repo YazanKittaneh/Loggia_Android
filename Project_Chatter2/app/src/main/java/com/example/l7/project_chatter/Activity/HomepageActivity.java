@@ -32,12 +32,11 @@ public class HomepageActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Toolbar Title");
-        getSupportActionBar().setSubtitle("Toolbar Subtitle");
-        getSupportActionBar().setLogo(R.drawable.ic_launcher);
-        mCreateEventButton = (Button) findViewById(R.id.Create_Event_Button);
+        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setLogo(null);
+        mCreateEventButton = (Button) findViewById(R.id.Homepage_Create_Event_Button);
         mViewEventButton = (Button) findViewById(R.id.Homepage_View_Event_Button);
-        mSendEventButton = (Button) findViewById(R.id.Send_Event_Button);
+        mSendEventButton = (Button) findViewById(R.id.Homepage_Send_Event_Button);
 
 
 
@@ -90,9 +89,8 @@ public class HomepageActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        Intent intent = new Intent(this.getApplicationContext(), CreateEventActivity.class);
+        startActivity(intent);
 
         return super.onOptionsItemSelected(item);
     }

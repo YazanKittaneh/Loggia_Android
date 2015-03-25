@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
+        android:background="?attr/colorPrimary"
+        app:theme="@style/Theme.MainTheme" />
 
     <EditText
         android:layout_width="match_parent"
@@ -70,16 +71,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/Create_Event_Description"
-        android:layout_below="@+id/Create_Event_Location"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Discribe the event!"/>
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,7 +78,21 @@
         android:id="@+id/Create_Event_Upload_Image_Button"
         android:layout_below="@+id/Create_Event_Description"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:hint="Describe the event!"
+        android:id="@+id/Create_Event_Description"
+        android:layout_below="@+id/Create_Event_Location"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:autoText="false"
+        android:gravity="top" />
 
 
 </RelativeLayout>
