@@ -1,5 +1,6 @@
 package com.example.l7.project_chatter.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -63,6 +64,9 @@ public class LogInActivity extends ActionBarActivity {
     public void login(View view) {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
+
+        Intent intent = new Intent(this, HomepageActivity.class);
+        this.startActivity(intent);
 
         mLogIn.initiateLogIn(username, password);
     }

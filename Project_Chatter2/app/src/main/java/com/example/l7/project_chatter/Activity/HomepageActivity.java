@@ -29,15 +29,15 @@ public class HomepageActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.NavigationBar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Toolbar Title");
         getSupportActionBar().setSubtitle("Toolbar Subtitle");
         getSupportActionBar().setLogo(R.drawable.ic_launcher);
-        mCreateEventButton = (Button) findViewById(R.id.Create_Event_Button);
+        mCreateEventButton = (Button) findViewById(R.id.Homepage_Create_Event_Button);
         mViewEventButton = (Button) findViewById(R.id.Homepage_View_Event_Button);
-        mSendEventButton = (Button) findViewById(R.id.Send_Event_Button);
+        mSendEventButton = (Button) findViewById(R.id.Homepage_Send_Event_Button);
 
 
 
