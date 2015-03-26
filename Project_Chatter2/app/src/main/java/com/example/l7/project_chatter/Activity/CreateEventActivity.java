@@ -1,6 +1,7 @@
 package com.example.l7.project_chatter.Activity;
 
 import android.graphics.drawable.Drawable;
+import android.inputmethodservice.ExtractEditText;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
@@ -36,9 +37,8 @@ public class CreateEventActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Toolbar Title");
-        getSupportActionBar().setSubtitle("Toolbar Subtitle");
-        getSupportActionBar().setLogo(R.drawable.ic_launcher);
+        getSupportActionBar().setTitle("Create an Event");
+        getSupportActionBar().setLogo(null);
 
         //Declarations
         mEventName = (TextView) findViewById(R.id.Create_Event_Name);
@@ -87,7 +87,7 @@ public class CreateEventActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_homepage, menu);
+        getMenuInflater().inflate(R.menu.menu_create, menu);
         return true;
     }
 
