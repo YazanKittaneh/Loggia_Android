@@ -1,9 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.l7.project_chatter.Activity.HomepageActivity">
-    <item android:id="@+id/Homepage_Create_Event_Button"
-          android:title="Create Event"
-          android:orderInCategory="100"
-          app:showAsAction="ifRoom" />
-</menu>
