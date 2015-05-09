@@ -22,67 +22,73 @@ public class EventObject {
     public String LOCATION = "Location";
     public String EVENT = "event";
     public String IMAGE = "Image";
-    ParseObject eventObject;
+    ParseObject mParseObject;
 
-    /*
+    /***********************
     Constructors
+    ************************/
+    /*
+    EventObject eventObject = new EventObject();
      */
     public EventObject(){
-        this.eventObject = new ParseObject(EVENT);
+        this.mParseObject = new ParseObject(EVENT);
     }
 
+    /*
+    EventObject eventObject = new EventObject(praseObject);
+    */
     public EventObject(ParseObject inputParseObject)
     {
-        this.eventObject = inputParseObject;
+        this.mParseObject = inputParseObject;
     }
 
-    /**(
+    /*
      * A controlled way of putting all information necessary into the parseObject
      * Allows for the information to be handled elsewere
      */
     public void putEventInfo(String name, String time, String location, String host, String description, Drawable image){
-        this.eventObject.put(NAME, name);
-        this.eventObject.put(TIME, time);
-        this.eventObject.put(HOST, host);
-        this.eventObject.put(DESCRIPTION, description);
-        this.eventObject.put(LOCATION, location);
-        this.eventObject.put(IMAGE, image);
+        this.mParseObject.put(NAME, name);
+        this.mParseObject.put(TIME, time);
+        this.mParseObject.put(HOST, host);
+        this.mParseObject.put(DESCRIPTION, description);
+        this.mParseObject.put(LOCATION, location);
+        this.mParseObject.put(IMAGE, image);
     }
 
     public void pushEventToCloud(){
-        this.eventObject.saveInBackground();
+        this.mParseObject.saveInBackground();
     }
 
     /*
      * Getters and Setters
      */
     public String getEventName() {
-        return this.eventObject.getString(NAME);
+        return this.mParseObject.getString(NAME);
     }
 
     public void setEventName(String eventName) {
-        this.eventObject.put(NAME, eventName);
+        this.mParseObject.put(NAME, eventName);
     }
 
 
     public String getEventTime() {
-        return this.eventObject.getString(TIME);
+        return this.mParseObject.getString(TIME);
     }
 
     public void setEventTime(String eventTime) {
-        this.eventObject.put(TIME, eventTime);
+        this.mParseObject.put(TIME, eventTime);
     }
 
     public String getEventLocation() {
-        return this.eventObject.getString(LOCATION);
+        return this.mParseObject.getString(LOCATION);
     }
 
     public void setEventLocation(String eventLocation) {
-        this.eventObject.put(LOCATION, eventLocation);
+        this.mParseObject.put(LOCATION, eventLocation);
     }
 
 
     public void getEventID(){
-        this.eventObject.getObjectId();
+        this.mParseObject.getObjectId();
     }
 }
