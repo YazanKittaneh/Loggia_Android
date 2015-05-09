@@ -35,7 +35,6 @@ public class HomepageActivity extends ActionBarActivity {
         getSupportActionBar().setTitle("Home");
         getSupportActionBar().setLogo(null);
         mCreateEventButton = (Button) findViewById(R.id.Homepage_Create_Event_Button);
-        mViewEventButton = (Button) findViewById(R.id.Homepage_View_Event_Button);
         mSendEventButton = (Button) findViewById(R.id.Homepage_Send_Event_Button);
 
 

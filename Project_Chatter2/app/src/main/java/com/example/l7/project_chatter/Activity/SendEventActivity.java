@@ -14,6 +14,9 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class SendEventActivity extends ActionBarActivity {
 
@@ -51,7 +54,10 @@ public class SendEventActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage(View v) {
+    public void sendMessage(View v) throws JSONException {
+        JSONObject parseNotificationObject = new JSONObject();
+        parseNotificationObject.put("EventObjectID", "JXaAFApgQK");
+
         ParseQuery user = ParseUser.getQuery();
         user.whereEqualTo("username", recepient.getText().toString());
         ParseQuery query = ParseInstallation.getQuery();
@@ -60,6 +66,7 @@ public class SendEventActivity extends ActionBarActivity {
         push.setQuery(query);
         //push.setChannel("Chatters");
         push.setMessage(message.getText().toString());
+        push.setData(parseNotificationObject);
         push.sendInBackground();
         Log.i(recepient.getText().toString(), message.getText().toString());
     }

@@ -1,5 +1,6 @@
 package com.example.l7.project_chatter.Activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

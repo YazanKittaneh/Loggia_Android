@@ -100,6 +100,10 @@
             android:name=".Activity.HomepageActivity"
             android:label="HomepageActivity" >
         </activity>
+        <activity
+            android:name=".Activity.MainActivity2Activity"
+            android:label="@string/title_activity_main_activity2" >
+        </activity>
     </application>
 
 </manifest>
