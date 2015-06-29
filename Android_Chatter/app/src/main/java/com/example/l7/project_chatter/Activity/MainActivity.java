@@ -8,12 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.l7.project_chatter.AuthenticationPage.LogInActivity;
+import com.example.l7.project_chatter.AuthenticationPage.SignUpActivity;
 import com.example.l7.project_chatter.R;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
 import com.parse.ParseInstallation;
-import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.PushService;
 
@@ -39,14 +40,7 @@ public class MainActivity extends ActionBarActivity {
         signUpButton = (Button) findViewById(R.id.signUpButton);
         logInButton = (Button) findViewById(R.id.logInButton);
 
-        // Initialize Crash Reporting.
-        ParseCrashReporting.enable(this);
 
-        // Add your initialization code here
-        Parse.initialize(this, "pq4DTXVfCwDskh0CBEfBhwkrDLzBqmo0Q0Fqu8Om", "5mkjDImOD21MhGM6Brzh7lOriLpfrxj9w47FWCL0");
-        ParseACL defaultACL = new ParseACL();
-
-        ParseACL.setDefaultACL(defaultACL, true);
 
         PushService.setDefaultPushCallback(this, MainActivity.class);
 

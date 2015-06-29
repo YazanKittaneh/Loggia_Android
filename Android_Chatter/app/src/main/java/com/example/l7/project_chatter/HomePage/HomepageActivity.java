@@ -1,4 +1,4 @@
-package com.example.l7.project_chatter.Activity;
+package com.example.l7.project_chatter.HomePage;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -9,6 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.l7.project_chatter.Activity.CreateEventActivity;
+import com.example.l7.project_chatter.Activity.DisplayEventActivity;
+import com.example.l7.project_chatter.Activity.FriendsListActivity;
+import com.example.l7.project_chatter.Activity.SendEventActivity;
 import com.example.l7.project_chatter.R;
 
 
@@ -36,6 +40,7 @@ public class HomepageActivity extends ActionBarActivity {
         getSupportActionBar().setLogo(null);
         mCreateEventButton = (Button) findViewById(R.id.Homepage_Create_Event_Button);
         mSendEventButton = (Button) findViewById(R.id.Homepage_Send_Event_Button);
+        mViewEventButton = (Button) findViewById(R.id.Homepage_View_Event_Button);
 
 
 
@@ -44,7 +49,7 @@ public class HomepageActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Button b = (Button) v;
 
-                Intent intent = new Intent(v.getContext(), CreateEventActivity.class);
+                Intent intent = new Intent(v.getContext(), FriendsListActivity.class);
                 startActivity(intent);
             }
         });

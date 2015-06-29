@@ -4,7 +4,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
-    tools:context="com.example.l7.project_chatter.Activity.HomepageActivity"
+    tools:context="com.example.l7.project_chatter.HomePage.HomepageActivity"
     android:contentDescription="Homepage"
     android:id="@+id/homepage_layout"
     android:theme="@style/Theme.MainTheme">

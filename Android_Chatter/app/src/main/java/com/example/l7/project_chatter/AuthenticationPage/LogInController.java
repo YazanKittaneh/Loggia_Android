@@ -1,12 +1,12 @@
-package com.example.l7.project_chatter.Controllers;
+package com.example.l7.project_chatter.AuthenticationPage;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.l7.project_chatter.Activity.HomepageActivity;
-import com.example.l7.project_chatter.Activity.LogInActivity;
+import com.example.l7.project_chatter.HomePage.HomepageActivity;
+import com.example.l7.project_chatter.AuthenticationPage.LogInActivity;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;

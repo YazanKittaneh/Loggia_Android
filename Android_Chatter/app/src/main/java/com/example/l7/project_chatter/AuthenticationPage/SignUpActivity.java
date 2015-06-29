@@ -1,4 +1,4 @@
-package com.example.l7.project_chatter.Activity;
+package com.example.l7.project_chatter.AuthenticationPage;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.l7.project_chatter.Controllers.SignUpController;
 import com.example.l7.project_chatter.R;
 
 
