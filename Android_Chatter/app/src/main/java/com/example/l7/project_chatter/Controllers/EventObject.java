@@ -1,8 +1,12 @@
 package com.example.l7.project_chatter.Controllers;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
+import com.parse.ParseFile;
 import com.parse.ParseObject;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by L7 on 2/28/15.
@@ -46,13 +50,17 @@ public class EventObject {
      * A controlled way of putting all information necessary into the parseObject
      * Allows for the information to be handled elsewere
      */
-    public void putEventInfo(String name, String time, String location, String host, String description, Drawable image){
+    public void putEventInfo(String name, String time, String location, String host, String description, Bitmap image){
         this.mParseObject.put(NAME, name);
         this.mParseObject.put(TIME, time);
         this.mParseObject.put(HOST, host);
         this.mParseObject.put(DESCRIPTION, description);
         this.mParseObject.put(LOCATION, location);
-        this.mParseObject.put(IMAGE, image);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] data = stream.toByteArray();
+        ParseFile imageFile = new ParseFile("image.png", data);
+        this.mParseObject.put(IMAGE, imageFile);
     }
 
     public void pushEventToCloud(){

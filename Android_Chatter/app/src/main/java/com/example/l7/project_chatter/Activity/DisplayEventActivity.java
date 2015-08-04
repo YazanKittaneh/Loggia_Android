@@ -44,7 +44,6 @@ public class DisplayEventActivity extends ActionBarActivity {
     TextView mEventLocation;
     ImageView mEventImage;
     EventObject mEventObject;
-    ///ImageView mEventImage;
 
 
     @Override

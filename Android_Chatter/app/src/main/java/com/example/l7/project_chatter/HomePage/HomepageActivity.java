@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.l7.project_chatter.Activity.CreateEventActivity;
 import com.example.l7.project_chatter.Activity.DisplayEventActivity;
+import com.example.l7.project_chatter.Activity.EventViewActivity;
 import com.example.l7.project_chatter.Activity.FriendsListActivity;
 import com.example.l7.project_chatter.Activity.SendEventActivity;
 import com.example.l7.project_chatter.R;
@@ -28,6 +29,7 @@ public class HomepageActivity extends ActionBarActivity {
     Button mCreateEventButton;
     Button mViewEventButton;
     Button mSendEventButton;
+    Button mEventListButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class HomepageActivity extends ActionBarActivity {
         mCreateEventButton = (Button) findViewById(R.id.Homepage_Create_Event_Button);
         mSendEventButton = (Button) findViewById(R.id.Homepage_Send_Event_Button);
         mViewEventButton = (Button) findViewById(R.id.Homepage_View_Event_Button);
+        mEventListButton = (Button) findViewById(R.id.Homepage_List_Button);
+
 
 
 
@@ -73,6 +77,17 @@ public class HomepageActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        mEventListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+
+                Intent intent = new Intent(v.getContext(), EventViewActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 

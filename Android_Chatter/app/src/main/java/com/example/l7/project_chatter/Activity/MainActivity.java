@@ -68,10 +68,6 @@ public class MainActivity extends ActionBarActivity {
         });
 
         //ParsePush.subscribeInBackground("Chatters");
-        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-        installation.put("user", ParseUser.getCurrentUser());
-        installation.saveInBackground();
-        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
 
