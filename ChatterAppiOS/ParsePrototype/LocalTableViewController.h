@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LocalTableViewController : UITableViewController
-- (IBAction)logOut:(id)sender;
+//- (IBAction)logOut:(id)sender;
+
 
 @end
