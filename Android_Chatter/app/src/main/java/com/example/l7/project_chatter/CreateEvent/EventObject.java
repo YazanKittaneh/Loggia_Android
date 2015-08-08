@@ -1,4 +1,4 @@
-package com.example.l7.project_chatter.Controllers;
+package com.example.l7.project_chatter.CreateEvent;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;

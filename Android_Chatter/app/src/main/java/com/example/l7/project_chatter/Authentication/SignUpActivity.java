@@ -1,4 +1,4 @@
-package com.example.l7.project_chatter.AuthenticationPage;
+package com.example.l7.project_chatter.Authentication;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

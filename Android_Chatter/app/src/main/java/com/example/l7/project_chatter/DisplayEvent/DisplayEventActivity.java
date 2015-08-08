@@ -1,16 +1,15 @@
-package com.example.l7.project_chatter.Activity;
+package com.example.l7.project_chatter.DisplayEvent;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.l7.project_chatter.Controllers.EventObject;
+import com.example.l7.project_chatter.CreateEvent.EventObject;
 import com.example.l7.project_chatter.R;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -27,7 +26,7 @@ import com.parse.ParseQuery;
  */
 
 
-public class DisplayEventActivity extends ActionBarActivity {
+public class DisplayEventActivity extends AppCompatActivity {
 
     /*
         this.eventObject.put(NAME, name);
@@ -57,7 +56,7 @@ public class DisplayEventActivity extends ActionBarActivity {
         mEventLocation = (TextView) findViewById(R.id.Display_Event_Location);
         mEventImage = (ImageView) findViewById(R.id.Display_Event_Image);
 
-        setupPage("iuhYXmsJy5");
+        setupPage(getIntent().getDataString());
     }
 
 
@@ -92,7 +91,6 @@ public class DisplayEventActivity extends ActionBarActivity {
      */
 
     private void setupPage(String objectID) {
-        objectID = "iuhYXmsJy5";
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("event");
         query.getInBackground(objectID, new GetCallback<ParseObject>() {

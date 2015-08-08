@@ -1,5 +1,6 @@
-package com.example.l7.project_chatter.Controllers;
+package com.example.l7.project_chatter.FriendsList;
 
+import com.example.l7.project_chatter.CreateEvent.EventObject;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;

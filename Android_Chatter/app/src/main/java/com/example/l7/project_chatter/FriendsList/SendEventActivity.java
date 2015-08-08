@@ -1,4 +1,4 @@
-package com.example.l7.project_chatter.Activity;
+package com.example.l7.project_chatter.FriendsList;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

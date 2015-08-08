@@ -6,8 +6,13 @@
 
         <!-- Set AppCompat’s color theming attrs -->
         <item name="colorPrimary">@color/red</item>
-    <item name="colorPrimaryDark">@color/darkred</item>
+        <item name="colorPrimaryDark">@color/darkred</item>
 
     <!-- The rest of your attributes -->
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/secondary_text_default_material_dark</item>
     </style>
 </resources>

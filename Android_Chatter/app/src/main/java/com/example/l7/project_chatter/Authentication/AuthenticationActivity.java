@@ -1,4 +1,4 @@
-package com.example.l7.project_chatter.Activity;
+package com.example.l7.project_chatter.Authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.l7.project_chatter.AuthenticationPage.LogInActivity;
-import com.example.l7.project_chatter.AuthenticationPage.SignUpActivity;
 import com.example.l7.project_chatter.R;
-import com.parse.Parse;
-import com.parse.ParseACL;
-import com.parse.ParseCrashReporting;
-import com.parse.ParseInstallation;
-import com.parse.ParseUser;
 import com.parse.PushService;
 
 
@@ -26,7 +19,7 @@ import com.parse.PushService;
  * Theoretically, this should be skipped if the user had already logged in
  * or has their user cached
  */
-public class MainActivity extends ActionBarActivity {
+public class AuthenticationActivity extends ActionBarActivity {
 
     Button signUpButton;
     Button logInButton;
@@ -42,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-        PushService.setDefaultPushCallback(this, MainActivity.class);
+        PushService.setDefaultPushCallback(this, AuthenticationActivity.class);
 
         /*
          * On click listener for signing in

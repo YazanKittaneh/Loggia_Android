@@ -32,23 +32,23 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".Authentication.AuthenticationActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".AuthenticationPage.LogInActivity"
+            android:name=".Authentication.LogInActivity"
             android:label="@string/title_activity_log_in" >
         </activity>
         <activity
-            android:name=".Activity.DisplayEventActivity"
+            android:name=".DisplayEvent.DisplayEventActivity"
             android:label="@string/title_activity_event" >
         </activity>
         <activity
-            android:name=".AuthenticationPage.SignUpActivity"
+            android:name=".Authentication.SignUpActivity"
             android:label="SignUpActivity" >
         </activity>
         <activity
-            android:name=".Activity.CreateEventActivity"
+            android:name=".CreateEvent.CreateEventActivity"
             android:label="@string/title_activity_homepage" >
         </activity>
 
@@ -85,7 +85,7 @@
             android:resource="@drawable/powered_by_google_light" />
 
         <activity
-            android:name=".Activity.SendEventActivity"
+            android:name=".FriendsList.SendEventActivity"
             android:label="@string/title_activity_send_event" >
         </activity>
         <activity
@@ -93,24 +93,21 @@
             android:label="HomepageActivity" >
         </activity>
         <activity
-            android:name=".Activity.FriendsListActivity"
+            android:name=".FriendsList.FriendsListActivity"
             android:label="@string/title_activity_friends_list" >
         </activity>
+        <!-- LAUNCHING ACTIVITY -->
         <activity
-            android:name=".contacts_row"
-            android:label="@string/title_activity_contacts_row" >
-        </activity>
-        <activity
-            android:name=".SplashPage.SplashPageActivity"
-            android:label="@string/title_activity_splash_page" >
+            android:name=".Splash.SplashPageActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- LAUNCHING ACTIVITY -->
         <activity
-            android:name=".Activity.EventViewActivity"
+            android:name=".Feed.EventFeedActivity"
             android:label="@string/title_activity_event_view" >
         </activity>
     </application>

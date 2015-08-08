@@ -1,4 +1,4 @@
-package com.example.l7.project_chatter.Controllers;
+package com.example.l7.project_chatter.FriendsList;
 
 /**
  * Created by L7 on 6/28/15.

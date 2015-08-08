@@ -1,7 +1,5 @@
-package com.example.l7.project_chatter.Activity;
+package com.example.l7.project_chatter.Feed;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,12 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.l7.project_chatter.Controllers.EventObject;
 import com.example.l7.project_chatter.R;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 
-import java.util.BitSet;
 import java.util.List;
 
 /**
@@ -29,9 +24,9 @@ public class CustomAdapter extends BaseAdapter{
 
     private static LayoutInflater inflater=null;
 
-    public CustomAdapter(EventViewActivity eventViewActivity, List<ParseObject> eventList) {
+    public CustomAdapter(EventFeedActivity mainActivity, List<ParseObject> eventList) {
         data=eventList;
-        context=eventViewActivity;
+        context= mainActivity;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

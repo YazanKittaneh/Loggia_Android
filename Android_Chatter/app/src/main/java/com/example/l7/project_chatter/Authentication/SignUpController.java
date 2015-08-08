@@ -1,4 +1,4 @@
-package com.example.l7.project_chatter.AuthenticationPage;
+package com.example.l7.project_chatter.Authentication;
 
 import android.widget.Toast;
 

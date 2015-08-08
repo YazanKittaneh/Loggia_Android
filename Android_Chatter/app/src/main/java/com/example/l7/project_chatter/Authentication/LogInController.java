@@ -1,4 +1,4 @@
-package com.example.l7.project_chatter.AuthenticationPage;
+package com.example.l7.project_chatter.Authentication;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.l7.project_chatter.HomePage.HomepageActivity;
-import com.example.l7.project_chatter.AuthenticationPage.LogInActivity;
+import com.example.l7.project_chatter.Authentication.LogInActivity;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;

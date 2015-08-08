@@ -1,12 +1,10 @@
-package com.example.l7.project_chatter.Activity;
+package com.example.l7.project_chatter.FriendsList;
 
 
 
 import java.util.ArrayList;
-        import java.util.Collections;
-        import java.util.Comparator;
 
-        import android.app.Activity;
+import android.app.Activity;
         import android.database.Cursor;
         import android.os.Bundle;
         import android.provider.ContactsContract;
@@ -19,8 +17,6 @@ import java.util.ArrayList;
         import android.widget.ListView;
         import android.widget.Toast;
 
-import com.example.l7.project_chatter.Controllers.ContactAdapter;
-import com.example.l7.project_chatter.Controllers.ContactBean;
 import com.example.l7.project_chatter.R;
 
 public class FriendsListActivity extends Activity implements OnItemClickListener {

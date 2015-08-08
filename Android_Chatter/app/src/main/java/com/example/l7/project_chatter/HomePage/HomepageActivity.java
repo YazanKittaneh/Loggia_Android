@@ -1,7 +1,7 @@
 package com.example.l7.project_chatter.HomePage;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,11 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.l7.project_chatter.Activity.CreateEventActivity;
-import com.example.l7.project_chatter.Activity.DisplayEventActivity;
-import com.example.l7.project_chatter.Activity.EventViewActivity;
-import com.example.l7.project_chatter.Activity.FriendsListActivity;
-import com.example.l7.project_chatter.Activity.SendEventActivity;
+import com.example.l7.project_chatter.CreateEvent.CreateEventActivity;
+import com.example.l7.project_chatter.DisplayEvent.DisplayEventActivity;
+import com.example.l7.project_chatter.Feed.EventFeedActivity;
+import com.example.l7.project_chatter.FriendsList.FriendsListActivity;
+import com.example.l7.project_chatter.FriendsList.SendEventActivity;
 import com.example.l7.project_chatter.R;
 
 
@@ -24,22 +24,24 @@ import com.example.l7.project_chatter.R;
  * other feature
  */
 
-public class HomepageActivity extends ActionBarActivity {
+public class HomepageActivity extends AppCompatActivity {
 
     Button mCreateEventButton;
     Button mViewEventButton;
     Button mSendEventButton;
     Button mEventListButton;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.NavigationBar);
+
+        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Home");
-        getSupportActionBar().setLogo(null);
+
+
         mCreateEventButton = (Button) findViewById(R.id.Homepage_Create_Event_Button);
         mSendEventButton = (Button) findViewById(R.id.Homepage_Send_Event_Button);
         mViewEventButton = (Button) findViewById(R.id.Homepage_View_Event_Button);
@@ -83,7 +85,7 @@ public class HomepageActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Button b = (Button) v;
 
-                Intent intent = new Intent(v.getContext(), EventViewActivity.class);
+                Intent intent = new Intent(v.getContext(), EventFeedActivity.class);
                 startActivity(intent);
             }
         });
