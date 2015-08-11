@@ -1,8 +1,11 @@
 package com.example.l7.project_chatter.CreateEvent;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
@@ -89,6 +92,33 @@ public class EventObject {
 
     public String getEventLocation() {
         return this.mParseObject.getString(LOCATION);
+    }
+
+    public String getEventHost() {
+        return this.mParseObject.getString(HOST);
+    }
+
+    public String getEventDescription() {
+        return this.mParseObject.getString(DESCRIPTION);
+    }
+
+    public Drawable getEventImage() {
+        Drawable mDrawable = null;
+        ParseFile imgFile = this.mParseObject.getParseFile(IMAGE);
+        byte[] file = new byte[0];
+        if (imgFile != null) {
+            try {
+                file = imgFile.getData();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+
+            Bitmap image = BitmapFactory.decodeByteArray(file, 0, file.length);
+            mDrawable = new BitmapDrawable(image);
+        }
+
+        return mDrawable;
+
     }
 
     public void setEventLocation(String eventLocation) {

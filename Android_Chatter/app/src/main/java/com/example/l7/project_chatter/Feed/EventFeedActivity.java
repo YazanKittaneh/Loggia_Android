@@ -12,13 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.dexafree.materialList.cards.BigImageButtonsCard;
+import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
 import com.dexafree.materialList.model.CardItemView;
 import com.dexafree.materialList.view.MaterialListView;
 import com.example.l7.project_chatter.CreateEvent.CreateEventActivity;
 import com.example.l7.project_chatter.DisplayEvent.DisplayEventActivity;
+import com.example.l7.project_chatter.FriendsList.FriendsListActivity;
 import com.example.l7.project_chatter.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -64,7 +67,7 @@ public class EventFeedActivity extends AppCompatActivity {
 
 
                     for (int i=0; i<markers.size(); i++) {
-                        BigImageButtonsCard card = new BigImageButtonsCard(context);
+                        BigImageCard card = new BigImageCard(context);
                         Log.i(i+" Item: ", String.valueOf(i));
                         card.setTitle(markers.get(i).getString("Name"));
                         card.setDescription(markers.get(i).getString("Description"));
@@ -83,12 +86,16 @@ public class EventFeedActivity extends AppCompatActivity {
 
                             card.setDrawable(mDrawable);
                         }
-                        //card.setBitmap(markers.get(i).getString("Image"));
-                        card.setLeftButtonText("LEFT");
-                        card.setRightButtonText("RIGHT");
-                        card.setTag(markers.get(i).getObjectId());
+                        String test = markers.get(i).getObjectId();
+                        card.setTag(test);
+
+
                         mListView.add(card);
+
                     }
+
+
+
                 } else {
                     Log.e("DONE ERROR", e.toString());
                 }
@@ -96,25 +103,27 @@ public class EventFeedActivity extends AppCompatActivity {
         });
 
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
-
             @Override
             public void onItemClick(CardItemView view, int position) {
-                /*
-                ParseObject parseObject = (ParseObject) view.getTag();
-                startActivity(new Intent(EventViewActivity.this, DisplayEventActivity.class).putExtra);
-                finish();
-                 */
+                String objectID = view.getTag().toString();
+                Log.d("CLICK TEST: ", objectID);
 
-                String objectId = (String) view.getTag();
-                startActivity(new Intent(EventFeedActivity.this, DisplayEventActivity.class).putExtra("ObjectID", objectId));
-                finish();
+                Intent intent = new Intent(view.getContext(), DisplayEventActivity.class);
+                intent.putExtra("objectID", objectID);
+                startActivity(intent);
+
+                //startActivity(new Intent(EventFeedActivity.this, DisplayEventActivity.class).putExtra("ObjectID", objectId));
+                //finish();
             }
 
             @Override
             public void onItemLongClick(CardItemView view, int position) {
-                Log.d("LONG_CLICK", view.getTag().toString());
+
             }
         });
+
+
+
     }
 
 

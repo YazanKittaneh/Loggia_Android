@@ -22,25 +22,25 @@ public class SplashPageActivity extends Activity {
         setContentView(R.layout.activity_splash_page);
 
         // Initialize Crash Reporting.
-        ParseCrashReporting.enable(this);
+        //ParseCrashReporting.enable(this);
 
-        Parse.enableLocalDatastore(this);
+        //Parse.enableLocalDatastore(this);
         // Add your initialization code here
-        Parse.initialize(this, "pq4DTXVfCwDskh0CBEfBhwkrDLzBqmo0Q0Fqu8Om", "5mkjDImOD21MhGM6Brzh7lOriLpfrxj9w47FWCL0");
-        ParseACL defaultACL = new ParseACL();
+        //Parse.initialize(this, "pq4DTXVfCwDskh0CBEfBhwkrDLzBqmo0Q0Fqu8Om", "5mkjDImOD21MhGM6Brzh7lOriLpfrxj9w47FWCL0");
+        //ParseACL defaultACL = new ParseACL();
 
-        ParseACL.setDefaultACL(defaultACL, true);
+        //ParseACL.setDefaultACL(defaultACL, true);
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        //ParseUser currentUser = ParseUser.getCurrentUser();
 
-        if (currentUser != null) {
+        //if (currentUser != null) {
             startActivity(new Intent(SplashPageActivity.this, HomepageActivity.class));
             finish();
 
-        } else {
-            startActivity(new Intent(SplashPageActivity.this, AuthenticationActivity.class));
-            finish();
-        }
+        //} else {
+        //   startActivity(new Intent(SplashPageActivity.this, AuthenticationActivity.class));
+        //    finish();
+        //}
 
 
     }
