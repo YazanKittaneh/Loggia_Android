@@ -8,8 +8,10 @@
 
 #import "AppDelegate.h"
 #import "LocalTableViewController.h"
+#import "EventDetailsViewController.h"
 #import <Parse/Parse.h>
 #import "Date.h"
+
 //#import <FBSDKCoreKit/FBSDKCoreKit.h>
 //#import <FBSDKShareKit/FBSDKShareKit.h>
 //#import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -157,6 +159,11 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"eventDetails" sender:tableView];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 
 /*
 // Override to support rearranging the table view.
@@ -164,15 +171,24 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"eventDetails"]){
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSString *dateKey = self.cronKeys[indexPath.section];
+        PFObject *passingEvent = self.calendarTable[dateKey][indexPath.row];
+        ((EventDetailsViewController*)segue.destinationViewController).eventDetails = passingEvent;
+        //((SecondViewController*)segue.destinationViewController).stateName = ((USState*)self.statesArray[indexPath.row]).name;
+        //((SecondViewController*)segue.destinationViewController).capName = ((USState*)self.statesArray[indexPath.row]).capital;
+        //((SecondViewController*)segue.destinationViewController).popName = ((USState*)self.statesArray[indexPath.row]).population;
+    }
 }
-*/
+
 
 //- (IBAction)logOut:(id)sender {
 //    [PFUser logOut];

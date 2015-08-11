@@ -7,13 +7,14 @@
 //
 
 #import "EventDetailsViewController.h"
+#import "Parse/Parse.h"
 
 @interface EventDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *whenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *whereLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) UIImage *eventImage;
-@property (weak, nonatomic) IBOutlet UIImageView *bgView;
+@property (strong, nonatomic) IBOutlet UIImageView *bgView;
 
 @end
 
@@ -22,6 +23,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.whenLabel = self.eventDetails[@"Time"];
+    self.whereLabel = self.eventDetails[@"Location"];
+    self.descriptionLabel = self.eventDetails[@"Description"];
+    self.eventImage = self.eventDetails[@"Image"];
+    self.bgView = [[UIImageView alloc] initWithImage:self.eventImage];
+    
 }
 
 - (void)didReceiveMemoryWarning {
