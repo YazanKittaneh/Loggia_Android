@@ -45,6 +45,7 @@
 		C77EC9E71B71A969000BBA7A /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77EC9E41B71A969000BBA7A /* FBSDKCoreKit.framework */; };
 		C77EC9E81B71A969000BBA7A /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77EC9E51B71A969000BBA7A /* FBSDKLoginKit.framework */; };
 		C77EC9E91B71A969000BBA7A /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77EC9E61B71A969000BBA7A /* FBSDKShareKit.framework */; };
+		C79D1F951B77DD67008903C2 /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = C79D1F941B77DD67008903C2 /* Date.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,8 @@
 		C77EC9E41B71A969000BBA7A /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		C77EC9E51B71A969000BBA7A /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		C77EC9E61B71A969000BBA7A /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		C79D1F931B77DD67008903C2 /* Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Date.h; sourceTree = "<group>"; };
+		C79D1F941B77DD67008903C2 /* Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Date.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +194,7 @@
 		0368A61E1AE439DC00D063EF = {
 			isa = PBXGroup;
 			children = (
+				C79D1F921B77DCE6008903C2 /* Categories */,
 				03540C771B2DF6E800245ACC /* Images */,
 				034E780A1AED7AAE002076B3 /* Frameworks */,
 				0368A6291AE439DC00D063EF /* ParsePrototype */,
@@ -261,6 +265,15 @@
 				0368A6451AE439DD00D063EF /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C79D1F921B77DCE6008903C2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C79D1F931B77DD67008903C2 /* Date.h */,
+				C79D1F941B77DD67008903C2 /* Date.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,6 +386,7 @@
 				03540C7D1B2E000100245ACC /* MyEventsTableViewController.m in Sources */,
 				034E78061AED79DF002076B3 /* LogInViewController.m in Sources */,
 				C75AA1F21B766DE00026BDBC /* EventDetailsViewController.m in Sources */,
+				C79D1F951B77DD67008903C2 /* Date.m in Sources */,
 				0368A6301AE439DC00D063EF /* AppDelegate.m in Sources */,
 				0368A62D1AE439DC00D063EF /* main.m in Sources */,
 				03540C7A1B2DF95C00245ACC /* LocalTableViewController.m in Sources */,

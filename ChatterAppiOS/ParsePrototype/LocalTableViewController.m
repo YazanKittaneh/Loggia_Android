@@ -6,21 +6,63 @@
 //  Copyright (c) 2015 french.chagrin. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "LocalTableViewController.h"
 #import <Parse/Parse.h>
+#import "Date.h"
 //#import <FBSDKCoreKit/FBSDKCoreKit.h>
 //#import <FBSDKShareKit/FBSDKShareKit.h>
 //#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 
 @interface LocalTableViewController ()
-@property (nonatomic, strong) NSArray *allEvents;
+@property (nonatomic, strong) NSMutableDictionary *calendarTable;
+@property (nonatomic, strong) NSMutableArray *currentDay;
+@property (nonatomic, strong) NSArray *cronKeys;
 @end
 
 @implementation LocalTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.scrollEnabled = NO;
+    PFQuery *query = [PFQuery queryWithClassName:@"event"];
+    [query whereKey:@"Description" equalTo:@"greatest"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error){
+            if (error){
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo objectForKey:@"error"] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            
+                [alertView show];
+            } else {
+                self.calendarTable = [[NSMutableDictionary alloc] init];
+                self.currentDay = [[NSMutableArray alloc] init];
+                NSLog(@"%@", events);
+                for (PFObject *event in events) {
+                    NSLog(@"Test");
+                    NSLog(@"%@", event[@"Time"]);
+                    NSString *date = event[@"Time"];
+                    
+                    if (self.calendarTable[date]){
+                        [self.calendarTable[date] addObject:event];
+                    } else {
+                        self.calendarTable[date] = [[NSMutableArray alloc] init];
+                        [self.calendarTable[date] addObject:event];
+                    }
+                }
+                
+                NSArray *keys = [self.calendarTable allKeys];
+                self.cronKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
+                    NSDate *date1 = [NSDate dateFromString:d1];
+                    NSDate *date2 = [NSDate dateFromString:d2];
+                    return [date1 compare:date2];
+                }];
+                NSLog(@"%@", self.cronKeys);
+                NSLog(@"%@", keys);
+                [self.tableView reloadData];
+                self.tableView.scrollEnabled = YES;
+            }
+        }];
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -82,35 +124,38 @@
 //    }
 //}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return [self.cronKeys count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [[self.calendarTable objectForKey:[self.cronKeys objectAtIndex:section]] count];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    return [self.cronKeys objectAtIndex:section];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
+    NSString *SimpleIdentifier = @"simpleIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SimpleIdentifier forIndexPath:indexPath];
     
+    if (cell == nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleIdentifier];
+    }
+    
+    NSString *dateKey =  self.cronKeys[indexPath.section];
+    PFObject *event = self.calendarTable[dateKey][indexPath.row];
+    
+    cell.textLabel.text = event[@"Name"];
     return cell;
 }
-
-
 
 
 /*

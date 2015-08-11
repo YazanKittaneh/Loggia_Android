@@ -9,6 +9,11 @@
 #import "EventDetailsViewController.h"
 
 @interface EventDetailsViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *whenLabel;
+@property (weak, nonatomic) IBOutlet UILabel *whereLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) UIImage *eventImage;
+@property (weak, nonatomic) IBOutlet UIImageView *bgView;
 
 @end
 
