@@ -8,8 +8,8 @@
 
 #import "LogInViewController.h"
 #import <Parse/Parse.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface LogInViewController ()
 
@@ -21,9 +21,9 @@
     [super viewDidLoad];
     self.navigationItem.hidesBackButton = YES;
     // Do any additional setup after loading the view.
-    FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
-    loginButton.center = self.view.center;
-    [self.view addSubview:loginButton];
+    //FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
+    //loginButton.center = self.view.center;
+    //[self.view addSubview:loginButton];
 }
 
 /*
