@@ -23,12 +23,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.whenLabel = self.eventDetails[@"Time"];
-    self.whereLabel = self.eventDetails[@"Location"];
-    self.descriptionLabel = self.eventDetails[@"Description"];
-    self.eventImage = self.eventDetails[@"Image"];
-    self.bgView = [[UIImageView alloc] initWithImage:self.eventImage];
+    NSLog(@"Does the app even get to this point?");
+    self.title = self.eventDetails[@"Name"];
+    self.whenLabel.text = self.eventDetails[@"Time"];
+    self.whereLabel.text = self.eventDetails[@"Location"];
+    self.descriptionLabel.text = self.eventDetails[@"Description"];
+    //self.eventImage = self.eventDetails[@"Image"];
+    //self.bgView = [[UIImageView alloc] initWithImage:self.eventImage];
     
 }
 

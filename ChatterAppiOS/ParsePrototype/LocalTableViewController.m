@@ -28,9 +28,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.scrollEnabled = NO;
+    
+    /*for (int i = 1; i < 11; i++){
+        PFObject *bacon = [PFObject objectWithClassName:@"event"];
+        bacon[@"Description"] = [NSString stringWithFormat:@"The %dnd most interesting event ever to occur on campus", i];
+        bacon[@"Name"] = [NSString stringWithFormat:@"The Baconator Part %d", i];
+        bacon[@"Host"] = @"Grinnell College";
+        bacon[@"Date"] = [NSString stringWithFormat:@"Aug %dth, 2015", (i + 19)];
+        bacon[@"Time"] = [NSString stringWithFormat:@"%d:00 pm", (i + 12)];
+        if (i % 2 == 0){
+            UIImage *img = [UIImage imageNamed:@"Unknown-2"];
+            NSData *imageData = UIImagePNGRepresentation(img);
+            PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
+            bacon[@"Image"] = imageFile;
+        } else {
+            UIImage *img = [UIImage imageNamed:@"Unknown"];
+            NSData *imageData = UIImagePNGRepresentation(img);
+            PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
+            bacon[@"Image"] = imageFile;
+        }
+        
+        [bacon saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+            if (succeeded){
+                NSLog(@"Yay!");
+            } else {
+                NSLog(@"Well shit.");
+            }
+        }];
+    }*/
+
     PFQuery *query = [PFQuery queryWithClassName:@"event"];
-    [query whereKey:@"Description" equalTo:@"greatest"];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error){
+    [query findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error){
             if (error){
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo objectForKey:@"error"] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             
@@ -38,10 +66,7 @@
             } else {
                 self.calendarTable = [[NSMutableDictionary alloc] init];
                 self.currentDay = [[NSMutableArray alloc] init];
-                NSLog(@"%@", events);
                 for (PFObject *event in events) {
-                    NSLog(@"Test");
-                    NSLog(@"%@", event[@"Time"]);
                     NSString *date = event[@"Time"];
                     
                     if (self.calendarTable[date]){
@@ -58,8 +83,6 @@
                     NSDate *date2 = [NSDate dateFromString:d2];
                     return [date1 compare:date2];
                 }];
-                NSLog(@"%@", self.cronKeys);
-                NSLog(@"%@", keys);
                 [self.tableView reloadData];
                 self.tableView.scrollEnabled = YES;
             }
@@ -183,9 +206,6 @@
         NSString *dateKey = self.cronKeys[indexPath.section];
         PFObject *passingEvent = self.calendarTable[dateKey][indexPath.row];
         ((EventDetailsViewController*)segue.destinationViewController).eventDetails = passingEvent;
-        //((SecondViewController*)segue.destinationViewController).stateName = ((USState*)self.statesArray[indexPath.row]).name;
-        //((SecondViewController*)segue.destinationViewController).capName = ((USState*)self.statesArray[indexPath.row]).capital;
-        //((SecondViewController*)segue.destinationViewController).popName = ((USState*)self.statesArray[indexPath.row]).population;
     }
 }
 
