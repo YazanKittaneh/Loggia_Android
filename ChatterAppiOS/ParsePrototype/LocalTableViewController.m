@@ -163,12 +163,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [[self.calendarTable objectForKey:[self.cronKeys objectAtIndex:section]] count];
+    return [[self.calendarTable objectForKey:[self.cronKeys objectAtIndex:[self.cronKeys count] - (section + 1)]] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    return [self.cronKeys objectAtIndex:section];
+    return [self.cronKeys objectAtIndex:([self.cronKeys count] - (section + 1))];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -180,7 +180,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleIdentifier];
     }
     
-    NSString *dateKey =  self.cronKeys[indexPath.section];
+    NSString *dateKey =  self.cronKeys[[self.cronKeys count] - (indexPath.section + 1)];
+    NSLog(@"%ld", (long)indexPath.section);
     PFObject *event = self.calendarTable[dateKey][indexPath.row];
     
     cell.textLabel.text = event[@"Name"];
