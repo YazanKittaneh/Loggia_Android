@@ -31,22 +31,23 @@
     
     /*for (int i = 1; i < 11; i++){
         PFObject *bacon = [PFObject objectWithClassName:@"event"];
-        bacon[@"Description"] = [NSString stringWithFormat:@"The %dnd most interesting event ever to occur on campus", i];
-        bacon[@"Name"] = [NSString stringWithFormat:@"The Baconator Part %d", i];
+        bacon[@"Description"] = [NSString stringWithFormat:@"Who reads the description these days anyway?"];
+        bacon[@"Name"] = @"Palapalooza";
+        bacon[@"Location"] = @"Mac Field";
         bacon[@"Host"] = @"Grinnell College";
-        bacon[@"Date"] = [NSString stringWithFormat:@"Aug %dth, 2015", (i + 19)];
-        bacon[@"Time"] = [NSString stringWithFormat:@"%d:00 pm", (i + 12)];
-        if (i % 2 == 0){
+        bacon[@"Date"] = [NSString stringWithFormat: @"10/20/2015"];
+        bacon[@"Time"] = [NSString stringWithFormat:@"2:30 - 4:40 pm"];
+        //if (i % 2 == 0){
             UIImage *img = [UIImage imageNamed:@"Unknown-2"];
             NSData *imageData = UIImagePNGRepresentation(img);
             PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
             bacon[@"Image"] = imageFile;
-        } else {
-            UIImage *img = [UIImage imageNamed:@"Unknown"];
-            NSData *imageData = UIImagePNGRepresentation(img);
-            PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
-            bacon[@"Image"] = imageFile;
-        }
+        //} else {
+        //    UIImage *img = [UIImage imageNamed:@"Unknown"];
+        //    NSData *imageData = UIImagePNGRepresentation(img);
+        //    PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
+        //    bacon[@"Image"] = imageFile;
+        //}
         
         [bacon saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
             if (succeeded){
@@ -67,9 +68,11 @@
                 self.calendarTable = [[NSMutableDictionary alloc] init];
                 self.currentDay = [[NSMutableArray alloc] init];
                 for (PFObject *event in events) {
-                    NSString *date = event[@"Time"];
+                    NSString *date = event[@"Date"];
                     
-                    if (self.calendarTable[date]){
+                    if (date == nil){
+                        continue;
+                    } else if (self.calendarTable[date]){
                         [self.calendarTable[date] addObject:event];
                     } else {
                         self.calendarTable[date] = [[NSMutableArray alloc] init];
@@ -78,11 +81,13 @@
                 }
                 
                 NSArray *keys = [self.calendarTable allKeys];
+                NSLog(@"%@", keys);
                 self.cronKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
                     NSDate *date1 = [NSDate dateFromString:d1];
                     NSDate *date2 = [NSDate dateFromString:d2];
                     return [date1 compare:date2];
                 }];
+                //NSLog(@"%@", self.cronKeys);
                 [self.tableView reloadData];
                 self.tableView.scrollEnabled = YES;
             }
@@ -183,7 +188,6 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"eventDetails" sender:tableView];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -207,6 +211,7 @@
         PFObject *passingEvent = self.calendarTable[dateKey][indexPath.row];
         ((EventDetailsViewController*)segue.destinationViewController).eventDetails = passingEvent;
     }
+    
 }
 
 

@@ -13,9 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *whenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *whereLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) UIImage *eventImage;
+@property (weak, nonatomic) PFFile *eventImage;
 @property (strong, nonatomic) IBOutlet UIImageView *bgView;
-
 @end
 
 @implementation EventDetailsViewController
@@ -23,12 +22,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"Does the app even get to this point?");
     self.title = self.eventDetails[@"Name"];
     self.whenLabel.text = self.eventDetails[@"Time"];
     self.whereLabel.text = self.eventDetails[@"Location"];
     self.descriptionLabel.text = self.eventDetails[@"Description"];
-    //self.eventImage = self.eventDetails[@"Image"];
+    self.eventImage = self.eventDetails[@"Image"];
+    
+    [self.eventImage getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+        if (!error){
+            UIImage *image = [UIImage imageWithData:data];
+            self.bgView = [[UIImageView alloc] init];
+            self.bgView.image = image;
+        }
+    }];
     //self.bgView = [[UIImageView alloc] initWithImage:self.eventImage];
     
 }
