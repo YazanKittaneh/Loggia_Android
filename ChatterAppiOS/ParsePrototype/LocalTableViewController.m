@@ -81,7 +81,6 @@
                 }
                 
                 NSArray *keys = [self.calendarTable allKeys];
-                NSLog(@"%@", keys);
                 self.cronKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
                     NSDate *date1 = [NSDate dateFromString:d1];
                     NSDate *date2 = [NSDate dateFromString:d2];
@@ -181,10 +180,21 @@
     }
     
     NSString *dateKey =  self.cronKeys[[self.cronKeys count] - (indexPath.section + 1)];
-    //NSLog(@"%ld", (long)indexPath.section);
     PFObject *event = self.calendarTable[dateKey][indexPath.row];
     
+    //cell.textLabel.textAlignment = UITextAlignmentCenter;
+    [cell setIndentationLevel:5];
     cell.textLabel.text = event[@"Name"];
+    PFFile *cellImageData = event[@"Image"];
+    [cellImageData getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+        if (!error){
+            UIImage *image = [UIImage imageWithData:data];
+            UIImageView *cellImage = [[UIImageView alloc]initWithFrame:CGRectMake(3, 10, 40, 25)];
+            cellImage.image = image;
+            [cell addSubview:cellImage];
+        }
+    }];
+
     return cell;
 }
 

@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>15202414-689D-4CAA-B865-D5BD77AA1E01</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>ParsePrototype</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>1BDAD790EB0A64284A368A74B714F0C477D840EC</key>
 		<string>https://github.com/YazanKittaneh/Project_Chatter.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ChatterAppiOS/ParsePrototype.xcodeproj/project.xcworkspace</string>
+	<string>ChatterAppiOS/ParsePrototype.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>1BDAD790EB0A64284A368A74B714F0C477D840EC</key>
