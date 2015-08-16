@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.loggia.loggia" >
+    package="com.loggia" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,9 +9,21 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.DesignDemo" >
+        android:minSdkVersion="9"
+        android:targetSdkVersion="15"
+        android:theme="@style/Theme.DesignDemo"
+        android:versionCode="1"
+        android:versionName="0.1" >
         <activity
-            android:name=".Feed.EventFeedActivity"
+            android:name="com.loggia.Feed.EventFeedActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.loggia.Display.DisplayActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.loggia.Splash.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +32,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EventDisplay.DisplayActivity"
-            android:label="@string/title_activity_display" >
+            android:name="com.loggia.Create.CreateActivity"
+            android:label="@string/app_name" >
         </activity>
     </application>
 

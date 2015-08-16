@@ -101,6 +101,7 @@ public class EventFeedActivity extends AppCompatActivity {
                 }
             }
         });
+        mListView.getLayoutManager().offsetChildrenVertical(20);
 
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override

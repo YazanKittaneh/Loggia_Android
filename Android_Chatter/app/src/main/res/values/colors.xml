@@ -26,7 +26,7 @@
         <item>@color/darkred</item>
     </integer-array>
 
-    <color name="ColorPrimary">#FF5722</color>
+    <color name="ColorPrimary">#F14E46</color>
     <color name="ColorPrimaryDark">#E64A19</color>
 
 </resources>
