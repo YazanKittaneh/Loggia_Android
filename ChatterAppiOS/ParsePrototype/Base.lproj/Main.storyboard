@@ -83,15 +83,18 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="6cu-cn-ukb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="0.35812996149999998" blue="0.22739711830000001" alpha="0.85999999999999999" colorSpace="calibratedRGB"/>
+                        <color key="separatorColor" red="0.51347458960000003" green="0.1125146695" blue="0.055578616409999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.73506549870000004" green="0.15913183750000001" blue="0.072330186520000006" alpha="0.85999999999999999" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentifier" id="gnK-98-UTj">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="simpleIdentifier" id="gnK-98-UTj">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gnK-98-UTj" id="nQ4-wm-yFe">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.70472301131717174" green="0.1485531484784775" blue="0.069929677837322124" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <segue destination="gbL-ef-qCk" kind="show" identifier="eventDetails" id="E4c-NT-EA1"/>
+                                    <segue destination="4S2-Cx-Xs5" kind="show" identifier="eventDetails" id="rhN-q6-b0H"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -115,61 +118,47 @@
                         <viewControllerLayoutGuide type="top" id="t4L-bH-5Vc"/>
                         <viewControllerLayoutGuide type="bottom" id="Wgy-Zo-lTl"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="PlJ-c6-IEz">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="PlJ-c6-IEz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QrJ-QD-sOG">
-                                <rect key="frame" x="0.0" y="64" width="375" height="254"/>
-                            </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="58B-u6-fi8">
-                                <rect key="frame" x="27" y="360" width="320" height="307"/>
+                                <rect key="frame" x="0.0" y="348" width="375" height="319"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="When:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u4g-K8-Qx9">
-                                        <rect key="frame" x="8" y="84" width="53" height="21"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                        <color key="textColor" red="0.73506549870000004" green="0.15913183750000001" blue="0.072330186520000006" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Where:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRx-On-irD">
-                                        <rect key="frame" x="8" y="147" width="60" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.73506549870000004" green="0.15913183750000001" blue="0.072330186520000006" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuP-mA-p2d">
-                                        <rect key="frame" x="8" y="208" width="53" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.73506549870000004" green="0.15913183750000001" blue="0.072330186520000006" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name of Event Thingy blah blah blah" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgc-ov-OaT">
-                                        <rect key="frame" x="8" y="8" width="304" height="68"/>
-                                        <fontDescription key="fontDescription" name="Zapfino" family="Zapfino" pointSize="12"/>
-                                        <color key="textColor" red="0.51347458964646464" green="0.11251466953371943" blue="0.055578616413546077" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time when Event Thingy Happens" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNg-vi-ZYy">
-                                        <rect key="frame" x="76" y="67" width="220" height="55"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOh-03-h4H">
+                                        <rect key="frame" x="103" y="28" width="220" height="55"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.73506549870000004" green="0.15913183750000001" blue="0.072330186520000006" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Place Where Event Thingy Happens" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOh-03-h4H">
-                                        <rect key="frame" x="76" y="130" width="220" height="55"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eb1-dC-4TK">
+                                        <rect key="frame" x="103" y="152" width="220" height="101"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.73506549870000004" green="0.15913183750000001" blue="0.072330186520000006" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What the event thingy is -- Omg this is such a long description what else should I say" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eb1-dC-4TK">
-                                        <rect key="frame" x="76" y="168" width="220" height="101"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="marker_red" translatesAutoresizingMaskIntoConstraints="NO" id="Anb-ws-Mnq">
+                                        <rect key="frame" x="57" y="37" width="38" height="38"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="info.png" translatesAutoresizingMaskIntoConstraints="NO" id="kRd-LI-3Gk">
+                                        <rect key="frame" x="57" y="184" width="38" height="38"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNg-vi-ZYy">
+                                        <rect key="frame" x="103" y="101" width="220" height="55"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.73506549870000004" green="0.15913183750000001" blue="0.072330186520000006" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="images.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZFA-fj-phY">
+                                        <rect key="frame" x="57" y="110" width="38" height="38"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QrJ-QD-sOG">
+                                <rect key="frame" x="0.0" y="64" width="375" height="254"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.7350654987373737" green="0.15913183749816784" blue="0.072330186520593975" alpha="0.85999999999999999" colorSpace="calibratedRGB"/>
                     </view>
@@ -184,7 +173,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7wm-0c-6JS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2562.5" y="1384.5"/>
+            <point key="canvasLocation" x="1887.5" y="1384.5"/>
         </scene>
         <!--Friends-->
         <scene sceneID="zYe-UF-eI1">
@@ -449,28 +438,13 @@
             </objects>
             <point key="canvasLocation" x="3720.5" y="617.5"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="SBn-lU-lHD">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gbL-ef-qCk" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="88W-Bf-8p7">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="4S2-Cx-Xs5" kind="relationship" relationship="rootViewController" id="dXO-Nw-bmN"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="V7Y-bT-Fag" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1975.5" y="1384.5"/>
-        </scene>
     </scenes>
     <resources>
         <image name="Events Near Me" width="19" height="19"/>
         <image name="Invites.png" width="39" height="39"/>
         <image name="My Events.png" width="39" height="39"/>
+        <image name="images.png" width="64" height="64"/>
+        <image name="info.png" width="64" height="64"/>
+        <image name="marker_red" width="64" height="64"/>
     </resources>
 </document>

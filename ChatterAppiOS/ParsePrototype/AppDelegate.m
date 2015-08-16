@@ -8,8 +8,8 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 
 @interface AppDelegate ()
@@ -20,7 +20,7 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [FBSDKAppEvents activateApp];
+    //[FBSDKAppEvents activateApp];
 }
 
 //- (BOOL)application:(UIApplication *)application

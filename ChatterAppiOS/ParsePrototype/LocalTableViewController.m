@@ -8,8 +8,10 @@
 
 #import "AppDelegate.h"
 #import "LocalTableViewController.h"
+#import "EventDetailsViewController.h"
 #import <Parse/Parse.h>
 #import "Date.h"
+
 //#import <FBSDKCoreKit/FBSDKCoreKit.h>
 //#import <FBSDKShareKit/FBSDKShareKit.h>
 //#import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -26,9 +28,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.scrollEnabled = NO;
+    
+    /*for (int i = 1; i < 11; i++){
+        PFObject *bacon = [PFObject objectWithClassName:@"event"];
+        bacon[@"Description"] = [NSString stringWithFormat:@"Who reads the description these days anyway?"];
+        bacon[@"Name"] = @"Palapalooza";
+        bacon[@"Location"] = @"Mac Field";
+        bacon[@"Host"] = @"Grinnell College";
+        bacon[@"Date"] = [NSString stringWithFormat: @"10/20/2015"];
+        bacon[@"Time"] = [NSString stringWithFormat:@"2:30 - 4:40 pm"];
+        //if (i % 2 == 0){
+            UIImage *img = [UIImage imageNamed:@"Unknown-2"];
+            NSData *imageData = UIImagePNGRepresentation(img);
+            PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
+            bacon[@"Image"] = imageFile;
+        //} else {
+        //    UIImage *img = [UIImage imageNamed:@"Unknown"];
+        //    NSData *imageData = UIImagePNGRepresentation(img);
+        //    PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
+        //    bacon[@"Image"] = imageFile;
+        //}
+        
+        [bacon saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+            if (succeeded){
+                NSLog(@"Yay!");
+            } else {
+                NSLog(@"Well shit.");
+            }
+        }];
+    }*/
+
     PFQuery *query = [PFQuery queryWithClassName:@"event"];
-    [query whereKey:@"Description" equalTo:@"greatest"];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error){
+    [query findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error){
             if (error){
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo objectForKey:@"error"] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             
@@ -36,13 +67,12 @@
             } else {
                 self.calendarTable = [[NSMutableDictionary alloc] init];
                 self.currentDay = [[NSMutableArray alloc] init];
-                NSLog(@"%@", events);
                 for (PFObject *event in events) {
-                    NSLog(@"Test");
-                    NSLog(@"%@", event[@"Time"]);
-                    NSString *date = event[@"Time"];
+                    NSString *date = event[@"Date"];
                     
-                    if (self.calendarTable[date]){
+                    if (date == nil){
+                        continue;
+                    } else if (self.calendarTable[date]){
                         [self.calendarTable[date] addObject:event];
                     } else {
                         self.calendarTable[date] = [[NSMutableArray alloc] init];
@@ -56,8 +86,7 @@
                     NSDate *date2 = [NSDate dateFromString:d2];
                     return [date1 compare:date2];
                 }];
-                NSLog(@"%@", self.cronKeys);
-                NSLog(@"%@", keys);
+                //NSLog(@"%@", self.cronKeys);
                 [self.tableView reloadData];
                 self.tableView.scrollEnabled = YES;
             }
@@ -133,12 +162,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [[self.calendarTable objectForKey:[self.cronKeys objectAtIndex:section]] count];
+    return [[self.calendarTable objectForKey:[self.cronKeys objectAtIndex:[self.cronKeys count] - (section + 1)]] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    return [self.cronKeys objectAtIndex:section];
+    return [self.cronKeys objectAtIndex:([self.cronKeys count] - (section + 1))];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -150,11 +179,27 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleIdentifier];
     }
     
-    NSString *dateKey =  self.cronKeys[indexPath.section];
+    NSString *dateKey =  self.cronKeys[[self.cronKeys count] - (indexPath.section + 1)];
     PFObject *event = self.calendarTable[dateKey][indexPath.row];
     
+    //cell.textLabel.textAlignment = UITextAlignmentCenter;
+    [cell setIndentationLevel:5];
     cell.textLabel.text = event[@"Name"];
+    PFFile *cellImageData = event[@"Image"];
+    [cellImageData getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+        if (!error){
+            UIImage *image = [UIImage imageWithData:data];
+            UIImageView *cellImage = [[UIImageView alloc]initWithFrame:CGRectMake(3, 10, 40, 25)];
+            cellImage.image = image;
+            [cell addSubview:cellImage];
+        }
+    }];
+
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -164,15 +209,22 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"eventDetails"]){
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSString *dateKey = self.cronKeys[[self.cronKeys count] - (indexPath.section + 1)];
+        PFObject *passingEvent = self.calendarTable[dateKey][indexPath.row];
+        ((EventDetailsViewController*)segue.destinationViewController).eventDetails = passingEvent;
+    }
+    
 }
-*/
+
 
 //- (IBAction)logOut:(id)sender {
 //    [PFUser logOut];
