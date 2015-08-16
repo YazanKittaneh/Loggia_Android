@@ -83,13 +83,16 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="6cu-cn-ukb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="0.35812996149999998" blue="0.22739711830000001" alpha="0.85999999999999999" colorSpace="calibratedRGB"/>
+                        <color key="separatorColor" red="0.51347458960000003" green="0.1125146695" blue="0.055578616409999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.73506549870000004" green="0.15913183750000001" blue="0.072330186520000006" alpha="0.85999999999999999" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="simpleIdentifier" id="gnK-98-UTj">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gnK-98-UTj" id="nQ4-wm-yFe">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.70472301131717174" green="0.1485531484784775" blue="0.069929677837322124" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="4S2-Cx-Xs5" kind="show" identifier="eventDetails" id="rhN-q6-b0H"/>
                                 </connections>
