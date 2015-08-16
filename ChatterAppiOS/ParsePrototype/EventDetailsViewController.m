@@ -31,11 +31,11 @@
     [self.eventImage getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
         if (!error){
             UIImage *image = [UIImage imageWithData:data];
-            self.bgView = [[UIImageView alloc] init];
+            self.bgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 85, 375, 233)];
             self.bgView.image = image;
+            [self.view addSubview: self.bgView];
         }
     }];
-    //self.bgView = [[UIImageView alloc] initWithImage:self.eventImage];
     
 }
 

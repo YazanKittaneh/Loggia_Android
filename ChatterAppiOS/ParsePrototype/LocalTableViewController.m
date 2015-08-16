@@ -181,7 +181,7 @@
     }
     
     NSString *dateKey =  self.cronKeys[[self.cronKeys count] - (indexPath.section + 1)];
-    NSLog(@"%ld", (long)indexPath.section);
+    //NSLog(@"%ld", (long)indexPath.section);
     PFObject *event = self.calendarTable[dateKey][indexPath.row];
     
     cell.textLabel.text = event[@"Name"];
@@ -208,7 +208,7 @@
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"eventDetails"]){
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSString *dateKey = self.cronKeys[indexPath.section];
+        NSString *dateKey = self.cronKeys[[self.cronKeys count] - (indexPath.section + 1)];
         PFObject *passingEvent = self.calendarTable[dateKey][indexPath.row];
         ((EventDetailsViewController*)segue.destinationViewController).eventDetails = passingEvent;
     }

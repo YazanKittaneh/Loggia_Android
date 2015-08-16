@@ -152,16 +152,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ODx-qq-1zn">
-                                <rect key="frame" x="0.0" y="64" width="375" height="251"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QrJ-QD-sOG">
-                                        <rect key="frame" x="0.0" y="-1" width="375" height="254"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QrJ-QD-sOG">
+                                <rect key="frame" x="0.0" y="64" width="375" height="254"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.7350654987373737" green="0.15913183749816784" blue="0.072330186520593975" alpha="0.85999999999999999" colorSpace="calibratedRGB"/>
                     </view>
