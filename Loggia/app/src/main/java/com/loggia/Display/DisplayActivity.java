@@ -31,6 +31,7 @@ public class DisplayActivity extends AppCompatActivity {
     TextView mEventTime;
     TextView mEventDescription;
     TextView mEventLocation;
+    TextView mEventDate;
 
 
     @Override
@@ -41,7 +42,7 @@ public class DisplayActivity extends AppCompatActivity {
         mEventTime = (TextView) findViewById(R.id.Display_Event_Time);
         mEventDescription = (TextView) findViewById(R.id.Display_Event_Description);
         mEventLocation = (TextView) findViewById(R.id.Display_Event_Location);
-
+        mEventDate = (TextView) findViewById(R.id.Display_Event_Date);
         final Drawable image;
 
 
@@ -51,7 +52,6 @@ public class DisplayActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
@@ -74,9 +74,11 @@ public class DisplayActivity extends AppCompatActivity {
             public void done(ParseObject parseObject, com.parse.ParseException e) {
                 if (e == null) {
                     collapsingToolbar.setTitle(parseObject.getString("Name"));
+                    mEventDate.setText(parseObject.getString("Date"));
                     mEventTime.setText(parseObject.getString("Time"));
                     mEventDescription.setText(parseObject.getString("Description"));
                     mEventLocation.setText(parseObject.getString("Location"));
+
 
                     ParseFile imgFile = parseObject.getParseFile("Image");
                     byte[] file = new byte[0];
