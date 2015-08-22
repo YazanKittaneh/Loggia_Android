@@ -73,7 +73,7 @@ public class EventFeedActivity extends AppCompatActivity {
         context=this;
 
         mListView = (MaterialListView) findViewById(R.id.material_listview);
-        //FloatingActionButton create = (FloatingActionButton) findViewById(R.id.create);
+        FloatingActionButton create = (FloatingActionButton) findViewById(R.id.create);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         swipeLayout.setColorSchemeResources(R.color.ColorPrimary);
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
@@ -87,7 +87,7 @@ public class EventFeedActivity extends AppCompatActivity {
 
         /* LISTENERS */
 
-        /*
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +95,7 @@ public class EventFeedActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        */
+
 
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
