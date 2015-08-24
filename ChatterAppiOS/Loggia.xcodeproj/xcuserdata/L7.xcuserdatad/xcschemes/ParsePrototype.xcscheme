@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0368A6261AE439DC00D063EF"
-               BuildableName = "ParsePrototype.app"
-               BlueprintName = "ParsePrototype"
-               ReferencedContainer = "container:ParsePrototype.xcodeproj">
+               BuildableName = "Loggia.app"
+               BlueprintName = "Loggia"
+               ReferencedContainer = "container:Loggia.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0368A63F1AE439DD00D063EF"
-               BuildableName = "ParsePrototypeTests.xctest"
-               BlueprintName = "ParsePrototypeTests"
-               ReferencedContainer = "container:ParsePrototype.xcodeproj">
+               BuildableName = "LoggiaTests.xctest"
+               BlueprintName = "LoggiaTests"
+               ReferencedContainer = "container:Loggia.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0368A63F1AE439DD00D063EF"
-               BuildableName = "ParsePrototypeTests.xctest"
-               BlueprintName = "ParsePrototypeTests"
-               ReferencedContainer = "container:ParsePrototype.xcodeproj">
+               BuildableName = "LoggiaTests.xctest"
+               BlueprintName = "LoggiaTests"
+               ReferencedContainer = "container:Loggia.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0368A6261AE439DC00D063EF"
-            BuildableName = "ParsePrototype.app"
-            BlueprintName = "ParsePrototype"
-            ReferencedContainer = "container:ParsePrototype.xcodeproj">
+            BuildableName = "Loggia.app"
+            BlueprintName = "Loggia"
+            ReferencedContainer = "container:Loggia.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0368A6261AE439DC00D063EF"
-            BuildableName = "ParsePrototype.app"
-            BlueprintName = "ParsePrototype"
-            ReferencedContainer = "container:ParsePrototype.xcodeproj">
+            BuildableName = "Loggia.app"
+            BlueprintName = "Loggia"
+            ReferencedContainer = "container:Loggia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0368A6261AE439DC00D063EF"
-            BuildableName = "ParsePrototype.app"
-            BlueprintName = "ParsePrototype"
-            ReferencedContainer = "container:ParsePrototype.xcodeproj">
+            BuildableName = "Loggia.app"
+            BlueprintName = "Loggia"
+            ReferencedContainer = "container:Loggia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -2,12 +2,6 @@ package com.loggia.Feed;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +9,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 
 
+import com.devspark.progressfragment.ProgressFragment;
 import com.loggia.Create.CreateActivity;
 import com.loggia.Display.DisplayActivity;
+import com.loggia.Helpers.ImageScaler;
 import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
@@ -28,8 +23,6 @@ import com.dexafree.materialList.controller.RecyclerItemClickListener;
 import com.dexafree.materialList.model.CardItemView;
 import com.dexafree.materialList.view.MaterialListView;
 import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -44,6 +37,7 @@ import android.os.Handler;
  * TODO: add '+' sign on the fab button
  * TODO: Refactor code to make it more legable
  */
+
 
 
 public class EventFeedActivity extends AppCompatActivity {
@@ -139,75 +133,13 @@ public class EventFeedActivity extends AppCompatActivity {
     }
 
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
-
-    public BitmapDrawable decodeSampledBitmapFromParse(Resources res, ParseObject mParseObject,
-                                                       int reqWidth, int reqHeight) {
-
-
-        randomStock = new StockImageRandomizer();
-        int randomImage = randomStock.getRandomStockDrawable();
-        ParseFile imgFile=null;
-        byte[] file = new byte[0];
-
-
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        imgFile = mParseObject.getParseFile("Image");
-
-        if (imgFile != null) {
-            try {
-                file = imgFile.getData();
-            } catch (ParseException e1) {
-                e1.printStackTrace();
-            }
-
-            BitmapFactory.decodeByteArray(file, 0, file.length, options);
-            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-            options.inJustDecodeBounds = false;
-            return new BitmapDrawable(res, BitmapFactory.decodeByteArray(file, 0, file.length, options));
-        }
-        else {
-
-            BitmapFactory.decodeResource(res, randomImage, options);
-            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-            options.inJustDecodeBounds = false;
-
-            return new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), randomStock.getRandomStockDrawable()));
-        }
-
-    }
 
     private void updateEvents()
     {
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        final int width=dm.widthPixels;
-        final int height=dm.heightPixels;
+        final ImageScaler scaler = new ImageScaler(this);
 
 
-        ParseQuery < ParseObject > query = new ParseQuery<ParseObject>("event").addAscendingOrder("createdAt");
+        ParseQuery < ParseObject > query = new ParseQuery<ParseObject>("Test").addAscendingOrder("createdAt");
         //final ProgressDialog dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -222,10 +154,10 @@ public class EventFeedActivity extends AppCompatActivity {
                         BigImageCard card = new BigImageCard(context);
                         Log.i(i + " Item: ", currentObject.getString("Name"));
                         card.setTitle(currentObject.getString("Name"));
-                        card.setDescription(currentObject.getString("Date") + "at " + currentObject.getString("Time"));
+                        card.setDescription(currentObject.getString("Date") + " at " + currentObject.getString("StartTime"));
 
 
-                        card.setDrawable(decodeSampledBitmapFromParse(getResources(), currentObject, width/4, height/4));
+                        card.setDrawable(scaler.decodeSampledBitmapFromParse(getResources(), currentObject));
                         String test = markers.get(i).getObjectId();
                         card.setTag(test);
 

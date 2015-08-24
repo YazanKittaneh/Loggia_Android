@@ -61,33 +61,53 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/loadingPanel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center" >
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true" />
-    </RelativeLayout>
-
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="1dp"
         android:background="@color/ColorPrimary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
+        <!-- Name -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="24dp">
 
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin">
 
+                <RelativeLayout
+                    style="@style/Widget.CardContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/Name_Icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/title"
+                        />
+
+                    <EditText
+                        android:layout_toRightOf="@id/Name_Icon"
+                        android:layout_width="match_parent"
+                        android:paddingLeft="16dp"
+                        android:hint="Event Name"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:id="@+id/Display_Event_Name"/>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
             <!-- Date -->
 
@@ -143,14 +163,37 @@
                         android:layout_height="24dp"
                         android:src="@drawable/time"/>
 
-                    <EditText
+                    <RelativeLayout
                         android:layout_toRightOf="@id/Time_Icon"
-                        android:layout_width="match_parent"
-                        android:hint="Set time"
-                        android:paddingLeft="16dp"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/Display_Event_Time"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:hint="Start time"
+                            android:paddingLeft="16dp"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/Display_Start_Time"/>
+
+                        <TextView
+                            android:layout_toRightOf="@id/Display_Start_Time"
+                            android:layout_width="wrap_content"
+                            android:text="- "
+                            android:paddingLeft="16dp"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/clear_space"/>
+
+
+                        <TextView
+                            android:layout_toRightOf="@id/clear_space"
+                            android:layout_width="wrap_content"
+                            android:hint="End time"
+                            android:paddingLeft="16dp"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/Display_End_Time"/>
+                    </RelativeLayout>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -180,8 +223,9 @@
                     <EditText
                         android:layout_toRightOf="@id/Location_Icon"
                         android:layout_width="match_parent"
+                        android:imeOptions="actionDone"
                         android:paddingLeft="16dp"
-                        android:hint="Set location"
+                        android:hint="Location"
                         android:textSize="16sp"
                         android:layout_height="wrap_content"
                         android:id="@+id/Display_Event_Location"/>
@@ -213,8 +257,9 @@
                         android:layout_toRightOf="@id/Description_Icon"
                         android:layout_width="match_parent"
                         android:paddingLeft="16dp"
-                        android:hint="Give a description"
+                        android:hint="Description"
                         android:textSize="16sp"
+                        android:imeOptions="actionDone"
                         android:layout_height="wrap_content"
                         android:id="@+id/Display_Event_Description"/>
 

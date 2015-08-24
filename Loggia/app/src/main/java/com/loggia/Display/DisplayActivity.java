@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.loggia.Helpers.ImageScaler;
+import com.loggia.Helpers.StartClockDialog;
 import com.loggia.R;
 
 import android.content.Intent;
@@ -28,10 +30,13 @@ public class DisplayActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbar;
     Toolbar toolbar;
 
-    TextView mEventTime;
+    TextView mEventStartTime;
+    TextView mEventEndTime;
     TextView mEventDescription;
     TextView mEventLocation;
     TextView mEventDate;
+
+    ImageScaler scaler;
 
 
     @Override
@@ -39,11 +44,14 @@ public class DisplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
 
-        mEventTime = (TextView) findViewById(R.id.Display_Event_Time);
+        mEventStartTime = (TextView) findViewById(R.id.Display_Start_Time);
+        mEventEndTime = (TextView) findViewById(R.id.Display_End_Time);
         mEventDescription = (TextView) findViewById(R.id.Display_Event_Description);
         mEventLocation = (TextView) findViewById(R.id.Display_Event_Location);
         mEventDate = (TextView) findViewById(R.id.Display_Event_Date);
         final Drawable image;
+
+        scaler = new ImageScaler(this);
 
 
         Intent intent = getIntent();
@@ -68,31 +76,19 @@ public class DisplayActivity extends AppCompatActivity {
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("event");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Test");
         query.getInBackground(objectID, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, com.parse.ParseException e) {
                 if (e == null) {
                     collapsingToolbar.setTitle(parseObject.getString("Name"));
                     mEventDate.setText(parseObject.getString("Date"));
-                    mEventTime.setText(parseObject.getString("Time"));
+                    mEventStartTime.setText(parseObject.getString("StartTime"));
+                    mEventEndTime.setText(parseObject.getString("EndTime"));
+
                     mEventDescription.setText(parseObject.getString("Description"));
                     mEventLocation.setText(parseObject.getString("Location"));
-
-
-                    ParseFile imgFile = parseObject.getParseFile("Image");
-                    byte[] file = new byte[0];
-                    if (imgFile != null) {
-                        try {
-                            file = imgFile.getData();
-                        } catch (com.parse.ParseException e1) {
-                            e1.printStackTrace();
-                        }
-
-                        Bitmap image = BitmapFactory.decodeByteArray(file, 0, file.length);
-                        Drawable mDrawable = new BitmapDrawable(getResources(), image);
-                        loadBackdrop(mDrawable);
-                    }
+                    loadBackdrop(scaler.decodeSampledBitmapFromParse(getResources(), parseObject));
                 } else {
                     Log.i("Information", "This is where information starts:");
                     e.printStackTrace();
