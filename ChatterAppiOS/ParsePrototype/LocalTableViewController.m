@@ -10,11 +10,7 @@
 #import "LocalTableViewController.h"
 #import "EventDetailsViewController.h"
 #import <Parse/Parse.h>
-#import "Date.h"
-
-//#import <FBSDKCoreKit/FBSDKCoreKit.h>
-//#import <FBSDKShareKit/FBSDKShareKit.h>
-//#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import "Date.h"
 
 
 @interface LocalTableViewController ()
@@ -28,35 +24,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.scrollEnabled = NO;
-    
-    /*for (int i = 1; i < 11; i++){
-        PFObject *bacon = [PFObject objectWithClassName:@"event"];
-        bacon[@"Description"] = [NSString stringWithFormat:@"Who reads the description these days anyway?"];
-        bacon[@"Name"] = @"Palapalooza";
-        bacon[@"Location"] = @"Mac Field";
-        bacon[@"Host"] = @"Grinnell College";
-        bacon[@"Date"] = [NSString stringWithFormat: @"10/20/2015"];
-        bacon[@"Time"] = [NSString stringWithFormat:@"2:30 - 4:40 pm"];
-        //if (i % 2 == 0){
-            UIImage *img = [UIImage imageNamed:@"Unknown-2"];
-            NSData *imageData = UIImagePNGRepresentation(img);
-            PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
-            bacon[@"Image"] = imageFile;
-        //} else {
-        //    UIImage *img = [UIImage imageNamed:@"Unknown"];
-        //    NSData *imageData = UIImagePNGRepresentation(img);
-        //    PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
-        //    bacon[@"Image"] = imageFile;
-        //}
-        
-        [bacon saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-            if (succeeded){
-                NSLog(@"Yay!");
-            } else {
-                NSLog(@"Well shit.");
-            }
-        }];
-    }*/
 
     PFQuery *query = [PFQuery queryWithClassName:@"event"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error){
@@ -81,12 +48,12 @@
                 }
                 
                 NSArray *keys = [self.calendarTable allKeys];
-                self.cronKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
-                    NSDate *date1 = [NSDate dateFromString:d1];
-                    NSDate *date2 = [NSDate dateFromString:d2];
-                    return [date1 compare:date2];
-                }];
-                //NSLog(@"%@", self.cronKeys);
+                //self.cronKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
+                    //NSDate *date1 = [NSDate dateFromString:d1];
+                    //NSDate *date2 = [NSDate dateFromString:d2];
+                    //return [date1 compare:date2];
+                //}];
+                self.cronKeys = keys;
                 [self.tableView reloadData];
                 self.tableView.scrollEnabled = YES;
             }
