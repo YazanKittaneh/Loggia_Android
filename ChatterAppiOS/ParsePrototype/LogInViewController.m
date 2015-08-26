@@ -8,8 +8,6 @@
 
 #import "LogInViewController.h"
 #import <Parse/Parse.h>
-//#import <FBSDKCoreKit/FBSDKCoreKit.h>
-//#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface LogInViewController ()
 
