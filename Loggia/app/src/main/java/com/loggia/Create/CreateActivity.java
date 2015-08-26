@@ -164,7 +164,9 @@ public class CreateActivity extends AppCompatActivity {
                 // Log.d(TAG, String.valueOf(bitmap));
 
                 ImageButton backdrop = (ImageButton) findViewById(R.id.backdrop);
+                image=bitmap;
                 backdrop.setImageBitmap(bitmap);
+                imgLoaded=true;
             } catch (IOException e) {
                 e.printStackTrace();
             }

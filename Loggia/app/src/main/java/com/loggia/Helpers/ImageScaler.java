@@ -39,13 +39,14 @@ public class ImageScaler extends Activity{
         options.inJustDecodeBounds = true;
 
         BitmapFactory.decodeResource(res, drawable, options);
-        options.inSampleSize = calculateInSampleSize(options, this.width, this.height);
+        options.inSampleSize = calculateInSampleSize(options, this.width/4, this.height/4);
         options.inJustDecodeBounds = false;
 
         return new BitmapDrawable(res, BitmapFactory.decodeResource(res, drawable));
 
 
     }
+
 
     public BitmapDrawable decodeSampledBitmapFromParse(Resources res, ParseObject mParseObject) {
 
@@ -112,8 +113,13 @@ public class ImageScaler extends Activity{
 
     public static byte[] compressForUpload(Bitmap bitmap){
         byte[] data;
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
         data = stream.toByteArray();
         return data;
     }
