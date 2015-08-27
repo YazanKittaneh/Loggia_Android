@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,12 @@ import com.loggia.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+
+/**
+ * TODO: Change way of getting date from dialogFragment (current way is based on a mistake introduced by the code
+ */
 
 public class CalendarDialog extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
@@ -31,7 +37,7 @@ public class CalendarDialog extends DialogFragment
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
-        int numDay = c.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+        //int day = c.get(Calendar.DAY_OF_WEEK);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
@@ -41,10 +47,11 @@ public class CalendarDialog extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Event_Date);
 
-        String sDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(day);
-        String sMonth = new SimpleDateFormat( "LLLL", Locale.getDefault()).format(month);
-
-        display_time.setText(sDay + ", " + sMonth + " " + day);
+        Log.i("DAY  INTEGER: ", String.valueOf(day));
+        Log.i("MONTH INTEGER: ", String.valueOf(month));
+        String sDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date(0,0,day-2));
+        String sMonth = new SimpleDateFormat( "LLLL", Locale.ENGLISH).format(new Date(0,month+1,0));
+        display_time.setText(sDay + ", " + sMonth + " " + day );
 
     }
 }
