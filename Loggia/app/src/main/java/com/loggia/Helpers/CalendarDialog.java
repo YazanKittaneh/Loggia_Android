@@ -19,12 +19,7 @@ import com.loggia.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-
-/**
- * TODO: Change way of getting date from dialogFragment (current way is based on a mistake introduced by the code
- */
 
 public class CalendarDialog extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
@@ -37,7 +32,6 @@ public class CalendarDialog extends DialogFragment
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
-        //int day = c.get(Calendar.DAY_OF_WEEK);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
@@ -49,8 +43,11 @@ public class CalendarDialog extends DialogFragment
 
         Log.i("DAY  INTEGER: ", String.valueOf(day));
         Log.i("MONTH INTEGER: ", String.valueOf(month));
-        String sDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date(0,0,day-2));
-        String sMonth = new SimpleDateFormat( "LLLL", Locale.ENGLISH).format(new Date(0,month+1,0));
+        String sDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(day);
+        String sMonth = new SimpleDateFormat( "LLLL", Locale.getDefault()).format(month);
+
+
+
         display_time.setText(sDay + ", " + sMonth + " " + day );
 
     }
