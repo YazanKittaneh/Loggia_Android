@@ -3,12 +3,14 @@ package com.loggia.Feed;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 
@@ -34,6 +36,7 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 import android.os.Handler;
+import android.widget.Toast;
 
 /**
  * TODO: Create organizational system for events
@@ -53,6 +56,7 @@ public class EventFeedActivity extends AppCompatActivity {
     private MaterialListView mListView;
     private SwipeRefreshLayout swipeLayout;
     StockImageRandomizer randomStock;
+    private DrawerLayout mDrawerLayout;
 
     private Handler handler = new Handler();
     public Context context;
@@ -78,36 +82,23 @@ public class EventFeedActivity extends AppCompatActivity {
         swipeLayout.setColorSchemeResources(R.color.ColorPrimary);
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);
-        new DrawerBuilder().withActivity(this).build();
+        //new DrawerBuilder().withActivity(this).build();
         mListView.getLayoutManager().offsetChildrenVertical(10);
 
         updateEvents();
         /* SETUP */
 
-        /* NavBar */
-        //if you want to update the items at a later time it is recommended to keep it in a variable
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName("Home").withIdentifier(1);
-        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withName("Settings").withIdentifier(2);
+        /* NavBar
 
-//create the drawer and remember the `Drawer` result object
-        Drawer result = new DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .addDrawerItems(
-                        item1,
-                        new DividerDrawerItem(),
-                        item2,
-                        new SecondaryDrawerItem().withName("Settings")
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
-                    }
-                })
-                .build();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        /* NavBar*/
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+
+
+         NavBar*/
 
 
         /* LISTENERS */
@@ -164,6 +155,17 @@ public class EventFeedActivity extends AppCompatActivity {
     }
 
 
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+    }
 
     private void updateEvents()
     {
