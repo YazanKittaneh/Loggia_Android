@@ -13,18 +13,22 @@
         android:targetSdkVersion="15"
         android:theme="@style/Theme.DesignDemo"
         android:versionCode="4"
-        android:versionName="1.1.2" >
+        android:versionName="1.1.2"
+        >
         <activity
             android:name="com.loggia.Feed.EventFeedActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            >
         </activity>
         <activity
             android:name="com.loggia.Display.DisplayActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            >
         </activity>
         <activity
             android:name="com.loggia.Splash.SplashActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +37,8 @@
         </activity>
         <activity
             android:name="com.loggia.Create.CreateActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            >
         </activity>
     </application>
 

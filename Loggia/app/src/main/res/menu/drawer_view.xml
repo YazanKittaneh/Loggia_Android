@@ -31,7 +31,6 @@
             android:title="Discussion" />
     </group>
 
-    <!--
     <item android:title="Sub items">
         <menu>
             <item
@@ -40,5 +39,4 @@
                 android:title="Sub item 2" />
         </menu>
     </item>
-    -->
 </menu>

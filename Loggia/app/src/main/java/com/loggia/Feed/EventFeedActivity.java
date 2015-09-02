@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-import com.devspark.progressfragment.ProgressFragment;
 import com.loggia.Create.CreateActivity;
 import com.loggia.Display.DisplayActivity;
 import com.loggia.Helpers.ImageScaler;
@@ -88,17 +87,14 @@ public class EventFeedActivity extends AppCompatActivity {
         updateEvents();
         /* SETUP */
 
-        /* NavBar
-
+        /* NavBar */
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-
-
-         NavBar*/
+         /*NavBar*/
 
 
         /* LISTENERS */
@@ -161,6 +157,10 @@ public class EventFeedActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
+                        String clicked = menuItem.toString();
+                        Intent intent = new Intent(context, DisplayActivity.class);
+                        intent.putExtra("objectID", "8srgcee99A");
+                        startActivity(intent);
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
