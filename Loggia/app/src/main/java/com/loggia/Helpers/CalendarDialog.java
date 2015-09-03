@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.loggia.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,12 +48,37 @@ public class CalendarDialog extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Event_Date);
 
+        /**
+         * TODO: fix dislay formatting
+         */
+        // String pattern = "LLLL-EEEE-yyyy";
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date date = new Date();
+
+        try {
+            date = format.parse(month+"-"+day+"-"+year);
+            System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(format.format(new Date()));
+
+
+
+
+
+
+    /*
         Log.i("DAY  INTEGER: ", String.valueOf(day));
         Log.i("MONTH INTEGER: ", String.valueOf(month));
         String sDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date(0,0,day-2));
         String sMonth = new SimpleDateFormat( "LLLL", Locale.ENGLISH).format(new Date(0,month+1,0));
         display_time.setText(sDay + ", " + sMonth + " " + day );
+    */
+    display_time.setText(format.format(date));
 
-    }
+}
 }
 

@@ -2,6 +2,7 @@ package com.loggia.Feed;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -32,7 +33,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
 import android.os.Handler;
 import android.widget.Toast;
@@ -56,6 +59,7 @@ public class EventFeedActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeLayout;
     StockImageRandomizer randomStock;
     private DrawerLayout mDrawerLayout;
+    private FloatingActionButton create;
 
     private Handler handler = new Handler();
     public Context context;
@@ -76,7 +80,7 @@ public class EventFeedActivity extends AppCompatActivity {
         context=this;
 
         mListView = (MaterialListView) findViewById(R.id.material_listview);
-        FloatingActionButton create = (FloatingActionButton) findViewById(R.id.create);
+        create = (FloatingActionButton) findViewById(R.id.create);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         swipeLayout.setColorSchemeResources(R.color.ColorPrimary);
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
@@ -157,14 +161,18 @@ public class EventFeedActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
-                        String clicked = menuItem.toString();
-                        Intent intent = new Intent(context, DisplayActivity.class);
-                        intent.putExtra("objectID", "8srgcee99A");
-                        startActivity(intent);
+                        //String clicked = menuItem.toString();
+                        onDrawerClick();
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
                 });
+    }
+
+    private void onDrawerClick(){
+        Intent intent = new Intent(context, DisplayActivity.class);
+        intent.putExtra("objectID", "8srgcee99A");
+        startActivity(intent);
     }
 
     private void updateEvents()
@@ -189,10 +197,27 @@ public class EventFeedActivity extends AppCompatActivity {
                         card.setTitle(currentObject.getString("Name"));
                         card.setDescription(currentObject.getString("Date") + " at " + currentObject.getString("StartTime"));
 
-
+                        /*
                         card.setDrawable(scaler.decodeSampledBitmapFromParse(getResources(), currentObject));
                         String test = markers.get(i).getObjectId();
-                        card.setTag(test);
+                        */
+                        try {
+                            card.setDrawable(new BitmapDrawable(
+                                    getResources(),
+                                    Picasso
+                                            .with(context)
+                                            .load(currentObject
+                                                    .getParseFile("Image")
+                                                    .getUrl())
+                                            .resize(1000,1000)
+                                            .centerCrop()
+                                            .into)
+                            );
+                        } catch (IOException e1) {
+                            card.setDrawable(R.drawable.cheese_1);
+                        }
+                        card.setDrawable();
+                        card.setTag(currentObject.getObjectId());
 
                         mListView.add(card);
                     }
