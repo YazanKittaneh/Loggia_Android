@@ -2,14 +2,18 @@ package com.loggia.Feed;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +40,7 @@ import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.lang.annotation.Target;
 import java.util.List;
 import android.os.Handler;
 import android.widget.Toast;
@@ -63,6 +68,7 @@ public class EventFeedActivity extends AppCompatActivity {
 
     private Handler handler = new Handler();
     public Context context;
+    String queryID="Test";
    // private String[] week = {"Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"};
 
 
@@ -87,8 +93,9 @@ public class EventFeedActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //new DrawerBuilder().withActivity(this).build();
         mListView.getLayoutManager().offsetChildrenVertical(10);
+        updateEvents(queryID);
 
-        updateEvents();
+
         /* SETUP */
 
         /* NavBar */
@@ -140,8 +147,7 @@ public class EventFeedActivity extends AppCompatActivity {
                     @Override
                     public void onRefresh() {
                         swipeLayout.setRefreshing(true);
-                        mListView.clear();
-                        updateEvents();
+                        updateEvents(queryID);
                         swipeLayout.setRefreshing(false);
 
                     }
@@ -162,25 +168,28 @@ public class EventFeedActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
                         //String clicked = menuItem.toString();
-                        onDrawerClick();
+                        onDrawerClick(menuItem.toString());
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
                 });
     }
 
-    private void onDrawerClick(){
-        Intent intent = new Intent(context, DisplayActivity.class);
-        intent.putExtra("objectID", "8srgcee99A");
-        startActivity(intent);
+    private void onDrawerClick(String menuID){
+        updateEvents(menuID);
     }
 
-    private void updateEvents()
+    private void updateEvents(String queryID)
     {
-        final ImageScaler scaler = new ImageScaler(this);
+        this.queryID=queryID;
+        mListView.clear();
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        final int width = dm.widthPixels/2;
+        final int height = dm.heightPixels/5;
 
 
-        ParseQuery < ParseObject > query = new ParseQuery<ParseObject>("Test").addAscendingOrder("createdAt");
+        ParseQuery < ParseObject > query = new ParseQuery<ParseObject>(queryID).addAscendingOrder("createdAt");
         //final ProgressDialog dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -192,7 +201,7 @@ public class EventFeedActivity extends AppCompatActivity {
                     for (int i = 0; i < markers.size(); i++) {
                         ParseObject currentObject = markers.get(i);
 
-                        BigImageCard card = new BigImageCard(context);
+                        final BigImageCard card = new BigImageCard(context);
                         Log.i(i + " Item: ", currentObject.getString("Name"));
                         card.setTitle(currentObject.getString("Name"));
                         card.setDescription(currentObject.getString("Date") + " at " + currentObject.getString("StartTime"));
@@ -201,6 +210,41 @@ public class EventFeedActivity extends AppCompatActivity {
                         card.setDrawable(scaler.decodeSampledBitmapFromParse(getResources(), currentObject));
                         String test = markers.get(i).getObjectId();
                         */
+
+
+                        /*
+                        com.squareup.picasso.Target target = new com.squareup.picasso.Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                BitmapDrawable d = new BitmapDrawable(getResources(), bitmap);
+                                card.setDrawable(d);
+                            }
+
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
+
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                            }
+
+                        };
+                        */
+
+                        /*
+                        Picasso
+                                .with(context)
+                                .load(currentObject
+                                        .getParseFile("Image")
+                                        .getUrl())
+                                .resize(width,height)
+                                .centerCrop()
+                        .into(target);
+                        */
+                        /*
+
                         try {
                             card.setDrawable(new BitmapDrawable(
                                     getResources(),
@@ -210,13 +254,16 @@ public class EventFeedActivity extends AppCompatActivity {
                                                     .getParseFile("Image")
                                                     .getUrl())
                                             .resize(1000,1000)
-                                            .centerCrop()
-                                            .into)
-                            );
+                                            .centerCrop().
+                                            .into(target)
+                            ));
                         } catch (IOException e1) {
                             card.setDrawable(R.drawable.cheese_1);
                         }
-                        card.setDrawable();
+                        */
+
+                        card.setDrawable(currentObject.getParseFile("Image").getUrl());
+
                         card.setTag(currentObject.getObjectId());
 
                         mListView.add(card);
@@ -230,6 +277,8 @@ public class EventFeedActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.loggia.Display;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -7,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.loggia.Helpers.ImageScaler;
@@ -23,6 +25,7 @@ import com.parse.GetCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.squareup.picasso.Picasso;
 
 public class DisplayActivity extends AppCompatActivity {
 
@@ -35,6 +38,8 @@ public class DisplayActivity extends AppCompatActivity {
     TextView mEventDescription;
     TextView mEventLocation;
     TextView mEventDate;
+    ImageView imageView;
+
 
     ImageScaler scaler;
 
@@ -49,13 +54,20 @@ public class DisplayActivity extends AppCompatActivity {
         mEventDescription = (TextView) findViewById(R.id.Display_Event_Description);
         mEventLocation = (TextView) findViewById(R.id.Display_Event_Location);
         mEventDate = (TextView) findViewById(R.id.Display_Event_Date);
+        imageView = (ImageView) findViewById(R.id.backdrop);
         final Drawable image;
+        final Context context;
 
-        scaler = new ImageScaler(this);
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        final int width = dm.widthPixels/4;
+        final int height = dm.heightPixels/10;
 
 
         Intent intent = getIntent();
         String objectID = intent.getStringExtra("objectID");
+        image=null;
+        context = getApplicationContext();
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,7 +82,6 @@ public class DisplayActivity extends AppCompatActivity {
             }
         });
 
-        image=null;
 
         collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -88,11 +99,20 @@ public class DisplayActivity extends AppCompatActivity {
 
                     mEventDescription.setText(parseObject.getString("Description"));
                     mEventLocation.setText(parseObject.getString("Location"));
-                    loadBackdrop(scaler.decodeSampledBitmapFromParse(getResources(), parseObject));
+                    Picasso
+                            .with(context)
+                            .load(parseObject
+                                    .getParseFile("Image")
+                                    .getUrl())
+                            .resize(width,height)
+                            .centerCrop()
+                            .into(imageView);
+                    //loadBackdrop(scaler.decodeSampledBitmapFromParse(getResources(), parseObject));
                 } else {
                     Log.i("Information", "This is where information starts:");
                     e.printStackTrace();
                 }
+
             }
 
         });
