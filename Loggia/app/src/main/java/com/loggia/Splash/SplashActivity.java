@@ -28,21 +28,25 @@ public class SplashActivity extends AppCompatActivity {
         context = this;
 
         Parse.enableLocalDatastore(this);
-
         Parse.initialize(this, "pq4DTXVfCwDskh0CBEfBhwkrDLzBqmo0Q0Fqu8Om", "5mkjDImOD21MhGM6Brzh7lOriLpfrxj9w47FWCL0");
 
-        ParseAnonymousUtils.logIn(new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (e != null) {
-                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-                    startActivity(new Intent(context, EventFeedActivity.class));
-                    finish();
-                } else {
-                    Log.d("MyApp", "Anonymous user logged in.");
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            loadEventFeed();
+        } else {
+            ParseAnonymousUtils.logIn(new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException e) {
+                    if (e != null) {
+                        Log.d("Myapp", e.toString());
+                    } else {
+                        Log.d("MyApp", "Anonymous logged in.");
+                        loadEventFeed();
+                    }
                 }
-            }
-        });
+            });
+
+        }
 
     }
 
@@ -66,5 +70,12 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void loadEventFeed()
+    {
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        startActivity(new Intent(context, EventFeedActivity.class));
+        finish();
     }
 }

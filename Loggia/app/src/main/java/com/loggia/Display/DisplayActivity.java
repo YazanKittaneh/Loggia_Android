@@ -27,12 +27,15 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;
 
+/**
+ * TODO: Fix getDrawable deprication
+ *
+ */
+
 public class DisplayActivity extends AppCompatActivity {
 
-    public static final String EXTRA_NAME = "cheese_name";
     CollapsingToolbarLayout collapsingToolbar;
     Toolbar toolbar;
-
     TextView mEventStartTime;
     TextView mEventEndTime;
     TextView mEventDescription;
@@ -41,40 +44,50 @@ public class DisplayActivity extends AppCompatActivity {
     ImageView imageView;
 
 
-    ImageScaler scaler;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
 
+        /**************************
+         View Declaration
+         *************************/
         mEventStartTime = (TextView) findViewById(R.id.Display_Start_Time);
         mEventEndTime = (TextView) findViewById(R.id.Display_End_Time);
         mEventDescription = (TextView) findViewById(R.id.Display_Event_Description);
         mEventLocation = (TextView) findViewById(R.id.Display_Event_Location);
         mEventDate = (TextView) findViewById(R.id.Display_Event_Date);
         imageView = (ImageView) findViewById(R.id.backdrop);
-        final Drawable image;
-        final Context context;
-
-        DisplayMetrics dm = new DisplayMetrics();
-        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        final int width = dm.widthPixels/4;
-        final int height = dm.heightPixels/10;
-
-
-        Intent intent = getIntent();
-        String objectID = intent.getStringExtra("objectID");
-        image=null;
-        context = getApplicationContext();
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         setSupportActionBar(toolbar);
 
 
+
+        /**************************
+        Intent handling
+         *************************/
+        Intent intent = getIntent();
+        String objectID = intent.getStringExtra("objectID");
+        String classID = intent.getStringExtra("classID");
+
+
+        /**************************
+         Variables
+         *************************/
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels/4;
+        int height = dm.heightPixels/10;
+
+
+        /**************************
+         Listeners
+         *************************/
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,12 +95,38 @@ public class DisplayActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        loadData(objectID, classID, width, height);
+    }
 
-        collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
+    /**
+     * Depricated method to load an image into the backdrop
+     * @param image
+     *  drawable, will be inputted into the imageview of the backdrop
+     */
+    private void loadBackdrop(Drawable image) {
+        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
+        //Glide.with(this).load(image).centerCrop().into(imageView);
+        imageView.setImageDrawable(image);
+    }
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Test");
+    /**
+     * TODO: make method asyncronous (research if its necessary)
+     * loadData takes in objectID and classID to get the object from parse
+     *
+     * @param objectID
+     *      ID of object requested
+     * @param classID
+     *      ID of class requested
+     * @param width
+     *      width of phone screen
+     * @param height
+     *      height of phone screen
+     */
+    private void loadData(String objectID, String classID, final int width, final int height){
+        final Context context = getApplicationContext();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(classID);
         query.getInBackground(objectID, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, com.parse.ParseException e) {
@@ -116,14 +155,6 @@ public class DisplayActivity extends AppCompatActivity {
             }
 
         });
-        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-
-    }
-
-    private void loadBackdrop(Drawable image) {
-        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        //Glide.with(this).load(image).centerCrop().into(imageView);
-        imageView.setImageDrawable(image);
     }
 
 

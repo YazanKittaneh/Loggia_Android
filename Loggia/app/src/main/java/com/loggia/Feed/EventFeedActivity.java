@@ -2,56 +2,35 @@ package com.loggia.Feed;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 
+import com.loggia.Admin.AdminActivity;
 import com.loggia.Create.CreateActivity;
 import com.loggia.Display.DisplayActivity;
-import com.loggia.Helpers.ImageScaler;
-import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
 import com.dexafree.materialList.model.CardItemView;
 import com.dexafree.materialList.view.MaterialListView;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.lang.annotation.Target;
 import java.util.List;
-import android.os.Handler;
-import android.widget.Toast;
 
 /**
  * TODO: Create organizational system for events
- * TODO: Extract image decoder into seperate Helper class
  * TODO: Pull events in an efficient manner ( only pull events not in the system)
- * TODO: Put create event button in the bottom right
- * TODO: add '+' sign on the fab button
- * TODO: Refactor code to make it more legable
  */
 
 
@@ -62,15 +41,11 @@ public class EventFeedActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private MaterialListView mListView;
     private SwipeRefreshLayout swipeLayout;
-    StockImageRandomizer randomStock;
     private DrawerLayout mDrawerLayout;
     private FloatingActionButton create;
 
-    private Handler handler = new Handler();
     public Context context;
-    String queryID="Test";
-   // private String[] week = {"Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"};
-
+    String classID ="Test";
 
 
 
@@ -81,36 +56,31 @@ public class EventFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_feed);
 
-
-        /* SETUP */
-        context=this;
-
+        /**************************
+         View Declaration
+         *************************/
         mListView = (MaterialListView) findViewById(R.id.material_listview);
         create = (FloatingActionButton) findViewById(R.id.create);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         swipeLayout.setColorSchemeResources(R.color.ColorPrimary);
-        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        setSupportActionBar(toolbar);
-        //new DrawerBuilder().withActivity(this).build();
-        mListView.getLayoutManager().offsetChildrenVertical(10);
-        updateEvents(queryID);
-
-
-        /* SETUP */
-
-        /* NavBar */
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        setSupportActionBar(toolbar);
+        mListView.getLayoutManager().offsetChildrenVertical(10);
+
+        /**************************
+         Setup
+         *************************/
+        context=this;
+        updateEvents(classID);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-         /*NavBar*/
 
-
-        /* LISTENERS */
-
-
+        /**************************
+         Listeners
+         *************************/
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,7 +88,6 @@ public class EventFeedActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -129,6 +98,7 @@ public class EventFeedActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(view.getContext(), DisplayActivity.class);
                     intent.putExtra("objectID", objectID);
+                    intent.putExtra("classID", classID);
                     startActivity(intent);
                 }
             }
@@ -139,28 +109,25 @@ public class EventFeedActivity extends AppCompatActivity {
             }
         });
 
-
-
-        swipeLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
                     @Override
                     public void onRefresh() {
                         swipeLayout.setRefreshing(true);
-                        updateEvents(queryID);
+                        updateEvents(classID);
                         swipeLayout.setRefreshing(false);
 
                     }
         });
-        /* LISTENERS */
-
-
-        //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-
 
     }
 
 
+    /**
+     * sets up the view inside the drawer
+     * @param navigationView
+     *      the navigation drawer that the view will be inserted into
+     */
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -175,29 +142,37 @@ public class EventFeedActivity extends AppCompatActivity {
                 });
     }
 
-    private void onDrawerClick(String menuID){
-        updateEvents(menuID);
+    /**
+     * Handles drawer item clicks
+     * @param menuID
+     *      ID of the item clicked
+     */
+    private void onDrawerClick(String menuID) {
+        if (menuID.equals("Admin")) {
+            Intent intent = new Intent(context, AdminActivity.class);
+            startActivity(intent);
+        } else {
+            updateEvents(menuID);
+        }
     }
 
-    private void updateEvents(String queryID)
+    /**
+     * Handles updating of parse events shown to the user.
+     * Fired at start of activity and on swipe refresh.
+     * @param classID
+     *       ID for the class specific events
+     */
+    private void updateEvents(String classID)
     {
-        this.queryID=queryID;
+        this.classID =classID;
         mListView.clear();
-        DisplayMetrics dm = new DisplayMetrics();
-        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        final int width = dm.widthPixels/2;
-        final int height = dm.heightPixels/5;
 
-
-        ParseQuery < ParseObject > query = new ParseQuery<ParseObject>(queryID).addAscendingOrder("createdAt");
+        ParseQuery < ParseObject > query = new ParseQuery<ParseObject>(classID).addAscendingOrder("createdAt");
         //final ProgressDialog dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> markers, com.parse.ParseException e) {
                 if (e == null) {
-                    Log.e("PARSE SUCESS", "I GUESS IT WORKS");
-
-
                     for (int i = 0; i < markers.size(); i++) {
                         ParseObject currentObject = markers.get(i);
 
@@ -205,72 +180,10 @@ public class EventFeedActivity extends AppCompatActivity {
                         Log.i(i + " Item: ", currentObject.getString("Name"));
                         card.setTitle(currentObject.getString("Name"));
                         card.setDescription(currentObject.getString("Date") + " at " + currentObject.getString("StartTime"));
-
-                        /*
-                        card.setDrawable(scaler.decodeSampledBitmapFromParse(getResources(), currentObject));
-                        String test = markers.get(i).getObjectId();
-                        */
-
-
-                        /*
-                        com.squareup.picasso.Target target = new com.squareup.picasso.Target() {
-                            @Override
-                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                BitmapDrawable d = new BitmapDrawable(getResources(), bitmap);
-                                card.setDrawable(d);
-                            }
-
-                            @Override
-                            public void onBitmapFailed(Drawable errorDrawable) {
-
-                            }
-
-                            @Override
-                            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                            }
-
-                        };
-                        */
-
-                        /*
-                        Picasso
-                                .with(context)
-                                .load(currentObject
-                                        .getParseFile("Image")
-                                        .getUrl())
-                                .resize(width,height)
-                                .centerCrop()
-                        .into(target);
-                        */
-                        /*
-
-                        try {
-                            card.setDrawable(new BitmapDrawable(
-                                    getResources(),
-                                    Picasso
-                                            .with(context)
-                                            .load(currentObject
-                                                    .getParseFile("Image")
-                                                    .getUrl())
-                                            .resize(1000,1000)
-                                            .centerCrop().
-                                            .into(target)
-                            ));
-                        } catch (IOException e1) {
-                            card.setDrawable(R.drawable.cheese_1);
-                        }
-                        */
-
                         card.setDrawable(currentObject.getParseFile("Image").getUrl());
-
                         card.setTag(currentObject.getObjectId());
-
                         mListView.add(card);
                     }
-                    Log.e("PARSE SUCESS", "WTF IT GOT OVER THE LOOP");
-
-
                 } else {
                     Log.e("DONE ERROR", "DOES NOT WORK");
                 }
