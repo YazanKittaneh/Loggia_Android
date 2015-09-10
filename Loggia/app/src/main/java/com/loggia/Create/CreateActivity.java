@@ -1,6 +1,8 @@
 package com.loggia.Create;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
@@ -234,4 +236,18 @@ public class CreateActivity extends AppCompatActivity {
         clockDialog.show(fm, "fragment_calender_dialog");
     }
 
+
+    private void showPickerDialog(){
+        CharSequence colors[] = new CharSequence[] {"Music", "Parties", "Sports", "Student Made", "Studying", "Talks", "Theater"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("What type of event ");
+        builder.setItems(colors, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+    }
 }
