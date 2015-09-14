@@ -51,13 +51,14 @@ public class CalendarDialog extends DialogFragment
         /**
          * TODO: fix dislay formatting
          */
+
         // String pattern = "LLLL-EEEE-yyyy";
-        String pattern = "MM-dd-yyyy";
+        String pattern = "EEEE"+", " + "LLLL dd";
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         Date date = new Date();
 
         try {
-            date = format.parse(month+"-"+day+"-"+year);
+            date = format.parse((month+1)+"-"+day+"-"+year);
             System.out.println(date);
         } catch (ParseException e) {
             e.printStackTrace();

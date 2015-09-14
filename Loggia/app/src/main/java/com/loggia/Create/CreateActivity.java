@@ -106,7 +106,6 @@ public class CreateActivity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 // Always show the chooser (if there are multiple options available)
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-
                             }
         });
 
@@ -207,6 +206,7 @@ public class CreateActivity extends AppCompatActivity {
             mParseObject.put("EndTime", mEventEndTime.getText().toString());
             mParseObject.put("Location", mEventLocation.getText().toString());
             mParseObject.put("Description", mEventDescription.getText().toString());
+            //mParseObject.put("Tag", )
 
             byte[] data = scaler.compressForUpload(image);
             ParseFile imageFile = new ParseFile("Image.jpg", data);
