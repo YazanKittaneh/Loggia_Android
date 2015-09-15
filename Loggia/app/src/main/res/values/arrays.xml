@@ -4,7 +4,12 @@
     <string-array name="tag_names">
         <item>SGA</item>
         <item>Concerts</item>
+        <item>Parties</item>
+        <item>Sports</item>
         <item>Admin</item>
         <item>Test</item>
+        <item>Student Made"</item>
+
+        "Music", "", "", "Student Made", "Studying", "Talks", "Theater"
     </string-array>
 </resources>

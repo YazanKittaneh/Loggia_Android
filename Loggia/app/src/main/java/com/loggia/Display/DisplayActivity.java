@@ -1,9 +1,6 @@
 package com.loggia.Display;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +8,6 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.loggia.Helpers.ImageScaler;
-import com.loggia.Helpers.StartClockDialog;
 import com.loggia.R;
 
 import android.content.Intent;
@@ -22,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.GetCallback;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;

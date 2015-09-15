@@ -24,10 +24,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.loggia.Display.DisplayActivity;
 import com.loggia.Helpers.CalendarDialog;
 import com.loggia.Helpers.EndClockDialog;
-import com.loggia.Helpers.ImageScaler;
+import com.loggia.Helpers.ImageScalar;
 import com.loggia.Helpers.StartClockDialog;
 import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.R;
@@ -48,6 +47,7 @@ public class CreateActivity extends AppCompatActivity {
     EditText mEventName;
     TextView mEventStartTime;
     TextView mEventEndTime;
+    TextView mEventTag;
     EditText mEventDescription;
     EditText mEventLocation;
     TextView mEventDate;
@@ -62,14 +62,14 @@ public class CreateActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMAGE = 1;
     Context context = this;
     StockImageRandomizer randomStock;
-    ImageScaler scaler;
+    ImageScalar scaler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
         randomStock = new StockImageRandomizer();
-        scaler = new ImageScaler(this);
+        scaler = new ImageScalar(this);
 
 
         mEventName = (EditText) findViewById(R.id.Display_Event_Name);
@@ -78,6 +78,7 @@ public class CreateActivity extends AppCompatActivity {
         mEventDate = (TextView) findViewById(R.id.Display_Event_Date);
         mEventStartTime = (TextView) findViewById(R.id.Display_Start_Time);
         mEventEndTime = (TextView) findViewById(R.id.Display_End_Time);
+        mEventTag = (TextView) findViewById(R.id.Display_Tag);
         backdrop = (ImageButton) findViewById(R.id.backdrop);
         createButton = (FloatingActionButton) findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -122,7 +123,7 @@ public class CreateActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             pushEvent();
+                pushEvent();
             }
         });
 
@@ -147,6 +148,16 @@ public class CreateActivity extends AppCompatActivity {
                 showEndClockDialog();
             }
         });
+
+        mEventTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPickerDialog();
+            }
+        });
+
+
+
 
 
     }
@@ -240,9 +251,10 @@ public class CreateActivity extends AppCompatActivity {
     private void showPickerDialog(){
         CharSequence colors[] = new CharSequence[] {"Music", "Parties", "Sports", "Student Made", "Studying", "Talks", "Theater"};
 
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("What type of event ");
-        builder.setItems(colors, new DialogInterface.OnClickListener() {
+        builder.setItems(R.array.tag_names, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
