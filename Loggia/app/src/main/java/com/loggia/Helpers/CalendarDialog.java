@@ -46,7 +46,7 @@ public class CalendarDialog extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Event_Date);
+        TextView mEventDate = (TextView) getActivity().findViewById(R.id.Display_Event_Date);
 
         /**
          * TODO: fix dislay formatting
@@ -78,7 +78,7 @@ public class CalendarDialog extends DialogFragment
         String sMonth = new SimpleDateFormat( "LLLL", Locale.ENGLISH).format(new Date(0,month+1,0));
         display_time.setText(sDay + ", " + sMonth + " " + day );
     */
-    display_time.setText(format.format(date));
+        mEventDate.setText(format.format(date));
 
 }
 }

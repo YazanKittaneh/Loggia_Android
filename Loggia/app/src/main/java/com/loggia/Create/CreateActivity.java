@@ -29,6 +29,7 @@ import com.loggia.Helpers.EndClockDialog;
 import com.loggia.Helpers.ImageScalar;
 import com.loggia.Helpers.StartClockDialog;
 import com.loggia.Helpers.StockImageRandomizer;
+import com.loggia.Helpers.TagDialog;
 import com.loggia.R;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -59,7 +60,6 @@ public class CreateActivity extends AppCompatActivity {
 
     Bitmap image;
     boolean imgLoaded = false;
-    private static int RESULT_LOAD_IMAGE = 1;
     Context context = this;
     StockImageRandomizer randomStock;
     ImageScalar scaler;
@@ -229,6 +229,7 @@ public class CreateActivity extends AppCompatActivity {
         }
     }
 
+
     private void showCalendarDialog() {
         FragmentManager fm = getSupportFragmentManager();
         CalendarDialog calendarDialog = new CalendarDialog();
@@ -247,19 +248,22 @@ public class CreateActivity extends AppCompatActivity {
         clockDialog.show(fm, "fragment_calender_dialog");
     }
 
-
     private void showPickerDialog(){
-        CharSequence colors[] = new CharSequence[] {"Music", "Parties", "Sports", "Student Made", "Studying", "Talks", "Theater"};
-
+        /*
+        final CharSequence eventTags[] = new CharSequence[] {"Music", "Parties", "Sports", "Student Made", "Studying", "Talks", "Theater"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("What type of event ");
         builder.setItems(R.array.tag_names, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                mEventTag.setText(eventTags[which]);
             }
         });
         builder.show();
+        */
+        FragmentManager fm = getSupportFragmentManager();
+        TagDialog tagDialog = new TagDialog();
+        tagDialog.show(fm, "tag_dialog");
     }
 }

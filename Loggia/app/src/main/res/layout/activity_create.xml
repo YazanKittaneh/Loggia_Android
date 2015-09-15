@@ -86,53 +86,63 @@
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin">
 
-                <RelativeLayout
-                    style="@style/Widget.CardContent"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/Name_Icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/title"
-                        />
-
-                    <EditText
-                        android:layout_toRightOf="@id/Name_Icon"
+                    <RelativeLayout
+                        android:id="@+id/Name"
+                        style="@style/Widget.CardContent"
                         android:layout_width="match_parent"
-                        android:paddingLeft="16dp"
-                        android:hint="Event Name"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:singleLine="true"
-                        android:id="@+id/Display_Event_Name"/>
+                        android:layout_height="wrap_content">
 
-                </RelativeLayout>
-                <RelativeLayout
-                    style="@style/Widget.CardContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/Name_Icon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/title"
+                            />
 
-                    <ImageView
-                        android:id="@+id/Tag_Icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        />
+                        <EditText
+                            android:layout_toRightOf="@id/Name_Icon"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="16dp"
+                            android:hint="Event Name"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:id="@+id/Display_Event_Name"/>
 
-                    <TextView
-                        android:layout_toRightOf="@id/Tag_Icon"
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_below="@id/Name"
+                        android:paddingTop="-8dp"
+                        android:id="@+id/Tag"
+                        style="@style/Widget.CardContent"
                         android:layout_width="match_parent"
-                        android:paddingLeft="16dp"
-                        android:hint="Event Type"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:singleLine="true"
-                        android:id="@+id/Display_Tag"/>
+                        android:layout_height="wrap_content">
 
-                </RelativeLayout>
+                        <ImageView
+                            android:id="@+id/Tag_Icon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            />
+
+                        <TextView
+                            android:layout_toRightOf="@id/Tag_Icon"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="16dp"
+                            android:hint="Event Type"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:id="@+id/Display_Tag"/>
+
+                    </RelativeLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
 

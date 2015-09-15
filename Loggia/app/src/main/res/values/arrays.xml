@@ -9,7 +9,9 @@
         <item>Admin</item>
         <item>Test</item>
         <item>Student Made"</item>
-
-        "Music", "", "", "Student Made", "Studying", "Talks", "Theater"
+        <item>Music</item>
+        <item>Studying</item>
+        <item>Talks</item>
+        <item>Theater</item>
     </string-array>
 </resources>
