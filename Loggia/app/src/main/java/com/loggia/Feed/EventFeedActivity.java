@@ -12,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 import com.loggia.Admin.AdminActivity;
@@ -42,7 +45,9 @@ public class EventFeedActivity extends AppCompatActivity {
     private MaterialListView mListView;
     private SwipeRefreshLayout swipeLayout;
     private DrawerLayout mDrawerLayout;
+    private ListView mDrawerItems;
     private FloatingActionButton create;
+    private String[] TAGS;
 
     public Context context;
     String classID ="Test";
@@ -65,7 +70,11 @@ public class EventFeedActivity extends AppCompatActivity {
         swipeLayout.setColorSchemeResources(R.color.ColorPrimary);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerItems = (ListView) findViewById(R.id.NavBar_List);
+        TAGS = getResources().getStringArray(R.array.tag_names);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+
         setSupportActionBar(toolbar);
         mListView.getLayoutManager().offsetChildrenVertical(10);
 
@@ -128,7 +137,12 @@ public class EventFeedActivity extends AppCompatActivity {
      * @param navigationView
      *      the navigation drawer that the view will be inserted into
      */
-    private void setupDrawerContent(NavigationView navigationView) {
+    private void setupDrawerContent(final NavigationView navigationView) {
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, TAGS);
+        mDrawerItems.setAdapter(mAdapter);
+        //registerForContextMenu(mDrawerItems);
+        //navigationView.inflateMenu(mDrawerItems);
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -140,6 +154,16 @@ public class EventFeedActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
+        mDrawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               // menuItem.setChecked(true);
+                //String clicked = menuItem.toString();
+               // onDrawerClick(menuItem.toString());
+               // mDrawerLayout.closeDrawers();
+            }
+        });
     }
 
     /**

@@ -78,7 +78,19 @@
         android:layout_width="wrap_content"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:theme="@layout/nav_menu"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_view"/>
+
+        >
+
+
+                <ListView
+                    android:layout_marginTop="192dp"
+                    android:id="@+id/NavBar_List"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
