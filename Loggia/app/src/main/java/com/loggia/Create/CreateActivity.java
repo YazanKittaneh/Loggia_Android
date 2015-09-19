@@ -88,8 +88,8 @@ public class CreateActivity extends AppCompatActivity {
         //Drawable mDrawable = new BitmapDrawable(getResources(), image);
         //backdrop.setImageDrawable(mDrawable);
 
-
         setSupportActionBar(toolbar);
+
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
 

@@ -29,7 +29,12 @@ import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * TODO: Create organizational system for events
@@ -44,13 +49,15 @@ public class EventFeedActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private MaterialListView mListView;
     private SwipeRefreshLayout swipeLayout;
+    private NavigationView navigationView;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerItems;
     private FloatingActionButton create;
     private String[] TAGS;
-
+    public String currentTAG;
     public Context context;
-    String classID ="Test";
+    public static final Date baseDate = new GregorianCalendar(2014, 0, 1).getTime();
+    TimeZone mTimeZone;
 
 
 
@@ -72,24 +79,45 @@ public class EventFeedActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerItems = (ListView) findViewById(R.id.NavBar_List);
         TAGS = getResources().getStringArray(R.array.tag_names);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-
-        setSupportActionBar(toolbar);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         mListView.getLayoutManager().offsetChildrenVertical(10);
+
+
 
         /**************************
          Setup
          *************************/
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        setSupportActionBar(toolbar);
+        currentTAG=null;
         context=this;
-        updateEvents(classID);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
+        setupListeners();
+        updateEvents(currentTAG);
 
-        /**************************
-         Listeners
-         *************************/
+
+    }
+
+
+    /**
+     * Calculates the days between two dates. Used for getting parse objects
+     */
+    public int daysBetween(Date date1, Date date2) {
+        Long daysBetween;
+
+        // 86400000 milliseconds in in a day
+        daysBetween = (date1.getTime() - date2.getTime()) / 86400000;
+
+        return (int) Math.floor(daysBetween);
+    }
+
+    /**
+     * Set up listeners
+     */
+    private void setupListeners() {
+        /* Listener for the '+' create event button */
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +126,7 @@ public class EventFeedActivity extends AppCompatActivity {
             }
         });
 
+        /* Listener for each event card in the listview */
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(CardItemView view, int position) {
@@ -107,7 +136,6 @@ public class EventFeedActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(view.getContext(), DisplayActivity.class);
                     intent.putExtra("objectID", objectID);
-                    intent.putExtra("classID", classID);
                     startActivity(intent);
                 }
             }
@@ -118,17 +146,16 @@ public class EventFeedActivity extends AppCompatActivity {
             }
         });
 
+        /* Listener for swiping down on the view */
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeLayout.setRefreshing(true);
+                updateEvents(currentTAG);
+                swipeLayout.setRefreshing(false);
 
-                    @Override
-                    public void onRefresh() {
-                        swipeLayout.setRefreshing(true);
-                        updateEvents(classID);
-                        swipeLayout.setRefreshing(false);
-
-                    }
+            }
         });
-
     }
 
 
@@ -149,7 +176,8 @@ public class EventFeedActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
                         //String clicked = menuItem.toString();
-                        onDrawerClick(menuItem.toString());
+                        currentTAG=menuItem.toString();
+                        updateEvents(currentTAG);
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
@@ -158,10 +186,16 @@ public class EventFeedActivity extends AppCompatActivity {
         mDrawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // menuItem.setChecked(true);
-                //String clicked = menuItem.toString();
-               // onDrawerClick(menuItem.toString());
-               // mDrawerLayout.closeDrawers();
+                currentTAG = mDrawerItems.getItemAtPosition(position).toString();
+                updateEvents(currentTAG);
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(navigationView);
             }
         });
     }
@@ -180,20 +214,50 @@ public class EventFeedActivity extends AppCompatActivity {
         }
     }
 
+    private Date currentDay(){
+    /* Open the events for today by default */
+        GregorianCalendar todayCalendar = new GregorianCalendar(Locale.US);
+
+        // Correct for time zones and DST
+        if (todayCalendar.getTimeZone().inDaylightTime(new Date())) {
+            mTimeZone = TimeZone.getTimeZone("GMT-5");
+        }
+        else {
+            mTimeZone = TimeZone.getTimeZone("GMT-6");
+        }
+
+        todayCalendar.setTimeZone(mTimeZone);
+
+        Date today = todayCalendar.getTime();
+        //int daysPastBase = daysBetween(today, baseDate);
+        return today;
+
+    }
+
     /**
-     * Handles updating of parse events shown to the user.
+     * Update parse events shown to the user.
      * Fired at start of activity and on swipe refresh.
      * @param classID
      *       ID for the class specific events
      */
-    private void updateEvents(String classID)
+    private void updateEvents(String eventTag)
     {
-        this.classID =classID;
         mListView.clear();
+        ParseQuery<ParseObject> event_query = ParseQuery.getQuery("TestDate");
 
-        ParseQuery < ParseObject > query = new ParseQuery<ParseObject>(classID).addAscendingOrder("createdAt");
+        /* will only get events with a date greater than the current date */
+        event_query.whereGreaterThanOrEqualTo("startTime", currentDay());
+        if(eventTag != null) {
+            event_query.whereEqualTo("eventTag", eventTag);
+        }
+
+        //Date tomorrowDate = new Date(todayDate.getTime() + 86400000);
+        //event_query.whereLessThan("startTime", tomorrowDate);
+
+
+        //ParseQuery < ParseObject > query = new ParseQuery<ParseObject>(classID).addAscendingOrder("createdAt");
         //final ProgressDialog dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
-        query.findInBackground(new FindCallback<ParseObject>() {
+        event_query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> markers, com.parse.ParseException e) {
                 if (e == null) {
