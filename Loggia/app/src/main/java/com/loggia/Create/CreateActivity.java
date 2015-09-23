@@ -36,6 +36,7 @@ import com.parse.ParseObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * TODO: Add name input
@@ -57,6 +58,9 @@ public class CreateActivity extends AppCompatActivity {
     FloatingActionButton createButton;
     Toolbar toolbar;
     private int PICK_IMAGE_REQUEST = 1;
+    public Date calendarDate;
+    public Date startTime;
+    public Date endTime;
 
     Bitmap image;
     boolean imgLoaded = false;
@@ -191,8 +195,6 @@ public class CreateActivity extends AppCompatActivity {
 
         TextView[] fields = {mEventName, mEventStartTime, mEventEndTime, mEventLocation, mEventDate, mEventDescription};
 
-
-
         for (int i = 0; i < fields.length; i++) {
             String mTextField = fields[i].getText().toString();
             if (TextUtils.isEmpty(mTextField)) {
@@ -210,14 +212,14 @@ public class CreateActivity extends AppCompatActivity {
                 backdrop.setImageDrawable(mDrawable);
             }
 
-            ParseObject mParseObject = new ParseObject("Test");
+            ParseObject mParseObject = new ParseObject("TestDate");
             mParseObject.put("Name", mEventName.getText().toString());
-            mParseObject.put("Date", mEventDate.getText().toString());
-            mParseObject.put("StartTime", mEventStartTime.getText().toString());
-            mParseObject.put("EndTime", mEventEndTime.getText().toString());
+            mParseObject.put("Date", calendarDate);
+            mParseObject.put("StartTime", startTime);
+            mParseObject.put("EndTime", endTime);
             mParseObject.put("Location", mEventLocation.getText().toString());
             mParseObject.put("Description", mEventDescription.getText().toString());
-            //mParseObject.put("Tag", )
+            mParseObject.put("Tag", mEventTag.getText());
 
             byte[] data = scaler.compressForUpload(image);
             ParseFile imageFile = new ParseFile("Image.jpg", data);

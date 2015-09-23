@@ -215,7 +215,6 @@ public class EventFeedActivity extends AppCompatActivity {
     }
 
     private Date currentDay(){
-    /* Open the events for today by default */
         GregorianCalendar todayCalendar = new GregorianCalendar(Locale.US);
 
         // Correct for time zones and DST
@@ -237,18 +236,18 @@ public class EventFeedActivity extends AppCompatActivity {
     /**
      * Update parse events shown to the user.
      * Fired at start of activity and on swipe refresh.
-     * @param classID
-     *       ID for the class specific events
-     */
+     **/
     private void updateEvents(String eventTag)
     {
         mListView.clear();
-        ParseQuery<ParseObject> event_query = ParseQuery.getQuery("TestDate");
+        ParseQuery <ParseObject> event_query = new ParseQuery<>("TestDate");
 
         /* will only get events with a date greater than the current date */
-        event_query.whereGreaterThanOrEqualTo("startTime", currentDay());
+        //Log.d("CURRENT DATE: ", currentDay().toString());
+        //event_query.whereGreaterThanOrEqualTo("startTime", currentDay());
         if(eventTag != null) {
-            event_query.whereEqualTo("eventTag", eventTag);
+            Log.d("MENU CLICK: ", eventTag);
+            event_query.whereEqualTo("Tag", eventTag);
         }
 
         //Date tomorrowDate = new Date(todayDate.getTime() + 86400000);
@@ -262,13 +261,18 @@ public class EventFeedActivity extends AppCompatActivity {
             public void done(List<ParseObject> markers, com.parse.ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < markers.size(); i++) {
+                        Log.e("WITHIN PARSE", "WORKING");
                         ParseObject currentObject = markers.get(i);
 
                         final BigImageCard card = new BigImageCard(context);
                         Log.i(i + " Item: ", currentObject.getString("Name"));
                         card.setTitle(currentObject.getString("Name"));
-                        card.setDescription(currentObject.getString("Date") + " at " + currentObject.getString("StartTime"));
+                        card.setDescription(currentObject.getDate("Date") + " at " + currentObject.getDate("StartTime"));
                         card.setDrawable(currentObject.getParseFile("Image").getUrl());
+
+                        Log.d("DATE: ", currentObject.getDate("Date").toString());
+                        Log.d("TIME: ", currentObject.getDate("StartTime").toString());
+
                         card.setTag(currentObject.getObjectId());
                         mListView.add(card);
                     }

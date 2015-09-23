@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 
+import com.loggia.Create.CreateActivity;
 import com.loggia.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class StartClockDialog extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
@@ -35,13 +42,31 @@ public class StartClockDialog extends DialogFragment
         //int zone = c.get(Calendar.AM_PM);
 
         // Create a new instance of DatePickerDialog and return it
-        return new TimePickerDialog(getActivity(), this, hour, minute, false);
+        return new TimePickerDialog(new ContextThemeWrapper(getActivity(), R.style.Theme_Loggia), this, hour, minute, false);
     }
 
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Start_Time);
+        CreateActivity mCreateActivity = (CreateActivity) getActivity();
+        Calendar thisDate = new GregorianCalendar();
+        thisDate.add(Calendar.HOUR_OF_DAY, hourOfDay);
+        thisDate.add(Calendar.MINUTE, minute);
+
+        TimeZone mTimeZone;
+        if (thisDate.getTimeZone().inDaylightTime(new Date())) {
+            mTimeZone = TimeZone.getTimeZone("UTC-5");
+        }
+        else {
+            mTimeZone = TimeZone.getTimeZone("UTC-6");
+        }
+        thisDate.setTimeZone(mTimeZone);
+
+
+        SimpleDateFormat format = new SimpleDateFormat("h:mm a", Locale.US);
+
+        /*
         String aMpM = "AM";
         if(hourOfDay >11)
         {
@@ -60,9 +85,11 @@ public class StartClockDialog extends DialogFragment
              else
                 currentHour = hourOfDay;
         }
+        */
 
-        display_time.setText(currentHour + ":" + String.format("%02d", minute) + " " + aMpM);
-
+        //display_time.setText(currentHour + ":" + String.format("%02d", minute) + " " + aMpM);
+        mCreateActivity.startTime = thisDate.getTime();
+        display_time.setText(format.format(thisDate.getTime()));
     }
 }
 
