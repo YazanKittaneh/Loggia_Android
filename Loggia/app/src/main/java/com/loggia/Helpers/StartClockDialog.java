@@ -51,20 +51,21 @@ public class StartClockDialog extends DialogFragment
         TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Start_Time);
         CreateActivity mCreateActivity = (CreateActivity) getActivity();
         Calendar thisDate = new GregorianCalendar();
-        thisDate.add(Calendar.HOUR_OF_DAY, hourOfDay);
-        thisDate.add(Calendar.MINUTE, minute);
+        thisDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        thisDate.set(Calendar.MINUTE, minute);
+
 
         TimeZone mTimeZone;
         if (thisDate.getTimeZone().inDaylightTime(new Date())) {
-            mTimeZone = TimeZone.getTimeZone("UTC-5");
+            mTimeZone = TimeZone.getTimeZone("GMT-5");
         }
         else {
-            mTimeZone = TimeZone.getTimeZone("UTC-6");
+            mTimeZone = TimeZone.getTimeZone("GMT-6");
         }
         thisDate.setTimeZone(mTimeZone);
 
 
-        SimpleDateFormat format = new SimpleDateFormat("h:mm a", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("h:mm a");
 
         /*
         String aMpM = "AM";

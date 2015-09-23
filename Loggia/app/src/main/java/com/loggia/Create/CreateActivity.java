@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import com.loggia.Helpers.TagDialog;
 import com.loggia.R;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -88,6 +90,7 @@ public class CreateActivity extends AppCompatActivity {
         collapsingToolbar =(CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //image = BitmapFactory.decodeResource(getResources(), randomStock.getRandomStockDrawable());
         //Drawable mDrawable = new BitmapDrawable(getResources(), image);
         //backdrop.setImageDrawable(mDrawable);
@@ -220,6 +223,7 @@ public class CreateActivity extends AppCompatActivity {
             mParseObject.put("Location", mEventLocation.getText().toString());
             mParseObject.put("Description", mEventDescription.getText().toString());
             mParseObject.put("Tag", mEventTag.getText());
+            mParseObject.put("Owner", ParseUser.getCurrentUser());
 
             byte[] data = scaler.compressForUpload(image);
             ParseFile imageFile = new ParseFile("Image.jpg", data);

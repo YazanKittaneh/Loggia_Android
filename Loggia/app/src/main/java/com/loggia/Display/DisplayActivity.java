@@ -120,7 +120,7 @@ public class DisplayActivity extends AppCompatActivity {
      */
     private void loadData(String objectID, String classID, final int width, final int height){
         final Context context = getApplicationContext();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(classID);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestData");
         query.getInBackground(objectID, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, com.parse.ParseException e) {

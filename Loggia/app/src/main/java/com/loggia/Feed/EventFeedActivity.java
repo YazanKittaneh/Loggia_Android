@@ -218,13 +218,15 @@ public class EventFeedActivity extends AppCompatActivity {
         GregorianCalendar todayCalendar = new GregorianCalendar(Locale.US);
 
         // Correct for time zones and DST
+        /*
         if (todayCalendar.getTimeZone().inDaylightTime(new Date())) {
-            mTimeZone = TimeZone.getTimeZone("GMT-5");
+            mTimeZone = TimeZone.getTimeZone("UTC-5h");
         }
         else {
-            mTimeZone = TimeZone.getTimeZone("GMT-6");
+            mTimeZone = TimeZone.getTimeZone("UTC-6h");
         }
-
+        */
+        mTimeZone = TimeZone.getDefault();
         todayCalendar.setTimeZone(mTimeZone);
 
         Date today = todayCalendar.getTime();
@@ -244,7 +246,7 @@ public class EventFeedActivity extends AppCompatActivity {
 
         /* will only get events with a date greater than the current date */
         //Log.d("CURRENT DATE: ", currentDay().toString());
-        //event_query.whereGreaterThanOrEqualTo("startTime", currentDay());
+        event_query.whereGreaterThanOrEqualTo("startTime", currentDay());
         if(eventTag != null) {
             Log.d("MENU CLICK: ", eventTag);
             event_query.whereEqualTo("Tag", eventTag);
