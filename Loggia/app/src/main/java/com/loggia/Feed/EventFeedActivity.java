@@ -226,12 +226,7 @@ public class EventFeedActivity extends AppCompatActivity {
             mTimeZone = TimeZone.getTimeZone("UTC-6h");
         }
         */
-        mTimeZone = TimeZone.getDefault();
-        todayCalendar.setTimeZone(mTimeZone);
 
-        Date today = todayCalendar.getTime();
-        //int daysPastBase = daysBetween(today, baseDate);
-        return today;
 
     }
 
@@ -246,7 +241,7 @@ public class EventFeedActivity extends AppCompatActivity {
 
         /* will only get events with a date greater than the current date */
         //Log.d("CURRENT DATE: ", currentDay().toString());
-        event_query.whereGreaterThanOrEqualTo("startTime", currentDay());
+        //event_query.whereGreaterThanOrEqualTo("startTime", currentDay());
         if(eventTag != null) {
             Log.d("MENU CLICK: ", eventTag);
             event_query.whereEqualTo("Tag", eventTag);

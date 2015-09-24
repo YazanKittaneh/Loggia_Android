@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -78,6 +79,7 @@ public class CreateActivity extends AppCompatActivity {
         scaler = new ImageScalar(this);
 
 
+        
         mEventName = (EditText) findViewById(R.id.Display_Event_Name);
         mEventDescription = (EditText) findViewById(R.id.Display_Event_Description);
         mEventLocation = (EditText) findViewById(R.id.Display_Event_Location);
@@ -91,9 +93,6 @@ public class CreateActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        //image = BitmapFactory.decodeResource(getResources(), randomStock.getRandomStockDrawable());
-        //Drawable mDrawable = new BitmapDrawable(getResources(), image);
-        //backdrop.setImageDrawable(mDrawable);
 
         setSupportActionBar(toolbar);
 
@@ -114,7 +113,7 @@ public class CreateActivity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 // Always show the chooser (if there are multiple options available)
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-                            }
+            }
         });
 
 
@@ -165,8 +164,6 @@ public class CreateActivity extends AppCompatActivity {
 
 
 
-
-
     }
 
 
@@ -193,10 +190,11 @@ public class CreateActivity extends AppCompatActivity {
     }
 
 
-    private  void pushEvent(){
+    private  void pushEvent()
+    {
         boolean clear = true;
 
-        TextView[] fields = {mEventName, mEventStartTime, mEventEndTime, mEventLocation, mEventDate, mEventDescription};
+        TextView[] fields = {mEventName, mEventTag, mEventStartTime, mEventEndTime, mEventLocation, mEventDate, mEventDescription};
 
         for (int i = 0; i < fields.length; i++) {
             String mTextField = fields[i].getText().toString();
@@ -255,21 +253,11 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void showPickerDialog(){
-        /*
-        final CharSequence eventTags[] = new CharSequence[] {"Music", "Parties", "Sports", "Student Made", "Studying", "Talks", "Theater"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("What type of event ");
-        builder.setItems(R.array.tag_names, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mEventTag.setText(eventTags[which]);
-            }
-        });
-        builder.show();
-        */
         FragmentManager fm = getSupportFragmentManager();
         TagDialog tagDialog = new TagDialog();
         tagDialog.show(fm, "tag_dialog");
     }
+
+
 }

@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 
 import com.loggia.Create.CreateActivity;
 import com.loggia.R;
+import com.loggia.Utils.EventDateFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -50,47 +51,12 @@ public class StartClockDialog extends DialogFragment
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Start_Time);
         CreateActivity mCreateActivity = (CreateActivity) getActivity();
-        Calendar thisDate = new GregorianCalendar();
-        thisDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        thisDate.set(Calendar.MINUTE, minute);
 
+        EventDateFormat eventDateFormat = new EventDateFormat();
+        Date date = eventDateFormat.standardTime(hourOfDay, minute);
 
-        TimeZone mTimeZone;
-        if (thisDate.getTimeZone().inDaylightTime(new Date())) {
-            mTimeZone = TimeZone.getTimeZone("GMT-5");
-        }
-        else {
-            mTimeZone = TimeZone.getTimeZone("GMT-6");
-        }
-        thisDate.setTimeZone(mTimeZone);
-
-
-        SimpleDateFormat format = new SimpleDateFormat("h:mm a");
-
-        /*
-        String aMpM = "AM";
-        if(hourOfDay >11)
-        {
-            aMpM = "PM";
-        }
-
-        int currentHour;
-        if(hourOfDay>12)
-        {
-                currentHour = hourOfDay - 12;
-        }
-        else
-        {
-            if(hourOfDay == 0)
-                currentHour = 12;
-             else
-                currentHour = hourOfDay;
-        }
-        */
-
-        //display_time.setText(currentHour + ":" + String.format("%02d", minute) + " " + aMpM);
-        mCreateActivity.startTime = thisDate.getTime();
-        display_time.setText(format.format(thisDate.getTime()));
+        mCreateActivity.startTime =date;
+        display_time.setText(eventDateFormat.formatTime(date));
     }
 }
 
