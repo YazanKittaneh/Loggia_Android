@@ -55,6 +55,7 @@ public class DisplayActivity extends AppCompatActivity {
          *************************/
         mEventName = (TextView) findViewById(R.id.Display_Event_Name);
         mEventTag = (TextView) findViewById(R.id.Display_Tag);
+        mEventStartTime = (TextView) findViewById(R.id.Display_Start_Time);
         mEventEndTime = (TextView) findViewById(R.id.Display_End_Time);
         mEventDescription = (TextView) findViewById(R.id.Display_Event_Description);
         mEventLocation = (TextView) findViewById(R.id.Display_Event_Location);
