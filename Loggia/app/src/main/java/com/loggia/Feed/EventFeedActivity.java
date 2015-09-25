@@ -113,6 +113,7 @@ public class EventFeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), CreateActivity.class);
+                intent.putExtra("Tag", currentTAG);
                 startActivity(intent);
             }
         });
@@ -217,7 +218,7 @@ public class EventFeedActivity extends AppCompatActivity {
 
         /* will only get events with a date greater than the current date */
         //Log.d("CURRENT DATE: ", currentDay().toString());
-        event_query.whereGreaterThanOrEqualTo("Date", EventDateFormat.getCurrentDate());
+        event_query.whereGreaterThanOrEqualTo("EndTime", EventDateFormat.getCurrentDate());
         if(eventTag != null && !eventTag.equals("All")){
             Log.d("MENU CLICK: ", eventTag);
             event_query.whereEqualTo("Tag", eventTag);
@@ -233,13 +234,13 @@ public class EventFeedActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseObject> markers, com.parse.ParseException e) {
                 if (e == null) {
-                    for (int i = markers.size()-1; i >= 0; i--) {
+                    for (int i = 0; i < markers.size(); i++) {
                         Log.e("WITHIN PARSE", "WORKING");
                         ParseObject currentObject = markers.get(i);
                         createCard(
                                 currentObject.getString("Name"),
                                 EventDateFormat.formatTime(currentObject.getDate("StartTime")),
-                                EventDateFormat.formatDate(currentObject.getDate("Date")),
+                                EventDateFormat.formatDate(currentObject.getDate("StartTime")),
                                 currentObject.getParseFile("Image").getUrl(),
                                 currentObject.getObjectId()
                         );

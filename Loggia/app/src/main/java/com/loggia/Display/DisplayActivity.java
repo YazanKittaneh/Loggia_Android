@@ -31,6 +31,9 @@ public class DisplayActivity extends AppCompatActivity {
 
     CollapsingToolbarLayout collapsingToolbar;
     Toolbar toolbar;
+
+    TextView mEventName;
+    TextView mEventTag;
     TextView mEventStartTime;
     TextView mEventEndTime;
     TextView mEventDescription;
@@ -50,7 +53,8 @@ public class DisplayActivity extends AppCompatActivity {
         /**************************
          View Declaration
          *************************/
-        mEventStartTime = (TextView) findViewById(R.id.Display_Start_Time);
+        mEventName = (TextView) findViewById(R.id.Display_Event_Name);
+        mEventTag = (TextView) findViewById(R.id.Display_Tag);
         mEventEndTime = (TextView) findViewById(R.id.Display_End_Time);
         mEventDescription = (TextView) findViewById(R.id.Display_Event_Description);
         mEventLocation = (TextView) findViewById(R.id.Display_Event_Location);
@@ -87,20 +91,9 @@ public class DisplayActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-        loadData(objectID;
+        loadData(objectID);
     }
 
-
-    /**
-     * Depricated method to load an image into the backdrop
-     * @param image
-     *  drawable, will be inputted into the imageview of the backdrop
-     */
-    private void loadBackdrop(Drawable image) {
-        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        //Glide.with(this).load(image).centerCrop().into(imageView);
-        imageView.setImageDrawable(image);
-    }
 
     /**
      * TODO: make method asyncronous (research if its necessary)
@@ -108,28 +101,22 @@ public class DisplayActivity extends AppCompatActivity {
      *
      * @param objectID
      *      ID of object requested
-     * @param classID
-     *      ID of class requested
-     * @param width
-     *      width of phone screen
-     * @param height
-     *      height of phone screen
      */
-    private void loadData(String objectID, String classID, final int width, final int height){
+    private void loadData(String objectID){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TestDate");
         query.getInBackground(objectID, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, com.parse.ParseException e) {
                 if (e == null) {
-                   setContent(
-                           parseObject.getString("Name"),
-                           EventDateFormat.formatTime(parseObject.getDate("StartTime")),
-                           EventDateFormat.formatTime(parseObject.getDate("EndTime")),
-                           EventDateFormat.formatDate(parseObject.getDate("Date")),
-                           parseObject.getParseFile("Image").getUrl(),
-                           parseObject.getString("Description"),
-                           parseObject.getString("Location")
-                   );
+                    setContent(
+                            parseObject.getString("Name"),
+                            EventDateFormat.formatTime(parseObject.getDate("StartTime")),
+                            EventDateFormat.formatTime(parseObject.getDate("EndTime")),
+                            EventDateFormat.formatDate(parseObject.getDate("StartTime")),
+                            parseObject.getParseFile("Image").getUrl(),
+                            parseObject.getString("Description"),
+                            parseObject.getString("Location")
+                    );
                 } else {
                     e.printStackTrace();
                 }

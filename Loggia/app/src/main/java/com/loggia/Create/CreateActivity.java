@@ -39,6 +39,8 @@ import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -64,6 +66,9 @@ public class CreateActivity extends AppCompatActivity {
     public Date calendarDate;
     public Date startTime;
     public Date endTime;
+    public Calendar startTimeC;
+    public Calendar endTimeC;
+
 
     Bitmap image;
     boolean imgLoaded = false;
@@ -77,9 +82,12 @@ public class CreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create);
         randomStock = new StockImageRandomizer();
         scaler = new ImageScalar(this);
+        startTimeC = Calendar.getInstance();
+        endTimeC = Calendar.getInstance();
+        Intent intent = getIntent();
 
 
-        
+
         mEventName = (EditText) findViewById(R.id.Display_Event_Name);
         mEventDescription = (EditText) findViewById(R.id.Display_Event_Description);
         mEventLocation = (EditText) findViewById(R.id.Display_Event_Location);
@@ -91,13 +99,15 @@ public class CreateActivity extends AppCompatActivity {
         createButton = (FloatingActionButton) findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
         setSupportActionBar(toolbar);
-
-
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+
+        String Tag = intent.getStringExtra("Tag");
+        if(!Tag.equals("All"))
+        {
+            mEventTag.setText(Tag);
+        }
 
 
 
@@ -133,6 +143,7 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
+        /*
         mEventDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,18 +151,21 @@ public class CreateActivity extends AppCompatActivity {
 
             }
         });
+        */
 
         mEventStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showStartClockDialog();
+                showClockDialog(false);
+                showCalendarDialog(false);
             }
         });
 
         mEventEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEndClockDialog();
+                showClockDialog(true);
+                showCalendarDialog(true);
             }
         });
 
@@ -215,9 +229,9 @@ public class CreateActivity extends AppCompatActivity {
 
             ParseObject mParseObject = new ParseObject("TestDate");
             mParseObject.put("Name", mEventName.getText().toString());
-            mParseObject.put("Date", calendarDate);
-            mParseObject.put("StartTime", startTime);
-            mParseObject.put("EndTime", endTime);
+            //mParseObject.put("Date", calendarDate);
+            mParseObject.put("StartTime", startTimeC.getTime());
+            mParseObject.put("EndTime", endTimeC.getTime());
             mParseObject.put("Location", mEventLocation.getText().toString());
             mParseObject.put("Description", mEventDescription.getText().toString());
             mParseObject.put("Tag", mEventTag.getText());
@@ -234,15 +248,25 @@ public class CreateActivity extends AppCompatActivity {
     }
 
 
-    private void showCalendarDialog() {
+    private void showClockDialog(boolean TYPE){
+        FragmentManager fm = getSupportFragmentManager();
+        StartClockDialog clockDialog = new StartClockDialog();
+        clockDialog.isEndTime = TYPE;
+        clockDialog.show(fm, "fragment_calender_dialog");
+    }
+
+    private void showCalendarDialog(boolean TYPE) {
         FragmentManager fm = getSupportFragmentManager();
         CalendarDialog calendarDialog = new CalendarDialog();
+        calendarDialog.isEndTime = TYPE;
         calendarDialog.show(fm, "fragment_calender_dialog");
     }
 
+    /*
     private void showStartClockDialog() {
         FragmentManager fm = getSupportFragmentManager();
         StartClockDialog clockDialog = new StartClockDialog();
+
         clockDialog.show(fm, "fragment_calender_dialog");
     }
 
@@ -251,6 +275,7 @@ public class CreateActivity extends AppCompatActivity {
         EndClockDialog clockDialog = new EndClockDialog();
         clockDialog.show(fm, "fragment_calender_dialog");
     }
+    */
 
     private void showPickerDialog(){
 

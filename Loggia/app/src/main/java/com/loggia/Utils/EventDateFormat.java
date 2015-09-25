@@ -52,7 +52,6 @@ public class EventDateFormat {
         todayCalendar.setTimeZone(timeZone);
 
         Date today = todayCalendar.getTime();
-        //int daysPastBase = daysBetween(today, baseDate);
         return today;
     }
 

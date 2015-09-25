@@ -35,6 +35,7 @@ import java.util.TimeZone;
 public class CalendarDialog extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
+    public boolean isEndTime;
 
 
     @Override
@@ -54,7 +55,6 @@ public class CalendarDialog extends DialogFragment
         TextView mEventDate = (TextView) getActivity().findViewById(R.id.Display_Event_Date);
         CreateActivity mCreateActivity = (CreateActivity) getActivity();
         Calendar thisDate = new GregorianCalendar(year, month, day);
-        thisDate.setTimeZone(TimeZone.getTimeZone("GMT-5"));
 
         TimeZone mTimeZone;
         if (thisDate.getTimeZone().inDaylightTime(new Date())) {
@@ -88,7 +88,18 @@ public class CalendarDialog extends DialogFragment
     */
         mCreateActivity.calendarDate = thisDate.getTime();
 
-        mEventDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
+        if(isEndTime) {
+            mCreateActivity.endTimeC.set(year, month, day);
+
+        }
+        else
+        {
+            mCreateActivity.startTimeC.set(year, month, day);
+            mEventDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
+
+
+        }
+
 
 }
 }

@@ -32,6 +32,7 @@ import java.util.TimeZone;
 public class StartClockDialog extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
 
+    public boolean isEndTime;
 
 
     @Override
@@ -49,14 +50,24 @@ public class StartClockDialog extends DialogFragment
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Start_Time);
         CreateActivity mCreateActivity = (CreateActivity) getActivity();
-
         EventDateFormat eventDateFormat = new EventDateFormat();
         Date date = eventDateFormat.standardTime(hourOfDay, minute);
 
-        mCreateActivity.startTime =date;
-        display_time.setText(eventDateFormat.formatTime(date));
+        if(isEndTime) {
+            TextView display_time = (TextView) getActivity().findViewById(R.id.Display_End_Time);
+            mCreateActivity.endTimeC.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            mCreateActivity.endTimeC.set(Calendar.MINUTE, minute);
+            display_time.setText(eventDateFormat.formatTime(date));
+        }
+        else
+        {
+            TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Start_Time);
+            mCreateActivity.startTimeC.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            mCreateActivity.startTimeC.set(Calendar.MINUTE, minute);
+            display_time.setText(eventDateFormat.formatTime(date));
+        }
+
     }
 }
 
