@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loggia.Utils.EventDateFormat;
 import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -36,6 +37,8 @@ public class DisplayActivity extends AppCompatActivity {
     TextView mEventLocation;
     TextView mEventDate;
     ImageView imageView;
+
+    Context context = this;
 
 
 
@@ -73,12 +76,6 @@ public class DisplayActivity extends AppCompatActivity {
          *************************/
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels/4;
-        int height = dm.heightPixels/10;
-
-
         /**************************
          Listeners
          *************************/
@@ -90,7 +87,7 @@ public class DisplayActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-        loadData(objectID, classID, width, height);
+        loadData(objectID;
     }
 
 
@@ -119,30 +116,21 @@ public class DisplayActivity extends AppCompatActivity {
      *      height of phone screen
      */
     private void loadData(String objectID, String classID, final int width, final int height){
-        final Context context = getApplicationContext();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestData");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestDate");
         query.getInBackground(objectID, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, com.parse.ParseException e) {
                 if (e == null) {
-                    collapsingToolbar.setTitle(parseObject.getString("Name"));
-                    mEventDate.setText(parseObject.getString("Date"));
-                    mEventStartTime.setText(parseObject.getString("StartTime"));
-                    mEventEndTime.setText(parseObject.getString("EndTime"));
-
-                    mEventDescription.setText(parseObject.getString("Description"));
-                    mEventLocation.setText(parseObject.getString("Location"));
-                    Picasso
-                            .with(context)
-                            .load(parseObject
-                                    .getParseFile("Image")
-                                    .getUrl())
-                            .resize(width,height)
-                            .centerCrop()
-                            .into(imageView);
-                    //loadBackdrop(scaler.decodeSampledBitmapFromParse(getResources(), parseObject));
+                   setContent(
+                           parseObject.getString("Name"),
+                           EventDateFormat.formatTime(parseObject.getDate("StartTime")),
+                           EventDateFormat.formatTime(parseObject.getDate("EndTime")),
+                           EventDateFormat.formatDate(parseObject.getDate("Date")),
+                           parseObject.getParseFile("Image").getUrl(),
+                           parseObject.getString("Description"),
+                           parseObject.getString("Location")
+                   );
                 } else {
-                    Log.i("Information", "This is where information starts:");
                     e.printStackTrace();
                 }
 
@@ -150,6 +138,40 @@ public class DisplayActivity extends AppCompatActivity {
 
         });
     }
+
+    /**
+     * Sets the ParseObject content in their respective view
+     * @param name
+     * @param startTime
+     * @param endTime
+     * @param date
+     * @param imageURL
+     * @param description
+     * @param location
+     */
+    private void setContent(String name, String startTime, String endTime, String date, String imageURL, String description, String location){
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels/4;
+        int height = dm.heightPixels/10;
+
+
+        collapsingToolbar.setTitle(name);
+        mEventDate.setText(date);
+        mEventStartTime.setText(startTime);
+        mEventEndTime.setText(endTime);
+        mEventDescription.setText(description);
+        mEventLocation.setText(location);
+        Picasso
+                .with(context)
+                .load(imageURL)
+                .resize(width, height)
+                .centerCrop()
+                .into(imageView);
+    }
+
+
 
 
 }

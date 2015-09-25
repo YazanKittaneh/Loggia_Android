@@ -13,7 +13,8 @@ import java.util.TimeZone;
 public class EventDateFormat {
 
 
-    private String FORMAT = "h:mm a";
+    private static String FORMAT_TIME = "h:mm a";
+    private static String FORMAT_DATE = "EEEE"+", " + "LLLL dd";
 
 
     public Date standardTime(int hourOfDay, int minute){
@@ -39,12 +40,12 @@ public class EventDateFormat {
      * @param date
      * @return
      */
-    public String formatTime(Date date){
-        SimpleDateFormat format = new SimpleDateFormat(FORMAT);
+    static public String formatTime(Date date){
+        SimpleDateFormat format = new SimpleDateFormat(FORMAT_TIME);
         return format.format(date);
     }
 
-    public Date getCurrentDate(){
+    public static Date getCurrentDate(){
         Calendar todayCalendar = new GregorianCalendar();
         TimeZone timeZone;
         timeZone = TimeZone.getDefault();
@@ -54,5 +55,11 @@ public class EventDateFormat {
         //int daysPastBase = daysBetween(today, baseDate);
         return today;
     }
+
+    public static String formatDate(Date date){
+        SimpleDateFormat format = new SimpleDateFormat(FORMAT_DATE);
+        return format.format(date);
+    }
+
 
 }

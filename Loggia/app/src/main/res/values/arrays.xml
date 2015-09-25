@@ -2,16 +2,13 @@
 <resources>
 
     <string-array name="tag_names">
-        <item>SGA</item>
-        <item>Concerts</item>
+        <item>All</item>
+        <item>Art</item>
+        <item>Food</item>
+        <item>Student Groups</item>
+        <item>Music</item>
         <item>Parties</item>
         <item>Sports</item>
-        <item>Admin</item>
-        <item>Test</item>
-        <item>Student Made"</item>
-        <item>Music</item>
-        <item>Studying</item>
-        <item>Talks</item>
-        <item>Theater</item>
+        <item>Student Groups"</item>
     </string-array>
 </resources>

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.loggia.Create.CreateActivity;
 import com.loggia.R;
+import com.loggia.Utils.EventDateFormat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,7 +55,6 @@ public class CalendarDialog extends DialogFragment
         CreateActivity mCreateActivity = (CreateActivity) getActivity();
         Calendar thisDate = new GregorianCalendar(year, month, day);
         thisDate.setTimeZone(TimeZone.getTimeZone("GMT-5"));
-        String pattern = "EEEE"+", " + "LLLL dd";
 
         TimeZone mTimeZone;
         if (thisDate.getTimeZone().inDaylightTime(new Date())) {
@@ -65,7 +65,6 @@ public class CalendarDialog extends DialogFragment
         }
         thisDate.setTimeZone(mTimeZone);
 
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
         /*
         // String pattern = "LLLL-EEEE-yyyy";
         String pattern = "EEEE"+", " + "LLLL dd";
@@ -89,7 +88,7 @@ public class CalendarDialog extends DialogFragment
     */
         mCreateActivity.calendarDate = thisDate.getTime();
 
-        mEventDate.setText(format.format(thisDate.getTime()));
+        mEventDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
 
 }
 }

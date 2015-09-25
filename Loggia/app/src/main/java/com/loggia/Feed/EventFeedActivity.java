@@ -2,6 +2,7 @@ package com.loggia.Feed;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -25,6 +26,7 @@ import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
 import com.dexafree.materialList.model.CardItemView;
 import com.dexafree.materialList.view.MaterialListView;
+import com.loggia.Utils.EventDateFormat;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -92,6 +94,7 @@ public class EventFeedActivity extends AppCompatActivity {
         currentTAG=null;
         context=this;
         if (navigationView != null) {
+
             setupDrawerContent(navigationView);
         }
         setupListeners();
@@ -100,18 +103,6 @@ public class EventFeedActivity extends AppCompatActivity {
 
     }
 
-
-    /**
-     * Calculates the days between two dates. Used for getting parse objects
-     */
-    public int daysBetween(Date date1, Date date2) {
-        Long daysBetween;
-
-        // 86400000 milliseconds in in a day
-        daysBetween = (date1.getTime() - date2.getTime()) / 86400000;
-
-        return (int) Math.floor(daysBetween);
-    }
 
     /**
      * Set up listeners
@@ -176,7 +167,7 @@ public class EventFeedActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
                         //String clicked = menuItem.toString();
-                        currentTAG=menuItem.toString();
+                        currentTAG = menuItem.toString();
                         updateEvents(currentTAG);
                         mDrawerLayout.closeDrawers();
                         return true;
@@ -214,21 +205,6 @@ public class EventFeedActivity extends AppCompatActivity {
         }
     }
 
-    private Date currentDay(){
-        GregorianCalendar todayCalendar = new GregorianCalendar(Locale.US);
-
-        // Correct for time zones and DST
-        /*
-        if (todayCalendar.getTimeZone().inDaylightTime(new Date())) {
-            mTimeZone = TimeZone.getTimeZone("UTC-5h");
-        }
-        else {
-            mTimeZone = TimeZone.getTimeZone("UTC-6h");
-        }
-        */
-
-
-    }
 
     /**
      * Update parse events shown to the user.
@@ -241,8 +217,8 @@ public class EventFeedActivity extends AppCompatActivity {
 
         /* will only get events with a date greater than the current date */
         //Log.d("CURRENT DATE: ", currentDay().toString());
-        //event_query.whereGreaterThanOrEqualTo("startTime", currentDay());
-        if(eventTag != null) {
+        event_query.whereGreaterThanOrEqualTo("Date", EventDateFormat.getCurrentDate());
+        if(eventTag != null && !eventTag.equals("All")){
             Log.d("MENU CLICK: ", eventTag);
             event_query.whereEqualTo("Tag", eventTag);
         }
@@ -257,27 +233,32 @@ public class EventFeedActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseObject> markers, com.parse.ParseException e) {
                 if (e == null) {
-                    for (int i = 0; i < markers.size(); i++) {
+                    for (int i = markers.size()-1; i >= 0; i--) {
                         Log.e("WITHIN PARSE", "WORKING");
                         ParseObject currentObject = markers.get(i);
-
-                        final BigImageCard card = new BigImageCard(context);
-                        Log.i(i + " Item: ", currentObject.getString("Name"));
-                        card.setTitle(currentObject.getString("Name"));
-                        card.setDescription(currentObject.getDate("Date") + " at " + currentObject.getDate("StartTime"));
-                        card.setDrawable(currentObject.getParseFile("Image").getUrl());
-
-                        Log.d("DATE: ", currentObject.getDate("Date").toString());
-                        Log.d("TIME: ", currentObject.getDate("StartTime").toString());
-
-                        card.setTag(currentObject.getObjectId());
-                        mListView.add(card);
+                        createCard(
+                                currentObject.getString("Name"),
+                                EventDateFormat.formatTime(currentObject.getDate("StartTime")),
+                                EventDateFormat.formatDate(currentObject.getDate("Date")),
+                                currentObject.getParseFile("Image").getUrl(),
+                                currentObject.getObjectId()
+                        );
                     }
                 } else {
                     Log.e("DONE ERROR", "DOES NOT WORK");
                 }
             }
         });
+    }
+
+    private void createCard(String name, String startTime, String date, String imageURL, String objectID){
+        BigImageCard card = new BigImageCard(context);
+        card.setTitle(name);
+        card.setDescription(date + " at " + startTime);
+        card.setDrawable(imageURL);
+        card.setTag(objectID);
+        mListView.add(card);
+
     }
 
 
