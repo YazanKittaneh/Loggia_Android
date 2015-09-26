@@ -33,6 +33,7 @@ import com.loggia.Helpers.StartClockDialog;
 import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.Helpers.TagDialog;
 import com.loggia.R;
+import com.loggia.Utils.Constants;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -227,7 +228,7 @@ public class CreateActivity extends AppCompatActivity {
                 backdrop.setImageDrawable(mDrawable);
             }
 
-            ParseObject mParseObject = new ParseObject("TestDate");
+            ParseObject mParseObject = new ParseObject(Constants.currentEvents);
             mParseObject.put("Name", mEventName.getText().toString());
             //mParseObject.put("Date", calendarDate);
             mParseObject.put("StartTime", startTimeC.getTime());

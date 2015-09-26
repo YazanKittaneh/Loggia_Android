@@ -26,6 +26,7 @@ import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
 import com.dexafree.materialList.model.CardItemView;
 import com.dexafree.materialList.view.MaterialListView;
+import com.loggia.Utils.Constants;
 import com.loggia.Utils.EventDateFormat;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
@@ -201,7 +202,7 @@ public class EventFeedActivity extends AppCompatActivity {
     private void updateEvents(String eventTag)
     {
         mListView.clear();
-        ParseQuery <ParseObject> event_query = new ParseQuery<>("TestDate");
+        ParseQuery <ParseObject> event_query = new ParseQuery<>(Constants.currentEvents);
 
         /* will only get events with a date greater than the current date */
         //Log.d("CURRENT DATE: ", currentDay().toString());

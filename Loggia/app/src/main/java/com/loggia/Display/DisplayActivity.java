@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loggia.Utils.Constants;
 import com.loggia.Utils.EventDateFormat;
 import com.parse.GetCallback;
 import com.parse.ParseObject;
@@ -103,7 +104,7 @@ public class DisplayActivity extends AppCompatActivity {
      *      ID of object requested
      */
     private void loadData(String objectID){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestDate");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.currentEvents);
         query.getInBackground(objectID, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, com.parse.ParseException e) {

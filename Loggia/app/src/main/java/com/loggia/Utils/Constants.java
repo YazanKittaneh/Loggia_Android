@@ -10,7 +10,8 @@ import java.util.TimeZone;
 /**
  * Created by L7 on 9/23/15.
  */
-public class TableConstants {
+public class Constants {
 
+    public static String currentEvents = "Events_v_1.2.0";
 
 }
