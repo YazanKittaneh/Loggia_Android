@@ -192,19 +192,6 @@ public class EventFeedActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Handles drawer item clicks
-     * @param menuID
-     *      ID of the item clicked
-     */
-    private void onDrawerClick(String menuID) {
-        if (menuID.equals("Admin")) {
-            Intent intent = new Intent(context, AdminActivity.class);
-            startActivity(intent);
-        } else {
-            updateEvents(menuID);
-        }
-    }
 
 
     /**

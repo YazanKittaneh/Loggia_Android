@@ -104,7 +104,7 @@ public class CreateActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
 
         String Tag = intent.getStringExtra("Tag");
-        if(!Tag.equals("All"))
+        if(Tag == null || !Tag.equals("All"))
         {
             mEventTag.setText(Tag);
         }
@@ -262,20 +262,6 @@ public class CreateActivity extends AppCompatActivity {
         calendarDialog.show(fm, "fragment_calender_dialog");
     }
 
-    /*
-    private void showStartClockDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        StartClockDialog clockDialog = new StartClockDialog();
-
-        clockDialog.show(fm, "fragment_calender_dialog");
-    }
-
-    private void showEndClockDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        EndClockDialog clockDialog = new EndClockDialog();
-        clockDialog.show(fm, "fragment_calender_dialog");
-    }
-    */
 
     private void showPickerDialog(){
 

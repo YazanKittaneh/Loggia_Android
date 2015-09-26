@@ -73,7 +73,6 @@ public class DisplayActivity extends AppCompatActivity {
          *************************/
         Intent intent = getIntent();
         String objectID = intent.getStringExtra("objectID");
-        String classID = intent.getStringExtra("classID");
 
 
         /**************************
