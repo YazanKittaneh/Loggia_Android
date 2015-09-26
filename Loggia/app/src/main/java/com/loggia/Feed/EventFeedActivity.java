@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-import com.loggia.Admin.AdminActivity;
 import com.loggia.Create.CreateActivity;
 import com.loggia.Display.DisplayActivity;
 import com.loggia.R;
