@@ -12,6 +12,6 @@ import java.util.TimeZone;
  */
 public class Constants {
 
-    public static String currentEvents = "Events_v_1.2.0";
+    public static String currentEvents = "Events_1_2_1";
 
 }

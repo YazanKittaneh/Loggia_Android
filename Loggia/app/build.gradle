@@ -8,8 +8,8 @@ android {
         applicationId "com.loggia"
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 4
-        versionName "1.1.2"
+        versionCode 6
+        versionName "1.2.1"
     }
     buildTypes {
         release {
