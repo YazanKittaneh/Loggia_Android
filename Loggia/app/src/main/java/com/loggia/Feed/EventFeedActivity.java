@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -121,12 +122,15 @@ public class EventFeedActivity extends AppCompatActivity {
             @Override
             public void onItemClick(CardItemView view, int position) {
                 if (view.getTag().toString() != null) {
-                    String objectID = view.getTag().toString();
-                    Log.d("CLICK TEST: ", objectID);
+                    ParseObject currentObject = (ParseObject) view.getTag();
+                    FragmentManager fm = getSupportFragmentManager();
+                    DisplayActivity displayActivity = DisplayActivity.newInstance(currentObject);
 
+                    /*
                     Intent intent = new Intent(view.getContext(), DisplayActivity.class);
                     intent.putExtra("objectID", objectID);
                     startActivity(intent);
+                    */
                 }
             }
 
@@ -220,6 +224,8 @@ public class EventFeedActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseObject> markers, com.parse.ParseException e) {
                 if (e == null) {
+                    Log.e("DONE ", "DOES WORK");
+
                     for (int i = 0; i < markers.size(); i++) {
                         Log.e("WITHIN PARSE", "WORKING");
                         ParseObject currentObject = markers.get(i);
@@ -228,22 +234,25 @@ public class EventFeedActivity extends AppCompatActivity {
                                 EventDateFormat.formatTime(currentObject.getDate("StartTime")),
                                 EventDateFormat.formatDate(currentObject.getDate("StartTime")),
                                 currentObject.getParseFile("Image").getUrl(),
-                                currentObject.getObjectId()
+                                currentObject.getObjectId(),
+                                currentObject
                         );
                     }
+
                 } else {
-                    //Log.e("DONE ERROR", "DOES NOT WORK");
+                    Log.e("DONE ERROR", "DOES NOT WORK");
                 }
             }
         });
     }
 
-    private void createCard(String name, String startTime, String date, String imageURL, String objectID){
+    private void createCard(String name, String startTime, String date, String imageURL, String objectID, ParseObject currentObject){
         BigImageCard card = new BigImageCard(context);
         card.setTitle(name);
         card.setDescription(date + " at " + startTime);
         card.setDrawable(imageURL);
-        card.setTag(objectID);
+        card.setTag(currentObject);
+        //card.setTag(objectID);
         mListView.add(card);
 
     }
