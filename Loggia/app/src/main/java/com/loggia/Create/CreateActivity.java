@@ -18,22 +18,25 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.loggia.Display.DisplayActivity;
 import com.loggia.Helpers.CalendarDialog;
-import com.loggia.Helpers.EndClockDialog;
-import com.loggia.Helpers.ImageScaler;
-import com.loggia.Helpers.StartClockDialog;
+import com.loggia.Helpers.ImageScalar;
+import com.loggia.Helpers.ClockDialog;
 import com.loggia.Helpers.StockImageRandomizer;
+import com.loggia.Helpers.TagDialog;
 import com.loggia.R;
+import com.loggia.Utils.Constants;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * TODO: Add name input
@@ -46,6 +49,7 @@ public class CreateActivity extends AppCompatActivity {
     EditText mEventName;
     TextView mEventStartTime;
     TextView mEventEndTime;
+    TextView mEventTag;
     EditText mEventDescription;
     EditText mEventLocation;
     TextView mEventDate;
@@ -54,20 +58,29 @@ public class CreateActivity extends AppCompatActivity {
     FloatingActionButton createButton;
     Toolbar toolbar;
     private int PICK_IMAGE_REQUEST = 1;
+    public Date calendarDate;
+    public Date startTime;
+    public Date endTime;
+    public Calendar startTimeC;
+    public Calendar endTimeC;
+
 
     Bitmap image;
     boolean imgLoaded = false;
-    private static int RESULT_LOAD_IMAGE = 1;
     Context context = this;
     StockImageRandomizer randomStock;
-    ImageScaler scaler;
+    ImageScalar scaler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
         randomStock = new StockImageRandomizer();
-        scaler = new ImageScaler(this);
+        scaler = new ImageScalar(this);
+        startTimeC = Calendar.getInstance();
+        endTimeC = Calendar.getInstance();
+        Intent intent = getIntent();
+
 
 
         mEventName = (EditText) findViewById(R.id.Display_Event_Name);
@@ -76,19 +89,20 @@ public class CreateActivity extends AppCompatActivity {
         mEventDate = (TextView) findViewById(R.id.Display_Event_Date);
         mEventStartTime = (TextView) findViewById(R.id.Display_Start_Time);
         mEventEndTime = (TextView) findViewById(R.id.Display_End_Time);
+        mEventTag = (TextView) findViewById(R.id.Display_Tag);
         backdrop = (ImageButton) findViewById(R.id.backdrop);
         createButton = (FloatingActionButton) findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        //image = BitmapFactory.decodeResource(getResources(), randomStock.getRandomStockDrawable());
-        //Drawable mDrawable = new BitmapDrawable(getResources(), image);
-        //backdrop.setImageDrawable(mDrawable);
-
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setSupportActionBar(toolbar);
-
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+
+        String Tag = intent.getStringExtra("Tag");
+        if(Tag == null || !Tag.equals("All"))
+        {
+            mEventTag.setText(Tag);
+        }
 
 
 
@@ -104,8 +118,7 @@ public class CreateActivity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 // Always show the chooser (if there are multiple options available)
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-
-                            }
+            }
         });
 
 
@@ -121,10 +134,11 @@ public class CreateActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             pushEvent();
+                pushEvent();
             }
         });
 
+        /*
         mEventDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,20 +146,31 @@ public class CreateActivity extends AppCompatActivity {
 
             }
         });
+        */
 
         mEventStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showStartClockDialog();
+                showClockDialog(false);
+                showCalendarDialog(false);
             }
         });
 
         mEventEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEndClockDialog();
+                showClockDialog(true);
+                showCalendarDialog(true);
             }
         });
+
+        mEventTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPickerDialog();
+            }
+        });
+
 
 
     }
@@ -174,12 +199,11 @@ public class CreateActivity extends AppCompatActivity {
     }
 
 
-    private  void pushEvent(){
+    private  void pushEvent()
+    {
         boolean clear = true;
 
-        TextView[] fields = {mEventName, mEventStartTime, mEventEndTime, mEventLocation, mEventDate, mEventDescription};
-
-
+        TextView[] fields = {mEventName, mEventTag, mEventStartTime, mEventEndTime, mEventLocation, mEventDate, mEventDescription};
 
         for (int i = 0; i < fields.length; i++) {
             String mTextField = fields[i].getText().toString();
@@ -198,40 +222,51 @@ public class CreateActivity extends AppCompatActivity {
                 backdrop.setImageDrawable(mDrawable);
             }
 
-            ParseObject mParseObject = new ParseObject("Test");
+            ParseObject mParseObject = new ParseObject(Constants.currentEvents);
             mParseObject.put("Name", mEventName.getText().toString());
-            mParseObject.put("Date", mEventDate.getText().toString());
-            mParseObject.put("StartTime", mEventStartTime.getText().toString());
-            mParseObject.put("EndTime", mEventEndTime.getText().toString());
+            //mParseObject.put("Date", calendarDate);
+            mParseObject.put("StartTime", startTimeC.getTime());
+            mParseObject.put("EndTime", endTimeC.getTime());
             mParseObject.put("Location", mEventLocation.getText().toString());
             mParseObject.put("Description", mEventDescription.getText().toString());
+            mParseObject.put("Tag", mEventTag.getText());
+            mParseObject.put("Owner", ParseUser.getCurrentUser());
 
             byte[] data = scaler.compressForUpload(image);
             ParseFile imageFile = new ParseFile("Image.jpg", data);
 
             mParseObject.put("Image", imageFile);
+            Log.d("StartTIme: ", startTimeC.getTime().toString());
+            Log.d("EndTIme: ", endTimeC.getTime().toString());
+
             mParseObject.saveInBackground();
             //startActivity(new Intent(context, DisplayActivity.class).putExtra("objectID", mParseObject.getObjectId()));
             finish();
         }
     }
 
-    private void showCalendarDialog() {
+
+    private void showClockDialog(boolean TYPE){
+        FragmentManager fm = getSupportFragmentManager();
+        ClockDialog clockDialog = new ClockDialog();
+        clockDialog.isEndTime = TYPE;
+        clockDialog.show(fm, "fragment_calender_dialog");
+    }
+
+    private void showCalendarDialog(boolean TYPE) {
         FragmentManager fm = getSupportFragmentManager();
         CalendarDialog calendarDialog = new CalendarDialog();
+        calendarDialog.isEndTime = TYPE;
         calendarDialog.show(fm, "fragment_calender_dialog");
     }
 
-    private void showStartClockDialog() {
+
+    private void showPickerDialog(){
+
         FragmentManager fm = getSupportFragmentManager();
-        StartClockDialog clockDialog = new StartClockDialog();
-        clockDialog.show(fm, "fragment_calender_dialog");
+        TagDialog tagDialog = new TagDialog();
+        tagDialog.show(fm, "tag_dialog");
     }
 
-    private void showEndClockDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        EndClockDialog clockDialog = new EndClockDialog();
-        clockDialog.show(fm, "fragment_calender_dialog");
-    }
 
 }

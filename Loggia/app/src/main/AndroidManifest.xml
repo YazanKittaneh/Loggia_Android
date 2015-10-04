@@ -11,19 +11,19 @@
         android:label="@string/app_name"
         android:minSdkVersion="9"
         android:targetSdkVersion="15"
-        android:theme="@style/Theme.DesignDemo"
-        android:versionCode="3"
-        android:versionName="1.1.1" >
+        android:theme="@style/Theme.Loggia"
+        android:versionCode="7"
+        android:versionName="1.2.2" >
         <activity
-            android:name="com.loggia.Feed.EventFeedActivity"
+            android:name=".Feed.EventFeedActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.loggia.Display.DisplayActivity"
+            android:name=".Display.DisplayActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.loggia.Splash.SplashActivity"
+            android:name=".Splash.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.loggia.Create.CreateActivity"
+            android:name=".Create.CreateActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

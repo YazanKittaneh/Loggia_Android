@@ -3,10 +3,10 @@
     <!-- Base application theme. -->
 
 
-    <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo">
+    <style name="Theme.Loggia" parent="Base.Theme.Loggia">
     </style>
 
-    <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.Theme.Loggia" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
         <item name="colorAccent">@color/ColorAccent</item>

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +16,22 @@ import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 
 
+import com.loggia.Create.CreateActivity;
 import com.loggia.R;
+import com.loggia.Utils.EventDateFormat;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class CalendarDialog extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
+    public boolean isEndTime;
 
 
     @Override
@@ -35,11 +43,38 @@ public class CalendarDialog extends DialogFragment
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+        return new DatePickerDialog(new ContextThemeWrapper(getActivity(), R.style.Theme_Loggia), this, year, month, day);
+
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Event_Date);
+        TextView mEventDate = (TextView) getActivity().findViewById(R.id.Display_Event_Date);
+        CreateActivity mCreateActivity = (CreateActivity) getActivity();
+        Calendar thisDate = new GregorianCalendar(year, month, day);
+
+        TimeZone mTimeZone;
+        if (thisDate.getTimeZone().inDaylightTime(new Date())) {
+            mTimeZone = TimeZone.getTimeZone("GMT-5");
+        }
+        else {
+            mTimeZone = TimeZone.getTimeZone("GMT-6");
+        }
+        thisDate.setTimeZone(mTimeZone);
+
+        /*
+        // String pattern = "LLLL-EEEE-yyyy";
+        String pattern = "EEEE"+", " + "LLLL dd";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date date = new Date();
+
+        try {
+            date = format.parse((month+1)+"-"+day+"-"+year);
+            System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(format.format(new Date()));
+
 
         Log.i("DAY  INTEGER: ", String.valueOf(day));
         Log.i("MONTH INTEGER: ", String.valueOf(month));
@@ -49,7 +84,22 @@ public class CalendarDialog extends DialogFragment
 
 
         display_time.setText(sDay + ", " + sMonth + " " + day );
+    */
+        mCreateActivity.calendarDate = thisDate.getTime();
 
-    }
+        if(isEndTime) {
+            mCreateActivity.endTimeC.set(year, month, day);
+
+        }
+        else
+        {
+            mCreateActivity.startTimeC.set(year, month, day);
+            mEventDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
+
+
+        }
+
+
+}
 }
 

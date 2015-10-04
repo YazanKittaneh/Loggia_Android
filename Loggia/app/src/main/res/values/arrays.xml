@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="tag_names">
+        <item>All</item>
+        <item>Art</item>
+        <item>Food</item>
+        <item>Music</item>
+        <item>Parties</item>
+        <item>Sports</item>
+        <item>Student Groups"</item>
+    </string-array>
+</resources>

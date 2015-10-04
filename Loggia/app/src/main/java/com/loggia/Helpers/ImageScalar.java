@@ -1,30 +1,31 @@
-package com.loggia.Helpers;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.DisplayMetrics;
+        package com.loggia.Helpers;
 
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
+        import android.app.Activity;
+        import android.content.Context;
+        import android.content.res.Resources;
+        import android.graphics.Bitmap;
+        import android.graphics.BitmapFactory;
+        import android.graphics.drawable.BitmapDrawable;
+        import android.graphics.drawable.Drawable;
+        import android.util.DisplayMetrics;
 
-import java.io.ByteArrayOutputStream;
+        import com.parse.ParseException;
+        import com.parse.ParseFile;
+        import com.parse.ParseObject;
+
+        import java.io.ByteArrayOutputStream;
 
 /**
  * Created by L7 on 8/23/15.
  */
-public class ImageScaler extends Activity{
+public class ImageScalar extends Activity {
 
     int width;
     int height;
     DisplayMetrics dm;
 
-    public ImageScaler(Activity activity) {
+    public ImageScalar(Activity activity) {
         this.dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
         this.width = dm.widthPixels;
@@ -32,14 +33,14 @@ public class ImageScaler extends Activity{
 
     }
 
-    public BitmapDrawable decodeSampledBitmapFromDrabwable(Resources res, int drawable){
+    public BitmapDrawable decodeSampledBitmapFromDrabwable(Resources res, int drawable) {
 
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
 
         BitmapFactory.decodeResource(res, drawable, options);
-        options.inSampleSize = calculateInSampleSize(options, this.width/4, this.height/4);
+        options.inSampleSize = calculateInSampleSize(options, this.width / 4, this.height / 4);
         options.inJustDecodeBounds = false;
 
         return new BitmapDrawable(res, BitmapFactory.decodeResource(res, drawable));
@@ -57,7 +58,6 @@ public class ImageScaler extends Activity{
         byte[] file = new byte[0];
 
 
-
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         imgFile = mParseObject.getParseFile("Image");
@@ -73,8 +73,7 @@ public class ImageScaler extends Activity{
             options.inSampleSize = calculateInSampleSize(options, this.width, this.height);
             options.inJustDecodeBounds = false;
             return new BitmapDrawable(res, BitmapFactory.decodeByteArray(file, 0, file.length, options));
-        }
-        else {
+        } else {
 
             BitmapFactory.decodeResource(res, randomImage, options);
             options.inSampleSize = calculateInSampleSize(options, this.width, this.height);
@@ -84,7 +83,6 @@ public class ImageScaler extends Activity{
         }
 
     }
-
 
 
     public static int calculateInSampleSize(
@@ -111,7 +109,7 @@ public class ImageScaler extends Activity{
     }
 
 
-    public static byte[] compressForUpload(Bitmap bitmap){
+    public static byte[] compressForUpload(Bitmap bitmap) {
         byte[] data;
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -123,4 +121,6 @@ public class ImageScaler extends Activity{
         data = stream.toByteArray();
         return data;
     }
+
+
 }
