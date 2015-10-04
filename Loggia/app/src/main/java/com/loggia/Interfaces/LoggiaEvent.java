@@ -1,5 +1,7 @@
 package com.loggia.Interfaces;
 
+import com.loggia.Model.ParseModels.ParseLoggiaUser;
+
 import java.util.Date;
 import java.util.List;
 
@@ -38,18 +40,27 @@ public interface LoggiaEvent {
      * @return the number of views for this event
      */
 
-    int getNumEventViews();
+    long getNumEventViews();
 
     /**
      * @return the number of invites for this event
      */
 
-    int getNumEventInvites();
+    long getNumEventInvites();
 
     /**
+     * TODO : check how to prevent parametized return type
      * @return the users that have been invited to this event
      */
 
-    List<LoggiaUser> getEventUsersInvited();
+    <T extends LoggiaUser> List<T> getEventUsersInvited();
+
+    /**
+     * @return a list of the users who are representatives for this event. If an organisation is
+     * hosting this event, the representatives will be admins of this organisation.
+     */
+
+    <T extends LoggiaUser> List<T> getEventRepresentatives();
+
 
 }

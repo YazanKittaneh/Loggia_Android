@@ -15,7 +15,7 @@ public interface LoggiaOrganisation {
      * @return a list of all the admins for this organisation.
      * the size of this list >=1
      */
-    List<LoggiaUser> getAdminstrators();
+    List<LoggiaUser> getAdministrators();
 
     /**
      * @return the name of this organisation.
