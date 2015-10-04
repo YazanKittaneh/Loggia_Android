@@ -125,7 +125,7 @@ public class EventFeedActivity extends AppCompatActivity {
                     ParseObject currentObject = (ParseObject) view.getTag();
                     FragmentManager fm = getSupportFragmentManager();
                     DisplayActivity displayActivity = DisplayActivity.newInstance(currentObject);
-
+                    fm.beginTransaction().replace(R.id.drawer_layout, displayActivity).addToBackStack(null).commit();
                     /*
                     Intent intent = new Intent(view.getContext(), DisplayActivity.class);
                     intent.putExtra("objectID", objectID);

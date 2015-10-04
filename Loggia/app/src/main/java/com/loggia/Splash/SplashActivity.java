@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
         context = this;
 
         Parse.enableLocalDatastore(this);
-        Parse.initialize(this, getString(R.string.parse_id), getString(R.string.parse_client));
+        Parse.initialize(this, "pq4DTXVfCwDskh0CBEfBhwkrDLzBqmo0Q0Fqu8Om", "5mkjDImOD21MhGM6Brzh7lOriLpfrxj9w47FWCL0");
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
