@@ -46,23 +46,26 @@ import java.util.Date;
 
 public class CreateActivity extends AppCompatActivity {
 
-    EditText mEventName;
-    TextView mEventStartTime;
-    TextView mEventEndTime;
-    TextView mEventTag;
-    EditText mEventDescription;
-    EditText mEventLocation;
-    TextView mEventDate;
+    EditText createEventName;
+
+    TextView createEventStartTime;
+    TextView createEventEndTime;
+    TextView createEventStartDate;
+    TextView createEventEndDate;
+
+    TextView createEventTag;
+    EditText createEventDescription;
+    EditText createEventLocation;
+
     CollapsingToolbarLayout collapsingToolbar;
     ImageButton backdrop;
     FloatingActionButton createButton;
     Toolbar toolbar;
     private int PICK_IMAGE_REQUEST = 1;
     public Date calendarDate;
-    public Date startTime;
-    public Date endTime;
-    public Calendar startTimeC;
-    public Calendar endTimeC;
+
+    public Calendar startDate;
+    public Calendar endDate;
 
 
     Bitmap image;
@@ -77,19 +80,23 @@ public class CreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create);
         randomStock = new StockImageRandomizer();
         scaler = new ImageScalar(this);
-        startTimeC = Calendar.getInstance();
-        endTimeC = Calendar.getInstance();
+        startDate = Calendar.getInstance();
+        endDate = Calendar.getInstance();
         Intent intent = getIntent();
 
 
 
-        mEventName = (EditText) findViewById(R.id.Display_Event_Name);
-        mEventDescription = (EditText) findViewById(R.id.Display_Event_Description);
-        mEventLocation = (EditText) findViewById(R.id.Display_Event_Location);
-        mEventDate = (TextView) findViewById(R.id.Display_Event_Date);
-        mEventStartTime = (TextView) findViewById(R.id.Display_Start_Time);
-        mEventEndTime = (TextView) findViewById(R.id.Display_End_Time);
-        mEventTag = (TextView) findViewById(R.id.Display_Tag);
+        createEventName = (EditText) findViewById(R.id.Create_Event_Name);
+        createEventDescription = (EditText) findViewById(R.id.Create_Event_Description);
+        createEventLocation = (EditText) findViewById(R.id.Create_Event_Location);
+
+        createEventStartDate = (TextView) findViewById(R.id.Create_Start_Date);
+        createEventStartTime = (TextView) findViewById(R.id.Create_Start_Time);
+        createEventEndDate = (TextView) findViewById(R.id.Create_End_Date);
+        createEventEndTime = (TextView) findViewById(R.id.Create_End_Time);
+
+        createEventTag = (TextView) findViewById(R.id.Create_Tag);
+
         backdrop = (ImageButton) findViewById(R.id.backdrop);
         createButton = (FloatingActionButton) findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -101,7 +108,7 @@ public class CreateActivity extends AppCompatActivity {
         String Tag = intent.getStringExtra("Tag");
         if(Tag == null || !Tag.equals("All"))
         {
-            mEventTag.setText(Tag);
+            createEventTag.setText(Tag);
         }
 
 
@@ -148,23 +155,36 @@ public class CreateActivity extends AppCompatActivity {
         });
         */
 
-        mEventStartTime.setOnClickListener(new View.OnClickListener() {
+        createEventStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCalendarDialog(false);
+
+            }
+        });
+
+        createEventEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCalendarDialog(true);
+
+            }
+        });
+        createEventStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showClockDialog(false);
-                showCalendarDialog(false);
             }
         });
 
-        mEventEndTime.setOnClickListener(new View.OnClickListener() {
+        createEventEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showClockDialog(true);
-                showCalendarDialog(true);
             }
         });
 
-        mEventTag.setOnClickListener(new View.OnClickListener() {
+        createEventTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPickerDialog();
@@ -203,7 +223,7 @@ public class CreateActivity extends AppCompatActivity {
     {
         boolean clear = true;
 
-        TextView[] fields = {mEventName, mEventTag, mEventStartTime, mEventEndTime, mEventLocation, mEventDate, mEventDescription};
+        TextView[] fields = {createEventName, createEventTag, createEventStartTime, createEventEndTime, createEventStartDate, createEventEndDate, createEventLocation, createEventDescription};
 
         for (int i = 0; i < fields.length; i++) {
             String mTextField = fields[i].getText().toString();
@@ -223,21 +243,18 @@ public class CreateActivity extends AppCompatActivity {
             }
 
             ParseObject mParseObject = new ParseObject(Constants.currentEvents);
-            mParseObject.put("Name", mEventName.getText().toString());
-            //mParseObject.put("Date", calendarDate);
-            mParseObject.put("StartTime", startTimeC.getTime());
-            mParseObject.put("EndTime", endTimeC.getTime());
-            mParseObject.put("Location", mEventLocation.getText().toString());
-            mParseObject.put("Description", mEventDescription.getText().toString());
-            mParseObject.put("Tag", mEventTag.getText());
+            mParseObject.put("Name", createEventName.getText().toString());
+            mParseObject.put("StartTime", startDate.getTime());
+            mParseObject.put("EndTime", endDate.getTime());
+            mParseObject.put("Location", createEventLocation.getText().toString());
+            mParseObject.put("Description", createEventDescription.getText().toString());
+            mParseObject.put("Tag", createEventTag.getText());
             mParseObject.put("Owner", ParseUser.getCurrentUser());
 
             byte[] data = scaler.compressForUpload(image);
             ParseFile imageFile = new ParseFile("Image.jpg", data);
 
             mParseObject.put("Image", imageFile);
-            Log.d("StartTIme: ", startTimeC.getTime().toString());
-            Log.d("EndTIme: ", endTimeC.getTime().toString());
 
             mParseObject.saveInBackground();
             //startActivity(new Intent(context, DisplayActivity.class).putExtra("objectID", mParseObject.getObjectId()));

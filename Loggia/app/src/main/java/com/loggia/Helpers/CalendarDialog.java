@@ -1,16 +1,9 @@
 package com.loggia.Helpers;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
@@ -20,12 +13,9 @@ import com.loggia.Create.CreateActivity;
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class CalendarDialog extends DialogFragment
@@ -48,7 +38,8 @@ public class CalendarDialog extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        TextView mEventDate = (TextView) getActivity().findViewById(R.id.Display_Event_Date);
+        TextView mEventStartDate = (TextView) getActivity().findViewById(R.id.Create_Start_Date);
+        TextView mEventEndDate = (TextView) getActivity().findViewById(R.id.Create_End_Date);
         CreateActivity mCreateActivity = (CreateActivity) getActivity();
         Calendar thisDate = new GregorianCalendar(year, month, day);
 
@@ -88,13 +79,16 @@ public class CalendarDialog extends DialogFragment
         mCreateActivity.calendarDate = thisDate.getTime();
 
         if(isEndTime) {
-            mCreateActivity.endTimeC.set(year, month, day);
+            mEventEndDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
+            mCreateActivity.endDate.set(year, month, day);
 
         }
         else
         {
-            mCreateActivity.startTimeC.set(year, month, day);
-            mEventDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
+            mCreateActivity.startDate.set(year, month, day);
+            mCreateActivity.endDate.set(year, month, day);
+            mEventEndDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
+            mEventStartDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
 
 
         }

@@ -1,12 +1,10 @@
 package com.loggia.Display;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 import com.loggia.R;
 
@@ -23,6 +21,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
+
 /**
  * TODO: Fix getDrawable deprication
  *
@@ -33,13 +33,12 @@ public class DisplayActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbar;
     Toolbar toolbar;
 
-    TextView mEventName;
-    TextView mEventTag;
-    TextView mEventStartTime;
-    TextView mEventEndTime;
-    TextView mEventDescription;
-    TextView mEventLocation;
-    TextView mEventDate;
+    TextView displayEventStartTime;
+    TextView displayEventStartDate;
+    TextView displayEventEndTime;
+    TextView displayEventEndDate;
+    TextView displayEventDescription;
+    TextView displayEventLocation;
     ImageView imageView;
 
     Context context = this;
@@ -54,13 +53,13 @@ public class DisplayActivity extends AppCompatActivity {
         /**************************
          View Declaration
          *************************/
-        mEventName = (TextView) findViewById(R.id.Display_Event_Name);
-        mEventTag = (TextView) findViewById(R.id.Display_Tag);
-        mEventStartTime = (TextView) findViewById(R.id.Display_Start_Time);
-        mEventEndTime = (TextView) findViewById(R.id.Display_End_Time);
-        mEventDescription = (TextView) findViewById(R.id.Display_Event_Description);
-        mEventLocation = (TextView) findViewById(R.id.Display_Event_Location);
-        mEventDate = (TextView) findViewById(R.id.Display_Event_Date);
+        displayEventStartTime = (TextView) findViewById(R.id.Display_Start_Time);
+        displayEventStartDate = (TextView) findViewById(R.id.Display_Start_Date);
+        displayEventEndTime = (TextView) findViewById(R.id.Display_End_Time);
+        displayEventEndDate = (TextView) findViewById(R.id.Display_End_Date);
+        displayEventDescription = (TextView) findViewById(R.id.Display_Event_Description);
+        displayEventLocation = (TextView) findViewById(R.id.Display_Event_Location);
+
         imageView = (ImageView) findViewById(R.id.backdrop);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         collapsingToolbar =
@@ -91,7 +90,6 @@ public class DisplayActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         loadData(objectID);
     }
 
@@ -111,9 +109,8 @@ public class DisplayActivity extends AppCompatActivity {
                 if (e == null) {
                     setContent(
                             parseObject.getString("Name"),
-                            EventDateFormat.formatTime(parseObject.getDate("StartTime")),
-                            EventDateFormat.formatTime(parseObject.getDate("EndTime")),
-                            EventDateFormat.formatDate(parseObject.getDate("StartTime")),
+                            parseObject.getDate("StartTime"),
+                            parseObject.getDate("EndTime"),
                             parseObject.getParseFile("Image").getUrl(),
                             parseObject.getString("Description"),
                             parseObject.getString("Location")
@@ -129,28 +126,23 @@ public class DisplayActivity extends AppCompatActivity {
 
     /**
      * Sets the ParseObject content in their respective view
-     * @param name
-     * @param startTime
-     * @param endTime
-     * @param date
-     * @param imageURL
-     * @param description
-     * @param location
      */
-    private void setContent(String name, String startTime, String endTime, String date, String imageURL, String description, String location){
+    private void setContent(String name, Date startDate, Date endDate, String imageURL, String description, String location){
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels/4;
         int height = dm.heightPixels/10;
+        EventDateFormat format = new EventDateFormat();
 
 
         collapsingToolbar.setTitle(name);
-        mEventDate.setText(date);
-        mEventStartTime.setText(startTime);
-        mEventEndTime.setText(endTime);
-        mEventDescription.setText(description);
-        mEventLocation.setText(location);
+        displayEventStartTime.setText(EventDateFormat.formatTime(startDate));
+        displayEventStartDate.setText(EventDateFormat.formatDate(startDate));
+        displayEventEndTime.setText(EventDateFormat.formatTime(endDate));
+        displayEventEndDate.setText(EventDateFormat.formatDate(endDate));
+        displayEventDescription.setText(description);
+        displayEventLocation.setText(location);
         Picasso
                 .with(context)
                 .load(imageURL)

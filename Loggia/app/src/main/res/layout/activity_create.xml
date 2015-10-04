@@ -71,13 +71,13 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <!-- Name -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="24dp">
 
+            <!-- Name -->
 
 
             <android.support.v7.widget.CardView
@@ -114,7 +114,7 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionDone"
                             android:singleLine="true"
-                            android:id="@+id/Display_Event_Name"/>
+                            android:id="@+id/Create_Event_Name"/>
 
                     </RelativeLayout>
                     <RelativeLayout
@@ -140,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionDone"
                             android:singleLine="true"
-                            android:id="@+id/Display_Tag"/>
+                            android:id="@+id/Create_Tag"/>
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -148,40 +148,6 @@
 
 
             <!-- Date -->
-<!--
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin">
-
-                <RelativeLayout
-                    style="@style/Widget.CardContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/Date_Icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/calender"/>
-
-                    <TextView
-                        android:layout_toRightOf="@id/Date_Icon"
-                        android:layout_width="match_parent"
-                        android:paddingLeft="16dp"
-                        android:hint="Set date"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/Display_Event_Date"/>
-
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
--->
-
-            <!-- time -->
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -211,30 +177,22 @@
                             android:layout_height="wrap_content">
                             <TextView
                                 android:layout_width="wrap_content"
+                                android:hint="Start date"
+                                android:paddingLeft="16dp"
+                                android:textSize="16sp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/Create_Start_Date"/>
+
+
+
+                            <TextView
+                                android:layout_toRightOf="@id/Create_Start_Date"
+                                android:layout_width="wrap_content"
                                 android:hint="Start time"
                                 android:paddingLeft="16dp"
                                 android:textSize="16sp"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/Display_Start_Time"/>
-
-                            <TextView
-                                android:layout_toRightOf="@id/Display_Start_Time"
-                                android:layout_width="wrap_content"
-                                android:text="- "
-                                android:paddingLeft="16dp"
-                                android:textSize="16sp"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/clear_space"/>
-
-
-                            <TextView
-                                android:layout_toRightOf="@id/clear_space"
-                                android:layout_width="wrap_content"
-                                android:hint="End time"
-                                android:paddingLeft="16dp"
-                                android:textSize="16sp"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/Display_End_Time"/>
+                                android:id="@+id/Create_Start_Time"/>
                         </RelativeLayout>
 
                     </RelativeLayout>
@@ -242,22 +200,28 @@
                         style="@style/Widget.CardContent"
                         android:layout_width="match_parent"
                         android:paddingTop="-10dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        >
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:paddingLeft="40dp"
+                                android:hint="End date"
+                                android:textSize="16sp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/Create_End_Date"/>
 
-                        <ImageView
-                            android:id="@+id/Date_Icon"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/calender"/>
-
-                        <TextView
-                            android:layout_toRightOf="@id/Date_Icon"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="16dp"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/Display_Event_Date"/>
-
+                            <TextView
+                                android:layout_toRightOf="@id/Create_End_Date"
+                                android:layout_width="wrap_content"
+                                android:hint="End Time"
+                                android:paddingLeft="16dp"
+                                android:textSize="16sp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/Create_End_Time"/>
+                        </RelativeLayout>
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -294,7 +258,7 @@
                         android:hint="Location"
                         android:textSize="16sp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/Display_Event_Location"/>
+                        android:id="@+id/Create_Event_Location"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -328,7 +292,7 @@
                         android:imeOptions="actionDone"
                         android:singleLine="true"
                         android:layout_height="wrap_content"
-                        android:id="@+id/Display_Event_Description"/>
+                        android:id="@+id/Create_Event_Description"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>

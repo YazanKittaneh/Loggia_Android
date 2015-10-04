@@ -60,17 +60,6 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/loadingPanel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center" >
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true" />
-    </RelativeLayout>
 
 
     <android.support.v4.widget.NestedScrollView
@@ -87,7 +76,6 @@
             android:orientation="vertical"
             android:paddingTop="24dp">
 
-
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,82 +83,73 @@
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin">
 
-                <RelativeLayout
-                    android:id="@+id/date"
-                    style="@style/Widget.CardContent"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/Date_Icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/calender"/>
-
-                    <TextView
-                        android:layout_toRightOf="@id/Date_Icon"
-                        android:layout_width="match_parent"
-                        android:paddingLeft="16dp"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/Display_Event_Date"/>
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin">
-
-                <RelativeLayout
-                    android:id="@+id/time"
-                    style="@style/Widget.CardContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/Time_Icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/time"/>
-
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
                     <RelativeLayout
-                        android:layout_toRightOf="@id/Time_Icon"
-                        android:layout_width="wrap_content"
+                        style="@style/Widget.CardContent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:paddingLeft="16dp"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/Display_Start_Time"/>
 
-                        <TextView
-                            android:layout_toRightOf="@id/Display_Start_Time"
+                        <ImageView
+                            android:id="@+id/Time_Icon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/time"/>
+
+                        <RelativeLayout
+                            android:layout_toRightOf="@id/Time_Icon"
                             android:layout_width="wrap_content"
-                            android:text="- "
-                            android:paddingLeft="16dp"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/clear_space"/>
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:paddingLeft="16dp"
+                                android:textSize="16sp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/Display_Start_Date"/>
 
 
-                        <TextView
-                            android:layout_toRightOf="@id/clear_space"
+
+                            <TextView
+                                android:layout_toRightOf="@id/Display_Start_Date"
+                                android:layout_width="wrap_content"
+                                android:paddingLeft="16dp"
+                                android:textSize="16sp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/Display_Start_Time"/>
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        style="@style/Widget.CardContent"
+                        android:layout_width="match_parent"
+                        android:paddingTop="-10dp"
+                        android:layout_height="wrap_content"
+                        >
+                        <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:paddingLeft="16dp"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/Display_End_Time"/>
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:paddingLeft="40dp"
+                                android:textSize="16sp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/Display_End_Date"/>
+
+                            <TextView
+                                android:layout_toRightOf="@id/Display_End_Date"
+                                android:layout_width="wrap_content"
+                                android:paddingLeft="16dp"
+                                android:textSize="16sp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/Display_End_Time"/>
+                        </RelativeLayout>
                     </RelativeLayout>
 
-                    </RelativeLayout>
-
+                </LinearLayout>
             </android.support.v7.widget.CardView>
+
 
 
 
@@ -241,14 +220,6 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-<!--
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/accept"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        />
--->
+
 
 </android.support.design.widget.CoordinatorLayout>
