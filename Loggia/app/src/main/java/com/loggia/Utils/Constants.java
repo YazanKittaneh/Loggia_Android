@@ -13,7 +13,6 @@ import java.util.TimeZone;
 public class Constants {
 
     public static String currentEvents = "Events_1_2_1";
-    //public static String currentEvents = "Events_1_2_1_test";
 
 
 }
