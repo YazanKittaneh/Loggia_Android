@@ -1,8 +1,7 @@
-package com.loggia.Feed;
+package com.loggia.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -18,8 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-import com.loggia.Create.CreateActivity;
-import com.loggia.Display.DisplayActivity;
+import com.loggia.Activities.CreateActivity;
+import com.loggia.Activities.DisplayActivity;
 import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
@@ -31,12 +30,7 @@ import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * TODO: Create organizational system for events

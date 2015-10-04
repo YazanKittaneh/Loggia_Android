@@ -1,33 +1,20 @@
 package com.loggia.Helpers;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.ContextThemeWrapper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.AnalogClock;
 import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 
-import com.loggia.Create.CreateActivity;
+import com.loggia.Activities.CreateActivity;
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class ClockDialog extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {

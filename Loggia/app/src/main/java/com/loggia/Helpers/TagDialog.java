@@ -1,14 +1,12 @@
 package com.loggia.Helpers;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 
-import com.loggia.Create.CreateActivity;
 import com.loggia.R;
 
 /**

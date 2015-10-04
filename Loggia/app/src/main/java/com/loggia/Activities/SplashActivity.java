@@ -1,4 +1,4 @@
-package com.loggia.Splash;
+package com.loggia.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.loggia.Feed.EventFeedActivity;
+import com.loggia.Activities.EventFeedActivity;
 import com.loggia.R;
 import com.parse.LogInCallback;
 import com.parse.Parse;

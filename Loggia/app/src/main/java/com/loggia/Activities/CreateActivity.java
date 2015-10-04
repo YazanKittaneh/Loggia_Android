@@ -1,4 +1,4 @@
-package com.loggia.Create;
+package com.loggia.Activities;
 
 
 import android.net.Uri;

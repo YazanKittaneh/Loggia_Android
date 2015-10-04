@@ -1,31 +1,21 @@
 package com.loggia.Helpers;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 
 
-import com.loggia.Create.CreateActivity;
+import com.loggia.Activities.CreateActivity;
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.TimeZone;
 
 /**

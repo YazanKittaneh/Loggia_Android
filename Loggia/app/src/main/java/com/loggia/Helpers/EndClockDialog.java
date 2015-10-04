@@ -8,17 +8,12 @@ import android.view.ContextThemeWrapper;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.loggia.Create.CreateActivity;
+import com.loggia.Activities.CreateActivity;
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class EndClockDialog extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {

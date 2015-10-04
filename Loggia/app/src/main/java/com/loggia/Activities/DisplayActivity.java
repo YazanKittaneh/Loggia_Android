@@ -1,4 +1,4 @@
-package com.loggia.Display;
+package com.loggia.Activities;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
