@@ -1,5 +1,7 @@
 package com.loggia.Utils;
 
+import android.util.Log;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,11 +12,16 @@ import java.util.TimeZone;
 /**
  * Created by L7 on 9/23/15.
  */
+
+/**
+ * TODO: Make method to regularize the timezone of the Date object
+ */
 public class EventDateFormat {
 
 
     private static String FORMAT_TIME = "h:mm a";
     private static String FORMAT_DATE = "EEEE"+", " + "LLLL dd";
+    
 
 
     public Date standardTime(int hourOfDay, int minute){
@@ -47,11 +54,13 @@ public class EventDateFormat {
 
     public static Date getCurrentDate(){
         Calendar todayCalendar = new GregorianCalendar();
-        TimeZone timeZone;
-        timeZone = TimeZone.getDefault();
-        todayCalendar.setTimeZone(timeZone);
+        //TimeZone timeZone;
+        //timeZone = TimeZone.getDefault();
+        todayCalendar.setTimeZone(TimeZone.getTimeZone("GMT-0"));
 
         Date today = todayCalendar.getTime();
+        Log.d("CURRENT TIME: ", today.toString());
+
         return today;
     }
 

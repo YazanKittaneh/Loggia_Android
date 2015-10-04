@@ -1,8 +1,6 @@
 package com.loggia.Create;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
@@ -21,15 +19,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.loggia.Helpers.CalendarDialog;
-import com.loggia.Helpers.EndClockDialog;
 import com.loggia.Helpers.ImageScalar;
-import com.loggia.Helpers.StartClockDialog;
+import com.loggia.Helpers.ClockDialog;
 import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.Helpers.TagDialog;
 import com.loggia.R;
@@ -38,9 +34,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -242,6 +236,9 @@ public class CreateActivity extends AppCompatActivity {
             ParseFile imageFile = new ParseFile("Image.jpg", data);
 
             mParseObject.put("Image", imageFile);
+            Log.d("StartTIme: ", startTimeC.getTime().toString());
+            Log.d("EndTIme: ", endTimeC.getTime().toString());
+
             mParseObject.saveInBackground();
             //startActivity(new Intent(context, DisplayActivity.class).putExtra("objectID", mParseObject.getObjectId()));
             finish();
@@ -251,7 +248,7 @@ public class CreateActivity extends AppCompatActivity {
 
     private void showClockDialog(boolean TYPE){
         FragmentManager fm = getSupportFragmentManager();
-        StartClockDialog clockDialog = new StartClockDialog();
+        ClockDialog clockDialog = new ClockDialog();
         clockDialog.isEndTime = TYPE;
         clockDialog.show(fm, "fragment_calender_dialog");
     }

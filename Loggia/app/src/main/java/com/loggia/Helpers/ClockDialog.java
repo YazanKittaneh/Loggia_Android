@@ -29,7 +29,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class StartClockDialog extends DialogFragment
+public class ClockDialog extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
 
     public boolean isEndTime;

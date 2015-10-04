@@ -58,8 +58,6 @@ public class EventFeedActivity extends AppCompatActivity {
     private String[] TAGS;
     public String currentTAG;
     public Context context;
-    public static final Date baseDate = new GregorianCalendar(2014, 0, 1).getTime();
-    TimeZone mTimeZone;
 
 
 
@@ -206,6 +204,7 @@ public class EventFeedActivity extends AppCompatActivity {
         /* will only get events with a date greater than the current date */
         //Log.d("CURRENT DATE: ", currentDay().toString());
         event_query.whereGreaterThanOrEqualTo("EndTime", EventDateFormat.getCurrentDate());
+        event_query.addAscendingOrder("StartTime");
         if(eventTag != null && !eventTag.equals("All")){
             Log.d("MENU CLICK: ", eventTag);
             event_query.whereEqualTo("Tag", eventTag);
@@ -233,7 +232,7 @@ public class EventFeedActivity extends AppCompatActivity {
                         );
                     }
                 } else {
-                    Log.e("DONE ERROR", "DOES NOT WORK");
+                    //Log.e("DONE ERROR", "DOES NOT WORK");
                 }
             }
         });
