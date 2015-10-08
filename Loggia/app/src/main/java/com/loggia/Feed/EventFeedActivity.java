@@ -1,5 +1,6 @@
 package com.loggia.Feed;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -11,7 +12,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeBounds;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -68,6 +73,7 @@ public class EventFeedActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_feed);
+        setupWindowAnimations();
 
         /**************************
          View Declaration
@@ -102,6 +108,13 @@ public class EventFeedActivity extends AppCompatActivity {
 
     }
 
+    @TargetApi(21)
+    private void setupWindowAnimations() {
+        Slide slide = new Slide();
+        slide.setDuration(1000);
+        getWindow().setExitTransition(slide);
+    }
+
 
     /**
      * Set up listeners
@@ -125,6 +138,21 @@ public class EventFeedActivity extends AppCompatActivity {
                     ParseObject currentObject = (ParseObject) view.getTag();
                     FragmentManager fm = getSupportFragmentManager();
                     DisplayActivity displayActivity = DisplayActivity.newInstance(currentObject);
+
+                    Slide slideTransition = new Slide(Gravity.RIGHT);
+                    slideTransition.setDuration(1000);
+                    sharedElementFragment2.setEnterTransition(slideTransition);
+
+// Defines enter transition only for shared element
+                    ChangeBounds changeBoundsTransition = TransitionInflater.from(context).inflateTransition(R.transition.change_bounds);
+                    DisplayActivity.setSharedElementEnterTransition(changeBoundsTransition);
+
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.content, fragmentB)
+                            .addSharedElement(blueView, getString(R.string.blue_name))
+                            .commit();
+
+
                     fm.beginTransaction().replace(R.id.drawer_layout, displayActivity).addToBackStack(null).commit();
                     /*
                     Intent intent = new Intent(view.getContext(), DisplayActivity.class);
