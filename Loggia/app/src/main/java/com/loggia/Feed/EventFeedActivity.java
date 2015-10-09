@@ -138,22 +138,12 @@ public class EventFeedActivity extends AppCompatActivity {
                     ParseObject currentObject = (ParseObject) view.getTag();
                     FragmentManager fm = getSupportFragmentManager();
                     DisplayActivity displayActivity = DisplayActivity.newInstance(currentObject);
-
-                    Slide slideTransition = new Slide(Gravity.RIGHT);
-                    slideTransition.setDuration(1000);
-                    sharedElementFragment2.setEnterTransition(slideTransition);
-
-// Defines enter transition only for shared element
-                    ChangeBounds changeBoundsTransition = TransitionInflater.from(context).inflateTransition(R.transition.change_bounds);
-                    DisplayActivity.setSharedElementEnterTransition(changeBoundsTransition);
-
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.content, fragmentB)
-                            .addSharedElement(blueView, getString(R.string.blue_name))
-                            .commit();
-
-
-                    fm.beginTransaction().replace(R.id.drawer_layout, displayActivity).addToBackStack(null).commit();
+                    fm.beginTransaction().setCustomAnimations(
+                            R.anim.bottom_slide_up_fast,
+                            R.anim.left_slide_out_fast,
+                            R.anim.bottom_slide_up_fast,
+                            R.anim.left_slide_out_fast)
+                            .replace(R.id.drawer_layout, displayActivity).addToBackStack(null).commit();
                     /*
                     Intent intent = new Intent(view.getContext(), DisplayActivity.class);
                     intent.putExtra("objectID", objectID);

@@ -70,7 +70,6 @@ public class DisplayActivity extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventFeedActivity mActivity = (EventFeedActivity) getActivity();
     }
 
     @Override
@@ -155,6 +154,8 @@ public class DisplayActivity extends android.support.v4.app.Fragment {
                 .centerCrop()
                 .into(imageView);
     }
+
+    @Override
 
 
 
