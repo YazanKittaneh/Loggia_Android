@@ -95,6 +95,12 @@ public class DisplayActivity extends android.support.v4.app.Fragment {
         //setSupportActionBar(toolbar);
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
         /*
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -155,8 +161,10 @@ public class DisplayActivity extends android.support.v4.app.Fragment {
                 .into(imageView);
     }
 
-    @Override
 
+    /**
+     * TODO: Create OnOptionsCreate method to handle backclicks
+     */
 
 
 
