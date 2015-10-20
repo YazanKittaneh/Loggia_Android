@@ -37,7 +37,7 @@ public class ClockDialog extends DialogFragment
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        CreateActivity mCreateActivity = (CreateActivity) getActivity();
+        CreateActivity mCreateActivity = (CreateActivity) getParentFragment();
         EventDateFormat eventDateFormat = new EventDateFormat();
         Date date = eventDateFormat.standardTime(hourOfDay, minute);
 

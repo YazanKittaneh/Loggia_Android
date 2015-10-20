@@ -1,6 +1,7 @@
 package com.loggia.Create;
 
 
+import android.app.Activity;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +18,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,7 +48,7 @@ import java.util.Date;
  *
  */
 
-public class CreateActivity extends AppCompatActivity {
+public class CreateActivity extends android.support.v4.app.Fragment {
 
     EditText createEventName;
 
@@ -70,45 +74,68 @@ public class CreateActivity extends AppCompatActivity {
 
     Bitmap image;
     boolean imgLoaded = false;
-    Context context = this;
+    CreateActivity context = this;
     StockImageRandomizer randomStock;
     ImageScalar scaler;
+    static String currentTag;
+
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public CreateActivity() {
+    }
+
+
+    /**
+     * Constructor created by the newInstance and takes in the Item ID
+     */
+    public static CreateActivity newInstance(String tag) {
+        CreateActivity fragment = new CreateActivity();
+        currentTag = tag;
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        View mView = inflater.inflate(R.layout.activity_create,container, false);
+
         randomStock = new StockImageRandomizer();
-        scaler = new ImageScalar(this);
+        scaler = new ImageScalar(context.getActivity());
         startDate = Calendar.getInstance();
         endDate = Calendar.getInstance();
-        Intent intent = getIntent();
 
 
 
-        createEventName = (EditText) findViewById(R.id.Create_Event_Name);
-        createEventDescription = (EditText) findViewById(R.id.Create_Event_Description);
-        createEventLocation = (EditText) findViewById(R.id.Create_Event_Location);
+        createEventName = (EditText) mView.findViewById(R.id.Create_Event_Name);
+        createEventDescription = (EditText) mView.findViewById(R.id.Create_Event_Description);
+        createEventLocation = (EditText) mView.findViewById(R.id.Create_Event_Location);
+        createEventStartDate = (TextView) mView.findViewById(R.id.Create_Start_Date);
+        createEventStartTime = (TextView) mView.findViewById(R.id.Create_Start_Time);
+        createEventEndDate = (TextView) mView.findViewById(R.id.Create_End_Date);
+        createEventEndTime = (TextView) mView.findViewById(R.id.Create_End_Time);
+        createEventTag = (TextView) mView.findViewById(R.id.Create_Tag);
+        backdrop = (ImageButton) mView.findViewById(R.id.backdrop);
+        createButton = (FloatingActionButton) mView.findViewById(R.id.accept);
+        collapsingToolbar =(CollapsingToolbarLayout) mView.findViewById(R.id.collapsing_toolbar);
+        toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
 
-        createEventStartDate = (TextView) findViewById(R.id.Create_Start_Date);
-        createEventStartTime = (TextView) findViewById(R.id.Create_Start_Time);
-        createEventEndDate = (TextView) findViewById(R.id.Create_End_Date);
-        createEventEndTime = (TextView) findViewById(R.id.Create_End_Time);
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        //setSupportActionBar(toolbar);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        createEventTag = (TextView) findViewById(R.id.Create_Tag);
-
-        backdrop = (ImageButton) findViewById(R.id.backdrop);
-        createButton = (FloatingActionButton) findViewById(R.id.accept);
-        collapsingToolbar =(CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
 
-        String Tag = intent.getStringExtra("Tag");
-        if(Tag == null || !Tag.equals("All"))
+        if(currentTag == null || !currentTag.equals("All"))
         {
-            createEventTag.setText(Tag);
+            createEventTag.setText(currentTag);
         }
 
 
@@ -134,7 +161,7 @@ public class CreateActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -158,11 +185,11 @@ public class CreateActivity extends AppCompatActivity {
         createEventStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCalendarDialog(false);
+                newInstance(false);
 
             }
         });
-
+/*
         createEventEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,24 +218,25 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-
+*/
+        return mView;
 
     }
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == context.getActivity().RESULT_OK && data != null && data.getData() != null) {
 
             Uri uri = data.getData();
 
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getActivity().getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
 
-                ImageButton backdrop = (ImageButton) findViewById(R.id.backdrop);
+                ImageButton backdrop = (ImageButton) context.getActivity().findViewById(R.id.backdrop);
                 image=bitmap;
                 backdrop.setImageBitmap(bitmap);
                 imgLoaded=true;
@@ -258,29 +286,38 @@ public class CreateActivity extends AppCompatActivity {
 
             mParseObject.saveInBackground();
             //startActivity(new Intent(context, DisplayActivity.class).putExtra("objectID", mParseObject.getObjectId()));
-            finish();
+            getActivity().getSupportFragmentManager().popBackStack();
+
         }
     }
 
-
+/*
     private void showClockDialog(boolean TYPE){
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = context.getActivity().getSupportFragmentManager();
         ClockDialog clockDialog = new ClockDialog();
         clockDialog.isEndTime = TYPE;
-        clockDialog.show(fm, "fragment_calender_dialog");
+        clockDialog.show(fm, "fragment_clock_dialog");
     }
+    */
 
+    public static ClockDialog newInstance(boolean TYPE) {
+        ClockDialog clockDialog = new ClockDialog();
+        clockDialog.isEndTime = TYPE;
+        return clockDialog;
+    }
+  /*
     private void showCalendarDialog(boolean TYPE) {
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = context.getActivity().getSupportFragmentManager();
         CalendarDialog calendarDialog = new CalendarDialog();
         calendarDialog.isEndTime = TYPE;
         calendarDialog.show(fm, "fragment_calender_dialog");
     }
+    */
 
 
     private void showPickerDialog(){
 
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = context.getActivity().getSupportFragmentManager();
         TagDialog tagDialog = new TagDialog();
         tagDialog.show(fm, "tag_dialog");
     }

@@ -14,13 +14,12 @@
         android:theme="@style/Theme.Loggia"
         android:versionCode="7"
         android:versionName="1.2.2" >
+
         <activity
             android:name=".Feed.EventFeedActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".Display.DisplayActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            >
         </activity>
         <activity
             android:name=".Splash.SplashActivity"
@@ -30,14 +29,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".Create.CreateActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".Helpers.TransitionActivity"
-            android:label="@string/title_activity_transition" >
         </activity>
     </application>
 

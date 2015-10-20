@@ -104,17 +104,20 @@
                             android:layout_height="24dp"
                             android:src="@drawable/title"
                             />
-
-                        <EditText
-                            android:layout_toRightOf="@id/Name_Icon"
+                        <com.wrapp.floatlabelededittext.FloatLabeledEditText
                             android:layout_width="match_parent"
-                            android:paddingLeft="16dp"
-                            android:hint="Event Name"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionDone"
-                            android:singleLine="true"
-                            android:id="@+id/Create_Event_Name"/>
+                            android:paddingLeft="28dp"
+                            android:layout_height="wrap_content">
+                            <EditText
+                                android:layout_toRightOf="@id/Name_Icon"
+                                android:layout_width="match_parent"
+                                android:hint="Event Name"
+                                android:textSize="16sp"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionDone"
+                                android:singleLine="true"
+                                android:id="@+id/Create_Event_Name"/>
+                        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
                     </RelativeLayout>
                     <RelativeLayout
@@ -248,18 +251,20 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/gps"/>
-
-                    <EditText
-                        android:layout_toRightOf="@id/Location_Icon"
+                    <com.wrapp.floatlabelededittext.FloatLabeledEditText
                         android:layout_width="match_parent"
-                        android:imeOptions="actionDone"
-                        android:singleLine="true"
-                        android:paddingLeft="16dp"
-                        android:hint="Location"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/Create_Event_Location"/>
-
+                        android:paddingLeft="28dp"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_toRightOf="@id/Location_Icon"
+                            android:layout_width="match_parent"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:hint="Location"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/Create_Event_Location"/>
+                    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -282,18 +287,20 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/desc"/>
-
-                    <EditText
-                        android:layout_toRightOf="@id/Description_Icon"
+                    <com.wrapp.floatlabelededittext.FloatLabeledEditText
                         android:layout_width="match_parent"
-                        android:paddingLeft="16dp"
-                        android:hint="Description"
-                        android:textSize="16sp"
-                        android:imeOptions="actionDone"
-                        android:singleLine="true"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/Create_Event_Description"/>
-
+                        android:paddingLeft="28dp"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_toRightOf="@id/Description_Icon"
+                            android:layout_width="match_parent"
+                            android:hint="Description"
+                            android:textSize="16sp"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/Create_Event_Description"/>
+                    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 

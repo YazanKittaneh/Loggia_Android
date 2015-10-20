@@ -124,9 +124,16 @@ public class EventFeedActivity extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), CreateActivity.class);
-                intent.putExtra("Tag", currentTAG);
-                startActivity(intent);
+
+                FragmentManager fm = getSupportFragmentManager();
+                CreateActivity createActivity = CreateActivity.newInstance(currentTAG);
+                fm.beginTransaction().setCustomAnimations(
+                        R.anim.bottom_slide_up_fast,
+                        R.anim.bottom_slide_down_fast,
+                        R.anim.bottom_slide_up_fast,
+                        R.anim.bottom_slide_down_fast)
+                        .replace(R.id.drawer_layout, createActivity).addToBackStack(null).commit();
+
             }
         });
 
@@ -140,9 +147,9 @@ public class EventFeedActivity extends AppCompatActivity {
                     DisplayActivity displayActivity = DisplayActivity.newInstance(currentObject);
                     fm.beginTransaction().setCustomAnimations(
                             R.anim.bottom_slide_up_fast,
-                            R.anim.left_slide_out_fast,
+                            R.anim.bottom_slide_down_fast,
                             R.anim.bottom_slide_up_fast,
-                            R.anim.left_slide_out_fast)
+                            R.anim.bottom_slide_down_fast)
                             .replace(R.id.drawer_layout, displayActivity).addToBackStack(null).commit();
                     /*
                     Intent intent = new Intent(view.getContext(), DisplayActivity.class);

@@ -40,7 +40,7 @@ public class CalendarDialog extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         TextView mEventStartDate = (TextView) getActivity().findViewById(R.id.Create_Start_Date);
         TextView mEventEndDate = (TextView) getActivity().findViewById(R.id.Create_End_Date);
-        CreateActivity mCreateActivity = (CreateActivity) getActivity();
+        CreateActivity mCreateActivity = (CreateActivity) getParentFragment();
         Calendar thisDate = new GregorianCalendar(year, month, day);
 
         TimeZone mTimeZone;
