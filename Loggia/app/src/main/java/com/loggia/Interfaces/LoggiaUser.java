@@ -38,7 +38,7 @@ public interface LoggiaUser {
     /**
      * @return a list of connections (to other users) that this user has.
      */
-    <T extends LoggiaEvent> List<T> getConnectList();
+    List<LoggiaUser> getConnectList();
 
     /**
      * Adds a new connection to this user's connect list
