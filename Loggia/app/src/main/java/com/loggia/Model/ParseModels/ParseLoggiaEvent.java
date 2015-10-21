@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 
-public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent {
+public class ParseLoggiaEvent extends ParseObject {
    private  List<ParseLoggiaUser> users;
    private List<ParseLoggiaUser> eventRepresentatives;
 
@@ -27,38 +27,38 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent {
         this.users = new ArrayList<ParseLoggiaUser>();
         this.eventRepresentatives = new ArrayList<ParseLoggiaUser>();
     }
-    @Override
+   // @Override
     public String getEventName() {
         return this.getString(TableData.EventColumnNames.event_name.toString());
     }
 
-    @Override
+   // @Override
     public Date getEventDate() {
         return this.getDate(TableData.EventColumnNames.event_date.toString());
     }
 
-    @Override
+  //  @Override
     public String getEventLocation() {
         return this.getString(TableData.EventColumnNames.event_location.toString());
     }
 
-    @Override
+   // @Override
     public String getEventImageUrl() {
         return this.getParseFile(TableData.EventColumnNames.event_image.toString()).getUrl();
     }
 
-    @Override
+   // @Override
     public long getNumEventViews() {
         return this.getLong(TableData.EventColumnNames.event_views.toString());
     }
 
-    @Override
+  //  @Override
     public long getNumEventInvites() {
         return this.getLong(TableData.EventColumnNames.event_num_invites.toString());
     }
 
-    @Override
-
+   // @Override
+/*
     public List<ParseLoggiaUser> getEventUsersInvited() {
 
         ParseQuery<ParseLoggiaUser> query = ParseQuery.
@@ -86,4 +86,5 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent {
         });
         return eventRepresentatives;
     }
+    */
 }

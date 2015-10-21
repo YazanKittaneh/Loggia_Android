@@ -46,4 +46,10 @@ public interface LoggiaUser {
      */
     void addNewConnection(LoggiaUser user);
 
+    /**
+     * Verifies if this user is active. That is if this user is logged in
+     */
+
+    boolean userActive();
+
 }

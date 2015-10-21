@@ -96,6 +96,8 @@ public class EventFeedActivity extends AppCompatActivity {
     }
 
 
+
+
     /**
      * Set up listeners
      */
@@ -199,6 +201,8 @@ public class EventFeedActivity extends AppCompatActivity {
         //Log.d("CURRENT DATE: ", currentDay().toString());
         event_query.whereGreaterThanOrEqualTo("EndTime", EventDateFormat.getCurrentDate());
         event_query.addAscendingOrder("StartTime");
+
+        //TODO: why event tag code?
         if(eventTag != null && !eventTag.equals("All")){
             Log.d("MENU CLICK: ", eventTag);
             event_query.whereEqualTo("Tag", eventTag);

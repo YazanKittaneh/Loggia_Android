@@ -18,23 +18,29 @@ import java.util.List;
  * Date : Octoer 4 2015
  * An implementation of LoggiaUser using Parse
  */
-public class ParseLoggiaUser extends ParseUser implements LoggiaUser {
+public class ParseLoggiaUser implements LoggiaUser {
+    ParseUser parseUser;
     List<ParseLoggiaOrg> userOrganisations;
     List<ParseLoggiaEvent> userUpcomingEvents;
 
     public ParseLoggiaUser(){
+        parseUser = ParseUser.getCurrentUser();
         this.userOrganisations = new ArrayList<ParseLoggiaOrg>();
         this.userUpcomingEvents = new ArrayList<ParseLoggiaEvent>();
     }
 
+    public ParseLoggiaUser(ParseUser user){
+        this.parseUser = user;
+    }
+
     @Override
     public String getFirstName() {
-        return this.getString(TableData.UserColumnNames.firstName.toString());
+        return parseUser.getString(TableData.UserColumnNames.firstName.toString());
     }
 
     @Override
     public String getLastName() {
-        return this.getString(TableData.UserColumnNames.lastName.toString());
+        return parseUser.getString(TableData.UserColumnNames.lastName.toString());
     }
 
     @Override
@@ -79,5 +85,9 @@ public class ParseLoggiaUser extends ParseUser implements LoggiaUser {
     public void addNewConnection(LoggiaUser user) {
 
 
+    }
+    @Override
+    public boolean userActive(){
+        return this.parseUser != null;
     }
 }

@@ -28,6 +28,9 @@ import com.loggia.Helpers.ImageScalar;
 import com.loggia.Helpers.ClockDialog;
 import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.Helpers.TagDialog;
+import com.loggia.Interfaces.LoggiaEvent;
+import com.loggia.Interfaces.LoggiaUser;
+import com.loggia.Model.ParseModels.ParseLoggiaUser;
 import com.loggia.R;
 import com.loggia.Utils.Constants;
 import com.parse.ParseFile;
@@ -37,6 +40,7 @@ import com.parse.ParseUser;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * TODO: Add name input
@@ -63,6 +67,9 @@ public class CreateActivity extends AppCompatActivity {
     public Date endTime;
     public Calendar startTimeC;
     public Calendar endTimeC;
+    //ParseLoggiaUser currentUser = new ParseLoggiaUser();
+    LoggiaUser currentUser;
+
 
 
     Bitmap image;
@@ -80,7 +87,7 @@ public class CreateActivity extends AppCompatActivity {
         startTimeC = Calendar.getInstance();
         endTimeC = Calendar.getInstance();
         Intent intent = getIntent();
-
+        currentUser = new ParseLoggiaUser(ParseUser.getCurrentUser());
 
 
         mEventName = (EditText) findViewById(R.id.Display_Event_Name);
