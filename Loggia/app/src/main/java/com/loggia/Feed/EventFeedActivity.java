@@ -1,9 +1,6 @@
 package com.loggia.Feed;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -12,11 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.transition.ChangeBounds;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,7 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 
-import com.loggia.Create.CreateActivity;
+import com.loggia.Create.CreateFragment;
 import com.loggia.Display.DisplayActivity;
 import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
@@ -40,12 +33,7 @@ import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * TODO: Create organizational system for events
@@ -76,7 +64,7 @@ public class EventFeedActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_feed);
-        setupWindowAnimations();
+        //setupWindowAnimations();
 
         /**************************
          View Declaration
@@ -90,7 +78,7 @@ public class EventFeedActivity extends AppCompatActivity {
         mDrawerItems = (ListView) findViewById(R.id.NavBar_List);
         TAGS = getResources().getStringArray(R.array.tag_names);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        mListView.getLayoutManager().offsetChildrenVertical(10);
+        mListView.getLayoutManager().offsetChildrenVertical(40);
 
 
 
@@ -109,13 +97,14 @@ public class EventFeedActivity extends AppCompatActivity {
         updateEvents(currentTAG);
     }
 
+    /*
     @TargetApi(21)
     private void setupWindowAnimations() {
         Slide slide = new Slide();
         slide.setDuration(1000);
         getWindow().setExitTransition(slide);
     }
-
+*/
 
     /**
      * Set up listeners
@@ -127,13 +116,13 @@ public class EventFeedActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 FragmentManager fm = getSupportFragmentManager();
-                CreateActivity createActivity = CreateActivity.newInstance(currentTAG);
+                CreateFragment createFragment = CreateFragment.newInstance(currentTAG);
                 fm.beginTransaction().setCustomAnimations(
                         R.anim.bottom_slide_up_fast,
                         R.anim.bottom_slide_down_fast,
                         R.anim.bottom_slide_up_fast,
                         R.anim.bottom_slide_down_fast)
-                        .replace(R.id.drawer_layout, createActivity).addToBackStack(null).commit();
+                        .replace(R.id.drawer_layout, createFragment).addToBackStack(null).commit();
 
             }
         });

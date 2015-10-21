@@ -9,7 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 
 
-import com.loggia.Create.CreateActivity;
+import com.loggia.Create.CreateFragment;
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 
@@ -40,7 +40,7 @@ public class CalendarDialog extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         TextView mEventStartDate = (TextView) getActivity().findViewById(R.id.Create_Start_Date);
         TextView mEventEndDate = (TextView) getActivity().findViewById(R.id.Create_End_Date);
-        CreateActivity mCreateActivity = (CreateActivity) getParentFragment();
+        CreateFragment mCreateFragment = (CreateFragment) getParentFragment();
         Calendar thisDate = new GregorianCalendar(year, month, day);
 
         TimeZone mTimeZone;
@@ -76,17 +76,17 @@ public class CalendarDialog extends DialogFragment
 
         display_time.setText(sDay + ", " + sMonth + " " + day );
     */
-        mCreateActivity.calendarDate = thisDate.getTime();
+        mCreateFragment.calendarDate = thisDate.getTime();
 
         if(isEndTime) {
             mEventEndDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
-            mCreateActivity.endDate.set(year, month, day);
+            mCreateFragment.endDate.set(year, month, day);
 
         }
         else
         {
-            mCreateActivity.startDate.set(year, month, day);
-            mCreateActivity.endDate.set(year, month, day);
+            mCreateFragment.startDate.set(year, month, day);
+            mCreateFragment.endDate.set(year, month, day);
             mEventEndDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
             mEventStartDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
 

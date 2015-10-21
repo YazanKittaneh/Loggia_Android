@@ -1,12 +1,9 @@
 package com.loggia.Create;
 
 
-import android.app.Activity;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,18 +11,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -46,78 +38,108 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * TODO: Add name input
- * TODO: Create universal Clock Dialog and make callback efficient
- *
+ * TODO: Add user contact info
  */
 
-public class CreateActivity extends android.support.v4.app.Fragment {
+public class CreateFragment extends android.support.v4.app.Fragment {
 
+    /** Declarations **/
     EditText createEventName;
-
     TextView createEventStartTime;
     TextView createEventEndTime;
     TextView createEventStartDate;
     TextView createEventEndDate;
-
     TextView createEventTag;
     EditText createEventDescription;
     EditText createEventLocation;
-
     CollapsingToolbarLayout collapsingToolbar;
     ImageButton backdrop;
     FloatingActionButton createButton;
     Toolbar toolbar;
+
+    /** Global Variables **/
     private int PICK_IMAGE_REQUEST = 1;
     public static Date calendarDate;
-
     public static Calendar startDate;
     public static Calendar endDate;
-
-
+    static String currentTag;
     Bitmap image;
     boolean imgLoaded = false;
-    CreateActivity context = this;
+    CreateFragment context = this;
     StockImageRandomizer randomStock;
     ImageScalar scaler;
-    static String currentTag;
+
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public CreateActivity() {
+    public CreateFragment() {
     }
 
 
     /**
      * Constructor created by the newInstance and takes in the Item ID
      */
-    public static CreateActivity newInstance(String tag) {
-        CreateActivity fragment = new CreateActivity();
-        currentTag = tag;
+    public static CreateFragment newInstance(String tag) {
+        CreateFragment fragment = new CreateFragment();
+        currentTag = tag;  //Sets the currentTag to the tag passed in
+
+        /* Setting current times */
         calendarDate = Calendar.getInstance().getTime();
         startDate = Calendar.getInstance();
         endDate = Calendar.getInstance();
+
         return fragment;
     }
 
+
+    /**
+     * OnCreate for the fragment
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+
+    /**
+     * OnCreateView, handles setup and returns the fragment view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                 Bundle savedInstanceState) {
+        /* Initialize setup */
         super.onCreate(savedInstanceState);
-        View mView = inflater.inflate(R.layout.activity_create,container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        /* Setup view */
+        View mView = inflater.inflate(R.layout.fragment_create,container, false);
+        setViewItems(mView);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        backdrop.setImageDrawable(scaler.decodeSampledBitmapFromDrabwable(getResources(), R.drawable.upload));
+        collapsingToolbar.setTitle("Upload Image");
+
+        /* Setup objects */
         randomStock = new StockImageRandomizer();
         scaler = new ImageScalar(context.getActivity());
 
+        /* logic setters */
+        setTag(currentTag);
+        setOnClickListeners();
 
+        return mView;
+    }
+
+
+    /**
+     * SETUP METHOD:
+     * Takes the fragment view, sets each view item
+     */
+    private void setViewItems(View mView)
+    {
         createEventName = (EditText) mView.findViewById(R.id.Create_Event_Name);
         createEventDescription = (EditText) mView.findViewById(R.id.Create_Event_Description);
         createEventLocation = (EditText) mView.findViewById(R.id.Create_Event_Location);
@@ -130,23 +152,15 @@ public class CreateActivity extends android.support.v4.app.Fragment {
         createButton = (FloatingActionButton) mView.findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) mView.findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
-        collapsingToolbar.setTitle("Upload Image");
-
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        //setSupportActionBar(toolbar);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
-
-        if(currentTag == null || !currentTag.equals("All"))
-        {
-            createEventTag.setText(currentTag);
-        }
+    }
 
 
 
-        backdrop.setImageDrawable(scaler.decodeSampledBitmapFromDrabwable(getResources(), R.drawable.upload));
-
-
+    /**
+     * SETUP METHOD:
+     * Sets the onclick listeners for each view item
+     */
+    public void setOnClickListeners(){
         backdrop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,9 +172,6 @@ public class CreateActivity extends android.support.v4.app.Fragment {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
-
-
-        //collapsingToolbar.setTitle("Test Name");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,16 +221,32 @@ public class CreateActivity extends android.support.v4.app.Fragment {
         createEventTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPickerDialog();
+                showTagDialog();
             }
         });
-
-
-        return mView;
-
     }
 
 
+
+    /**
+     * SETUP METHOD:
+     * Handles logic for object tagging
+     */
+    public void setTag(String currentTag){
+        if(currentTag == null || !currentTag.equals("All"))
+        {
+            createEventTag.setText(currentTag);
+        }
+    }
+
+
+
+    /**
+     * Handles the result from the imagepicker intent.
+     * If the image is sucessfully loaded => load in backdrop
+     * otherwise it will crash
+     * TODO: Handle the catch exception
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -233,6 +260,7 @@ public class CreateActivity extends android.support.v4.app.Fragment {
                 // Log.d(TAG, String.valueOf(bitmap));
 
                 ImageButton backdrop = (ImageButton) context.getActivity().findViewById(R.id.backdrop);
+                collapsingToolbar.setTitle("");
                 image=bitmap;
                 backdrop.setImageBitmap(bitmap);
                 imgLoaded=true;
@@ -243,11 +271,14 @@ public class CreateActivity extends android.support.v4.app.Fragment {
     }
 
 
-    private  void pushEvent()
-    {
-        boolean clear = true;
 
+    /**
+     * Checks view items to see if they are empty
+     * Display a UI error if there are emtpy fields
+     */
+    private boolean filledViewItems(){
         TextView[] fields = {createEventName, createEventTag, createEventStartTime, createEventEndTime, createEventStartDate, createEventEndDate, createEventLocation, createEventDescription};
+        boolean clear = true;
 
         for (int i = 0; i < fields.length; i++) {
             String mTextField = fields[i].getText().toString();
@@ -256,15 +287,26 @@ public class CreateActivity extends android.support.v4.app.Fragment {
                 clear = false;
             }
         }
+        if (!imgLoaded) {
+            image = BitmapFactory.decodeResource(getResources(), randomStock.getRandomStockDrawable());
+            Drawable mDrawable = new BitmapDrawable(getResources(), image);
+            backdrop.setImageDrawable(mDrawable);
+        }
 
-        if (clear) {
-            Log.i("Img LOAD: ", "" + imgLoaded);
+        return clear;
+    }
 
-            if (!imgLoaded) {
-                image = BitmapFactory.decodeResource(getResources(), randomStock.getRandomStockDrawable());
-                Drawable mDrawable = new BitmapDrawable(getResources(), image);
-                backdrop.setImageDrawable(mDrawable);
-            }
+
+
+
+
+    /**
+     * Pushes the event to parse
+     */
+    private  void pushEvent()
+    {
+
+        if (filledViewItems()) {                                 // if items are filled
 
             ParseObject mParseObject = new ParseObject(Constants.currentEvents);
             mParseObject.put("Name", createEventName.getText().toString());
@@ -275,18 +317,24 @@ public class CreateActivity extends android.support.v4.app.Fragment {
             mParseObject.put("Tag", createEventTag.getText());
             mParseObject.put("Owner", ParseUser.getCurrentUser());
 
-            byte[] data = scaler.compressForUpload(image);
+            byte[] data = ImageScalar.compressForUpload(image);
             ParseFile imageFile = new ParseFile("Image.jpg", data);
 
             mParseObject.put("Image", imageFile);
-
             mParseObject.saveInBackground();
             //startActivity(new Intent(context, DisplayActivity.class).putExtra("objectID", mParseObject.getObjectId()));
             getActivity().getSupportFragmentManager().popBackStack();
-
         }
     }
 
+
+    /**
+     * Brings up the clock dialog for both startTime and endTime
+     * @param TYPE:
+     *            True: End Time clock
+     *            False: Start Time clock
+     *
+     */
     private void showClockDialog(boolean TYPE){
         FragmentManager fm = context.getActivity().getSupportFragmentManager();
         ClockDialog clockDialog = new ClockDialog();
@@ -296,13 +344,13 @@ public class CreateActivity extends android.support.v4.app.Fragment {
 
 
 
-    public static ClockDialog newInstance(boolean TYPE) {
-        ClockDialog clockDialog = new ClockDialog();
-        clockDialog.isEndTime = TYPE;
-        return clockDialog;
-    }
-
-
+    /**
+     * Brings up the calendar dialog for both startTime and endTime
+     * @param TYPE:
+     *            True: End Time calendar
+     *            False: Start Time calendar
+     *
+     */
     private void showCalendarDialog(boolean TYPE) {
         FragmentManager fm = context.getActivity().getSupportFragmentManager();
         CalendarDialog calendarDialog = new CalendarDialog();
@@ -311,9 +359,10 @@ public class CreateActivity extends android.support.v4.app.Fragment {
     }
 
 
-
-    private void showPickerDialog(){
-
+    /**
+     * Brings the TagDialog to choose the event tag
+     */
+    private void showTagDialog(){
         FragmentManager fm = context.getActivity().getSupportFragmentManager();
         TagDialog tagDialog = new TagDialog();
         tagDialog.show(fm, "tag_dialog");
