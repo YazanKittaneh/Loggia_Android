@@ -21,7 +21,7 @@ import android.widget.ListView;
 
 
 import com.loggia.Create.CreateFragment;
-import com.loggia.Display.DisplayActivity;
+import com.loggia.Display.DisplayFragment;
 import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
@@ -134,13 +134,13 @@ public class EventFeedActivity extends AppCompatActivity {
                 if (view.getTag().toString() != null) {
                     ParseObject currentObject = (ParseObject) view.getTag();
                     FragmentManager fm = getSupportFragmentManager();
-                    DisplayActivity displayActivity = DisplayActivity.newInstance(currentObject);
+                    DisplayFragment displayFragment = DisplayFragment.newInstance(currentObject);
                     fm.beginTransaction().setCustomAnimations(
                             R.anim.bottom_slide_up_fast,
                             R.anim.bottom_slide_down_fast,
                             R.anim.bottom_slide_up_fast,
                             R.anim.bottom_slide_down_fast)
-                            .replace(R.id.drawer_layout, displayActivity).addToBackStack(null).commit();
+                            .replace(R.id.drawer_layout, displayFragment).addToBackStack(null).commit();
                     /*
                     Intent intent = new Intent(view.getContext(), DisplayActivity.class);
                     intent.putExtra("objectID", objectID);

@@ -3,6 +3,7 @@ package com.loggia.Create;
 
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -41,7 +42,7 @@ import java.util.Date;
  * TODO: Add user contact info
  */
 
-public class CreateFragment extends android.support.v4.app.Fragment {
+public class CreateFragment extends Fragment {
 
     /** Declarations **/
     EditText createEventName;
