@@ -2,6 +2,7 @@ package com.loggia.Create;
 
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
@@ -19,10 +20,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -66,10 +69,10 @@ public class CreateActivity extends android.support.v4.app.Fragment {
     FloatingActionButton createButton;
     Toolbar toolbar;
     private int PICK_IMAGE_REQUEST = 1;
-    public Date calendarDate;
+    public static Date calendarDate;
 
-    public Calendar startDate;
-    public Calendar endDate;
+    public static Calendar startDate;
+    public static Calendar endDate;
 
 
     Bitmap image;
@@ -93,12 +96,16 @@ public class CreateActivity extends android.support.v4.app.Fragment {
     public static CreateActivity newInstance(String tag) {
         CreateActivity fragment = new CreateActivity();
         currentTag = tag;
+        calendarDate = Calendar.getInstance().getTime();
+        startDate = Calendar.getInstance();
+        endDate = Calendar.getInstance();
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -109,9 +116,6 @@ public class CreateActivity extends android.support.v4.app.Fragment {
 
         randomStock = new StockImageRandomizer();
         scaler = new ImageScalar(context.getActivity());
-        startDate = Calendar.getInstance();
-        endDate = Calendar.getInstance();
-
 
 
         createEventName = (EditText) mView.findViewById(R.id.Create_Event_Name);
@@ -126,11 +130,11 @@ public class CreateActivity extends android.support.v4.app.Fragment {
         createButton = (FloatingActionButton) mView.findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) mView.findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
+        collapsingToolbar.setTitle("Upload Image");
 
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //setSupportActionBar(toolbar);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
 
         if(currentTag == null || !currentTag.equals("All"))
@@ -172,24 +176,16 @@ public class CreateActivity extends android.support.v4.app.Fragment {
             }
         });
 
-        /*
-        mEventDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCalendarDialog();
 
-            }
-        });
-        */
 
         createEventStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newInstance(false);
+                showCalendarDialog(false);
 
             }
         });
-/*
+
         createEventEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,7 +214,7 @@ public class CreateActivity extends android.support.v4.app.Fragment {
             }
         });
 
-*/
+
         return mView;
 
     }
@@ -228,7 +224,7 @@ public class CreateActivity extends android.support.v4.app.Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == context.getActivity().RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
 
             Uri uri = data.getData();
 
@@ -291,28 +287,29 @@ public class CreateActivity extends android.support.v4.app.Fragment {
         }
     }
 
-/*
     private void showClockDialog(boolean TYPE){
         FragmentManager fm = context.getActivity().getSupportFragmentManager();
         ClockDialog clockDialog = new ClockDialog();
         clockDialog.isEndTime = TYPE;
         clockDialog.show(fm, "fragment_clock_dialog");
     }
-    */
+
+
 
     public static ClockDialog newInstance(boolean TYPE) {
         ClockDialog clockDialog = new ClockDialog();
         clockDialog.isEndTime = TYPE;
         return clockDialog;
     }
-  /*
+
+
     private void showCalendarDialog(boolean TYPE) {
         FragmentManager fm = context.getActivity().getSupportFragmentManager();
         CalendarDialog calendarDialog = new CalendarDialog();
         calendarDialog.isEndTime = TYPE;
         calendarDialog.show(fm, "fragment_calender_dialog");
     }
-    */
+
 
 
     private void showPickerDialog(){
@@ -321,6 +318,8 @@ public class CreateActivity extends android.support.v4.app.Fragment {
         TagDialog tagDialog = new TagDialog();
         tagDialog.show(fm, "tag_dialog");
     }
+
+
 
 
 }

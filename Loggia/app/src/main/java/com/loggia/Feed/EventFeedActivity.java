@@ -18,9 +18,12 @@ import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 
@@ -104,8 +107,6 @@ public class EventFeedActivity extends AppCompatActivity {
         }
         setupListeners();
         updateEvents(currentTAG);
-
-
     }
 
     @TargetApi(21)
@@ -177,7 +178,28 @@ public class EventFeedActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
 
+        View v = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(event);
+
+        if (v instanceof EditText) {
+            View w = getCurrentFocus();
+            int scrcoords[] = new int[2];
+            w.getLocationOnScreen(scrcoords);
+            float x = event.getRawX() + w.getLeft() - scrcoords[0];
+            float y = event.getRawY() + w.getTop() - scrcoords[1];
+
+            Log.d("Activity", "Touch event "+event.getRawX()+","+event.getRawY()+" "+x+","+y+" rect "+w.getLeft()+","+w.getTop()+","+w.getRight()+","+w.getBottom()+" coords "+scrcoords[0]+","+scrcoords[1]);
+            if (event.getAction() == MotionEvent.ACTION_UP && (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w.getBottom()) ) {
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+            }
+        }
+        return ret;
+    }
     /**
      * sets up the view inside the drawer
      * @param navigationView
@@ -250,7 +272,6 @@ public class EventFeedActivity extends AppCompatActivity {
             public void done(List<ParseObject> markers, com.parse.ParseException e) {
                 if (e == null) {
                     Log.e("DONE ", "DOES WORK");
-
                     for (int i = 0; i < markers.size(); i++) {
                         Log.e("WITHIN PARSE", "WORKING");
                         ParseObject currentObject = markers.get(i);
@@ -266,6 +287,8 @@ public class EventFeedActivity extends AppCompatActivity {
 
                 } else {
                     Log.e("DONE ERROR", "DOES NOT WORK");
+                    Log.e("Error", e.toString());
+
                 }
             }
         });
