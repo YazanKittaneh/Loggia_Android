@@ -129,6 +129,7 @@ public class DisplayFragment extends Fragment {
     }
 
     /**
+     * TODO: Refactor into PARSE implementatoin code
      * loads the data from the parseObject loaded from the EventFeedActivity
      */
     private void loadData(ParseObject parseObject){

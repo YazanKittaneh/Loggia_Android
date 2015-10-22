@@ -302,6 +302,7 @@ public class CreateFragment extends Fragment {
 
 
     /**
+     * TODO: Refactor to PARSE code
      * Pushes the event to parse
      */
     private  void pushEvent()
@@ -330,6 +331,7 @@ public class CreateFragment extends Fragment {
 
 
     /**
+     * TODO: Further abstract the dialogs into a single method
      * Brings up the clock dialog for both startTime and endTime
      * @param TYPE:
      *            True: End Time clock
@@ -346,6 +348,7 @@ public class CreateFragment extends Fragment {
 
 
     /**
+     * TODO: Further abstract the dialogs into a single method
      * Brings up the calendar dialog for both startTime and endTime
      * @param TYPE:
      *            True: End Time calendar
@@ -361,6 +364,7 @@ public class CreateFragment extends Fragment {
 
 
     /**
+     * TODO: Further abstract the dialogs into a single method
      * Brings the TagDialog to choose the event tag
      */
     private void showTagDialog(){

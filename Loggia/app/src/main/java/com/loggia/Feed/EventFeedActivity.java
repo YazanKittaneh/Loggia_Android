@@ -233,6 +233,7 @@ public class EventFeedActivity extends AppCompatActivity {
 
 
     /**
+     * TODO: Refactor into PARSE implementation
      * Update parse events shown to the user.
      * Fired at start of activity and on swipe refresh.
      **/
