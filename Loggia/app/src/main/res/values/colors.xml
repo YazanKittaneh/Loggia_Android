@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="window_background">#FFF5F5F5</color>
-    <color name="ColorPrimary">#F14E46</color>
-    <color name="ColorPrimaryDark">#B93D3D</color>
+    <color name="ColorPrimary">#F44336</color>
+    <color name="ColorPrimaryDark">#b71c1c</color>
     <color name="ColorAccent">#ff9f00</color>
 
+<!-- F14E46 -->
+    <!-- B93D3D -->
 
 </resources>

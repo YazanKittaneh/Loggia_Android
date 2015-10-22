@@ -37,11 +37,36 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         context = this;
+<<<<<<< HEAD:Loggia/app/src/main/java/com/loggia/Activities/SplashActivity.java
         LoggiaUtils.initializeBackendService(BackendDomain.PARSE,context);
         currentUser = new ParseLoggiaUser(ParseUser.getCurrentUser());
         if(!currentUser.userActive())
             LoggiaUtils.anonymousUserLogIn(currentBackendDomain);
         loadEventFeed();
+=======
+
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, getResources().getString(R.string.parse_id), getResources().getString(R.string.parse_client));
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            loadEventFeed();
+        } else {
+            ParseAnonymousUtils.logIn(new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException e) {
+                    if (e != null) {
+                        Log.d("Myapp", e.toString());
+                    } else {
+                        Log.d("MyApp", "Anonymous logged in.");
+                        loadEventFeed();
+                    }
+                }
+            });
+
+        }
+
+>>>>>>> date_fix:Loggia/app/src/main/java/com/loggia/Splash/SplashActivity.java
     }
 
     @Override

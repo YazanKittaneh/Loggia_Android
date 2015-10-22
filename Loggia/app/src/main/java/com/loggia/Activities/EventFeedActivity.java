@@ -1,9 +1,9 @@
 package com.loggia.Activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,29 +11,34 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 
-import com.loggia.Model.ParseModels.ParseLoggiaEvent;
-import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
 import com.dexafree.materialList.model.CardItemView;
+import com.loggia.Display.DisplayFragment;
+import com.loggia.Fragments.CreateFragment;
+import com.loggia.Model.ParseModels.ParseLoggiaEvent;
+import com.loggia.R;
 import com.dexafree.materialList.view.MaterialListView;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.EventDateFormat;
 import com.loggia.Utils.TableData;
 import com.parse.FindCallback;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Filter;
 
 /**
  * TODO: Create organizational system for events
@@ -43,7 +48,6 @@ import java.util.logging.Filter;
 
 
 public class EventFeedActivity extends AppCompatActivity {
-
 
     private Toolbar toolbar;
     private MaterialListView mListView;
@@ -62,6 +66,7 @@ public class EventFeedActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_feed);
+        //setupWindowAnimations();
 
         /**************************
          View Declaration
@@ -75,7 +80,7 @@ public class EventFeedActivity extends AppCompatActivity {
         mDrawerItems = (ListView) findViewById(R.id.NavBar_List);
         TAGS = getResources().getStringArray(R.array.tag_names);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        mListView.getLayoutManager().offsetChildrenVertical(10);
+        mListView.getLayoutManager().offsetChildrenVertical(40);
 
 
 
@@ -91,11 +96,11 @@ public class EventFeedActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
         setupListeners();
+
         initializeFilterMap();
         selectAllEventFilters();
         queryEvents();
     }
-
 
 
 
@@ -107,9 +112,16 @@ public class EventFeedActivity extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), CreateActivity.class);
-                intent.putExtra("Tag", currentTAG);
-                startActivity(intent);
+
+                FragmentManager fm = getSupportFragmentManager();
+                CreateFragment createFragment = CreateFragment.newInstance(currentTAG);
+                fm.beginTransaction().setCustomAnimations(
+                        R.anim.bottom_slide_up_fast,
+                        R.anim.bottom_slide_down_fast,
+                        R.anim.bottom_slide_up_fast,
+                        R.anim.bottom_slide_down_fast)
+                        .replace(R.id.drawer_layout, createFragment).addToBackStack(null).commit();
+
             }
         });
 
@@ -118,12 +130,20 @@ public class EventFeedActivity extends AppCompatActivity {
             @Override
             public void onItemClick(CardItemView view, int position) {
                 if (view.getTag().toString() != null) {
-                    String objectID = view.getTag().toString();
-                    Log.d("CLICK TEST: ", objectID);
-
+                    ParseObject currentObject = (ParseObject) view.getTag();
+                    FragmentManager fm = getSupportFragmentManager();
+                    DisplayFragment displayFragment = DisplayFragment.newInstance(currentObject);
+                    fm.beginTransaction().setCustomAnimations(
+                            R.anim.bottom_slide_up_fast,
+                            R.anim.bottom_slide_down_fast,
+                            R.anim.bottom_slide_up_fast,
+                            R.anim.bottom_slide_down_fast)
+                            .replace(R.id.drawer_layout, displayFragment).addToBackStack(null).commit();
+                    /*
                     Intent intent = new Intent(view.getContext(), DisplayActivity.class);
                     intent.putExtra("objectID", objectID);
                     startActivity(intent);
+                    */
                 }
             }
 
@@ -144,7 +164,28 @@ public class EventFeedActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
 
+        View v = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(event);
+
+        if (v instanceof EditText) {
+            View w = getCurrentFocus();
+            int scrcoords[] = new int[2];
+            w.getLocationOnScreen(scrcoords);
+            float x = event.getRawX() + w.getLeft() - scrcoords[0];
+            float y = event.getRawY() + w.getTop() - scrcoords[1];
+
+            Log.d("Activity", "Touch event " + event.getRawX() + "," + event.getRawY() + " " + x + "," + y + " rect " + w.getLeft() + "," + w.getTop() + "," + w.getRight() + "," + w.getBottom() + " coords " + scrcoords[0] + "," + scrcoords[1]);
+            if (event.getAction() == MotionEvent.ACTION_UP && (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w.getBottom()) ) {
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+            }
+        }
+        return ret;
+    }
     /**
      * sets up the view inside the drawer
      * @param navigationView
@@ -200,7 +241,7 @@ public class EventFeedActivity extends AppCompatActivity {
      */
     private void queryEvents(){
         mListView.clear();
-        ParseQuery <ParseLoggiaEvent> event_query = new ParseQuery(TableData.TableNames.EVENT.toString());
+        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery(TableData.TableNames.EVENT.toString());
         event_query.whereGreaterThanOrEqualTo(TableData.EventColumnNames.event_end_date.toString(),
                 EventDateFormat.getCurrentDate());
 
@@ -224,8 +265,11 @@ public class EventFeedActivity extends AppCompatActivity {
                                 event.getEventImageUrl());
                     }
                 } else {
+
                     //TODO : SEND MESSAGE TO THE UI FOR A RESPONSE
                     //Log.e("DONE ERROR", "DOES NOT WORK");
+                    Log.e("DONE ERROR", "DOES NOT WORK");
+                    Log.e("Error", e.toString());
                 }
             }
         });
@@ -233,11 +277,14 @@ public class EventFeedActivity extends AppCompatActivity {
     }
 
 
+
     private void createCard(String name, String startTime, String date, String imageURL){
+
         BigImageCard card = new BigImageCard(context);
         card.setTitle(name);
         card.setDescription(date + " at " + startTime);
         card.setDrawable(imageURL);
+        //card.setTag(objectID);
         mListView.add(card);
 
     }
@@ -271,8 +318,7 @@ public class EventFeedActivity extends AppCompatActivity {
     private void selectEventFilters(List<Constants.FilterOptions> filters){
         for(Constants.FilterOptions option : filters)
             this.filterOptionsMap.put(option,true);
-    }a
-
+    }
 
 
 }

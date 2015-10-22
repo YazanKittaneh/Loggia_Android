@@ -18,7 +18,7 @@ public class TagDialog extends DialogFragment{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final CharSequence eventTags[] = getResources().getStringArray(R.array.tag_names);
-        final TextView mEventTag = (TextView) getActivity().findViewById(R.id.Display_Tag);
+        final TextView mEventTag = (TextView) getActivity().findViewById(R.id.Create_Tag);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("What type of event ");

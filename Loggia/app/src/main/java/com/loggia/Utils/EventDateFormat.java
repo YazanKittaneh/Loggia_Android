@@ -20,7 +20,7 @@ public class EventDateFormat {
 
 
     private static String FORMAT_TIME = "h:mm a";
-    private static String FORMAT_DATE = "EEEE"+", " + "LLLL dd";
+    private static String FORMAT_DATE = "EE"+", " + "LLLL dd";
     
 
 

@@ -9,7 +9,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 
-import com.loggia.Activities.CreateActivity;
+<<<<<<< HEAD
+=======
+import com.loggia.Fragments.CreateFragment;
+>>>>>>> date_fix
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 
@@ -37,21 +40,21 @@ public class ClockDialog extends DialogFragment
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        CreateActivity mCreateActivity = (CreateActivity) getActivity();
+        CreateFragment mCreateFragment = (CreateFragment) getParentFragment();
         EventDateFormat eventDateFormat = new EventDateFormat();
         Date date = eventDateFormat.standardTime(hourOfDay, minute);
 
         if(isEndTime) {
-            TextView display_time = (TextView) getActivity().findViewById(R.id.Display_End_Time);
-            mCreateActivity.endTimeC.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            mCreateActivity.endTimeC.set(Calendar.MINUTE, minute);
+            TextView display_time = (TextView) getActivity().findViewById(R.id.Create_End_Time);
+            mCreateFragment.endDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            mCreateFragment.endDate.set(Calendar.MINUTE, minute);
             display_time.setText(eventDateFormat.formatTime(date));
         }
         else
         {
-            TextView display_time = (TextView) getActivity().findViewById(R.id.Display_Start_Time);
-            mCreateActivity.startTimeC.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            mCreateActivity.startTimeC.set(Calendar.MINUTE, minute);
+            TextView display_time = (TextView) getActivity().findViewById(R.id.Create_Start_Time);
+            mCreateFragment.startDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            mCreateFragment.startDate.set(Calendar.MINUTE, minute);
             display_time.setText(eventDateFormat.formatTime(date));
         }
 

@@ -9,7 +9,10 @@ import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 
 
-import com.loggia.Activities.CreateActivity;
+<<<<<<< HEAD
+=======
+import com.loggia.Fragments.CreateFragment;
+>>>>>>> date_fix
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 
@@ -17,10 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
-/**
- * TODO: Change way of getting date from dialogFragment (current way is based on a mistake introduced by the code
- */
 
 public class CalendarDialog extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
@@ -42,8 +41,9 @@ public class CalendarDialog extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        TextView mEventDate = (TextView) getActivity().findViewById(R.id.Display_Event_Date);
-        CreateActivity mCreateActivity = (CreateActivity) getActivity();
+        TextView mEventStartDate = (TextView) getActivity().findViewById(R.id.Create_Start_Date);
+        TextView mEventEndDate = (TextView) getActivity().findViewById(R.id.Create_End_Date);
+        CreateFragment mCreateFragment = (CreateFragment) getParentFragment();
         Calendar thisDate = new GregorianCalendar(year, month, day);
 
         TimeZone mTimeZone;
@@ -72,20 +72,26 @@ public class CalendarDialog extends DialogFragment
 
         Log.i("DAY  INTEGER: ", String.valueOf(day));
         Log.i("MONTH INTEGER: ", String.valueOf(month));
-        String sDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date(0,0,day-2));
-        String sMonth = new SimpleDateFormat( "LLLL", Locale.ENGLISH).format(new Date(0,month+1,0));
+        String sDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(day);
+        String sMonth = new SimpleDateFormat( "LLLL", Locale.getDefault()).format(month);
+
+
+
         display_time.setText(sDay + ", " + sMonth + " " + day );
     */
-        mCreateActivity.calendarDate = thisDate.getTime();
+        mCreateFragment.calendarDate = thisDate.getTime();
 
         if(isEndTime) {
-            mCreateActivity.endTimeC.set(year, month, day);
+            mEventEndDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
+            mCreateFragment.endDate.set(year, month, day);
 
         }
         else
         {
-            mCreateActivity.startTimeC.set(year, month, day);
-            mEventDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
+            mCreateFragment.startDate.set(year, month, day);
+            mCreateFragment.endDate.set(year, month, day);
+            mEventEndDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
+            mEventStartDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
 
 
         }
