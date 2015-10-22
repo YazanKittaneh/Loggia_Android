@@ -14,5 +14,8 @@ public class Constants {
 
     public static String currentEvents = "Events_1_2_1";
 
+   public static  enum FilterOptions{
+        CONCERTS,SGA,PARTY,STUDY_SESSION
+    }
 
 }

@@ -17,8 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-import com.loggia.Activities.CreateActivity;
-import com.loggia.Activities.DisplayActivity;
+import com.loggia.Model.ParseModels.ParseLoggiaEvent;
 import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
@@ -26,11 +25,15 @@ import com.dexafree.materialList.model.CardItemView;
 import com.dexafree.materialList.view.MaterialListView;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.EventDateFormat;
+import com.loggia.Utils.TableData;
 import com.parse.FindCallback;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Filter;
 
 /**
  * TODO: Create organizational system for events
@@ -52,9 +55,7 @@ public class EventFeedActivity extends AppCompatActivity {
     private String[] TAGS;
     public String currentTAG;
     public Context context;
-
-
-
+    public Map<Constants.FilterOptions,Boolean> filterOptionsMap;
 
 
     @Override
@@ -90,9 +91,9 @@ public class EventFeedActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
         setupListeners();
-        updateEvents(currentTAG);
-
-
+        initializeFilterMap();
+        selectAllEventFilters();
+        queryEvents();
     }
 
 
@@ -137,9 +138,8 @@ public class EventFeedActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 swipeLayout.setRefreshing(true);
-                updateEvents(currentTAG);
+                queryEvents();
                 swipeLayout.setRefreshing(false);
-
             }
         });
     }
@@ -162,8 +162,10 @@ public class EventFeedActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
                         //String clicked = menuItem.toString();
+
                         currentTAG = menuItem.toString();
-                        updateEvents(currentTAG);
+                        queryEvents();
+                       // updateEvents(currentTAG);
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
@@ -173,7 +175,13 @@ public class EventFeedActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentTAG = mDrawerItems.getItemAtPosition(position).toString();
-                updateEvents(currentTAG);
+                List<Constants.FilterOptions> filters = new ArrayList<Constants.FilterOptions>();
+                    filters.add(Constants.FilterOptions.SGA);
+                filters.add(Constants.FilterOptions.PARTY);
+
+                selectEventFilters(filters);
+                queryEvents();
+                //updateEvents(currentTAG);
                 mDrawerLayout.closeDrawers();
             }
         });
@@ -187,65 +195,83 @@ public class EventFeedActivity extends AppCompatActivity {
     }
 
 
-
     /**
-     * Update parse events shown to the user.
-     * Fired at start of activity and on swipe refresh.
-     **/
-    private void updateEvents(String eventTag)
-    {
+     *  Updates the events according to the filters specified in filterOptionsMap
+     */
+    private void queryEvents(){
         mListView.clear();
-        ParseQuery <ParseObject> event_query = new ParseQuery<>(Constants.currentEvents);
+        ParseQuery <ParseLoggiaEvent> event_query = new ParseQuery(TableData.TableNames.EVENT.toString());
+        event_query.whereGreaterThanOrEqualTo(TableData.EventColumnNames.event_end_date.toString(),
+                EventDateFormat.getCurrentDate());
 
-        /* will only get events with a date greater than the current date */
-        //Log.d("CURRENT DATE: ", currentDay().toString());
-        event_query.whereGreaterThanOrEqualTo("EndTime", EventDateFormat.getCurrentDate());
-        event_query.addAscendingOrder("StartTime");
-
-        //TODO: why event tag code?
-        if(eventTag != null && !eventTag.equals("All")){
-            Log.d("MENU CLICK: ", eventTag);
-            event_query.whereEqualTo("Tag", eventTag);
+        // Additional queries depending on the tag that was chosen.
+        for(Map.Entry<Constants.FilterOptions,Boolean> entry : filterOptionsMap.entrySet()){
+            if(entry.getValue()){
+                event_query.whereEqualTo(TableData.EventColumnNames.event_tag.toString(),
+                        entry.getKey().toString());
+            }
         }
+        event_query.addAscendingOrder(TableData.EventColumnNames.event_start_date.toString());
 
-        //Date tomorrowDate = new Date(todayDate.getTime() + 86400000);
-        //event_query.whereLessThan("startTime", tomorrowDate);
-
-
-        //ParseQuery < ParseObject > query = new ParseQuery<ParseObject>(classID).addAscendingOrder("createdAt");
-        //final ProgressDialog dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
-        event_query.findInBackground(new FindCallback<ParseObject>() {
+        event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
             @Override
-            public void done(List<ParseObject> markers, com.parse.ParseException e) {
+            public void done(List<ParseLoggiaEvent> events, com.parse.ParseException e) {
                 if (e == null) {
-                    for (int i = 0; i < markers.size(); i++) {
-                        Log.e("WITHIN PARSE", "WORKING");
-                        ParseObject currentObject = markers.get(i);
-                        createCard(
-                                currentObject.getString("Name"),
-                                EventDateFormat.formatTime(currentObject.getDate("StartTime")),
-                                EventDateFormat.formatDate(currentObject.getDate("StartTime")),
-                                currentObject.getParseFile("Image").getUrl(),
-                                currentObject.getObjectId()
-                        );
+                    for(ParseLoggiaEvent event : events){
+                        createCard(event.getEventName(),
+                                EventDateFormat.formatTime(event.getEventStartDate()),
+                                EventDateFormat.formatDate((event.getEventStartDate())),
+                                event.getEventImageUrl());
                     }
                 } else {
+                    //TODO : SEND MESSAGE TO THE UI FOR A RESPONSE
                     //Log.e("DONE ERROR", "DOES NOT WORK");
                 }
             }
         });
+
     }
 
-    private void createCard(String name, String startTime, String date, String imageURL, String objectID){
+
+    private void createCard(String name, String startTime, String date, String imageURL){
         BigImageCard card = new BigImageCard(context);
         card.setTitle(name);
         card.setDescription(date + " at " + startTime);
         card.setDrawable(imageURL);
-        card.setTag(objectID);
         mListView.add(card);
 
     }
 
+    /**
+     * Initialises the map structure for event filter Options
+     */
+    private  void initializeFilterMap(){
+        this.filterOptionsMap = new HashMap();
+        this.filterOptionsMap.put(Constants.FilterOptions.CONCERTS, false);
+        this.filterOptionsMap.put(Constants.FilterOptions.PARTY, false);
+        this.filterOptionsMap.put(Constants.FilterOptions.STUDY_SESSION, false);
+    }
+
+    /**
+     * Selects all the filters for events
+     */
+    private void selectAllEventFilters(){
+        List<Constants.FilterOptions> filterOptions = new ArrayList();
+        filterOptions.add(Constants.FilterOptions.CONCERTS);
+        filterOptions.add(Constants.FilterOptions.PARTY);
+        filterOptions.add(Constants.FilterOptions.SGA);
+        filterOptions.add(Constants.FilterOptions.STUDY_SESSION);
+        selectEventFilters(filterOptions);
+    }
+
+    /**
+     * selects the filters for events as supplied by the options in filters
+     * @param filters the options to query the events with
+     */
+    private void selectEventFilters(List<Constants.FilterOptions> filters){
+        for(Constants.FilterOptions option : filters)
+            this.filterOptionsMap.put(option,true);
+    }a
 
 
 

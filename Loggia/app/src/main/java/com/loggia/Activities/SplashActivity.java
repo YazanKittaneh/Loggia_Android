@@ -20,6 +20,8 @@ import com.parse.Parse;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import android.telephony.SmsManager;
+import android.widget.Toast;
 
 /**
  *  This activity allows functionality for user login and anonymous user log in
@@ -71,4 +73,5 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(new Intent(context, EventFeedActivity.class));
         finish();
     }
+
 }

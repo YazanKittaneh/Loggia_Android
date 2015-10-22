@@ -32,9 +32,16 @@ public class ParseLoggiaEvent extends ParseObject {
         return this.getString(TableData.EventColumnNames.event_name.toString());
     }
 
+    public Date getEventStartDate(){
+        return this.getDate(TableData.EventColumnNames.event_start_date.toString());
+    }
+
+    public Date getEventEndDate(){
+        return this.getDate(TableData.EventColumnNames.event_end_date.toString());
+    }
    // @Override
     public Date getEventDate() {
-        return this.getDate(TableData.EventColumnNames.event_date.toString());
+        return this.getDate(TableData.EventColumnNames.event_start_date.toString());
     }
 
   //  @Override
