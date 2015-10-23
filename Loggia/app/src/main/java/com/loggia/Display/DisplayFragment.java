@@ -3,9 +3,13 @@ package com.loggia.Display;
 
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 
+import com.loggia.Create.CreateFragment;
+import com.loggia.Friends.FriendsListFragment;
 import com.loggia.R;
 
 import android.support.v7.widget.Toolbar;
@@ -38,6 +42,8 @@ public class DisplayFragment extends Fragment {
     TextView displayEventDescription;
     TextView displayEventLocation;
     ImageView imageView;
+    FloatingActionButton inviteButton;
+
 
     static ParseObject currentParseObject;
 
@@ -78,18 +84,22 @@ public class DisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         /* Initialize setup */
-        View mView = inflater.inflate(R.layout.fragment_display,
+        final View DisplayFragmentView = inflater.inflate(R.layout.fragment_display,
                 container, false);
 
         /* Setup view */
-        setViewItems(mView);
+        setViewItems(DisplayFragmentView);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
         loadData(currentParseObject);
 
         /* logic setters */
         setOnClickListeners();
 
-        return mView;
+
+
+
+
+        return DisplayFragmentView;
     }
 
 
@@ -110,6 +120,8 @@ public class DisplayFragment extends Fragment {
         toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
         collapsingToolbar =
                 (CollapsingToolbarLayout) mView.findViewById(R.id.collapsing_toolbar);
+        inviteButton = (FloatingActionButton) mView.findViewById(R.id.invite);
+
     }
 
 
@@ -126,6 +138,19 @@ public class DisplayFragment extends Fragment {
             }
         });
 
+        inviteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = context.getFragmentManager();
+                FriendsListFragment friendsListFragment = FriendsListFragment.newInstance();
+                fm.beginTransaction().setCustomAnimations(
+                        R.anim.bottom_slide_up_fast,
+                        R.anim.bottom_slide_down_fast,
+                        R.anim.bottom_slide_up_fast,
+                        R.anim.bottom_slide_down_fast)
+                        .replace(R.id.main_content, friendsListFragment).addToBackStack(null).commit();
+            }
+        });
     }
 
     /**
