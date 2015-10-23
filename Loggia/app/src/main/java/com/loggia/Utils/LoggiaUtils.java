@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.loggia.Interfaces.LoggiaEvent;
+import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.Model.ParseModels.ParseLoggiaEvent;
 import com.loggia.R;
 import com.parse.FindCallback;
@@ -81,41 +82,28 @@ public class LoggiaUtils {
         ParseQuery<ParseObject> event_query = new ParseQuery(TableData.TableNames.EVENT.toString());
 
         // query events with start time >= current time
-        event_query.whereGreaterThanOrEqualTo(TableData.EventColumnNames.event_date.toString(),
+        event_query.whereGreaterThanOrEqualTo(TableData.EventColumnNames.event_start_date.toString(),
                 EventDateFormat.getCurrentDate());
         /* will only get events with a date greater than the current date */
-        event_query.addAscendingOrder(TableData.EventColumnNames.event_date.toString());
-
-               /* event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
-
-
-                    final List<ParseLoggiaEvent> eventes = null;
-
-                    @Override
-                    public void done(List<ParseLoggiaEvent> markers, com.parse.ParseException e) {
-git
-                        final List<ParseLoggiaEvent> events;
-
-                        if (e == null) {
-                            events = markers;
-                            for (int i = 0; i < markers.size(); i++) {
-                                Log.e("WITHIN PARSE", "WORKING");
-                                ParseObject currentObject = markers.get(i);
-                                /*createCard(
-                                        currentObject.getString("Name"),
-                                        EventDateFormat.formatTime(currentObject.getDate("StartTime")),
-                                        EventDateFormat.formatDate(currentObject.getDate("StartTime")),
-                                        currentObject.getParseFile("Image").getUrl(),
-                                        currentObject.getObjectId()
-                                );
-
-                            }
-                        } else {
-                            //Log.e("DONE ERROR", "DOES NOT WORK");
-                        }
-            }
-
-        }*/
+        event_query.addAscendingOrder(TableData.EventColumnNames.event_start_date.toString());
         return null;
+    }
+
+    /**
+     * Pushes an event to the database
+     */
+    public static void saveEvent(BackendDomain domain,String eventName, Date eventStartDate,
+                                 Date eventEndDate, String eventLocation, byte []  eventImage,String
+                                 eventDescription,Constants.FilterOptions eventCategory,LoggiaUser eventRep){
+        LoggiaEvent event = null;
+       if(domain.equals(BackendDomain.PARSE)){
+          event = new ParseLoggiaEvent(eventName, eventStartDate,eventEndDate,eventLocation,eventImage,
+                  eventDescription, eventCategory, eventRep);
+        }
+        event.saveToDb();
+    }
+
+    private static void saveParseEvent(ParseLoggiaEvent parseLoggiaEvent){
+        parseLoggiaEvent.saveInBackground();
     }
 }

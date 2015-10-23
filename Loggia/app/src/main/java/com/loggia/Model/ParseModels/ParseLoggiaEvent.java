@@ -2,9 +2,11 @@ package com.loggia.Model.ParseModels;
 
 import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaUser;
+import com.loggia.Utils.Constants;
 import com.loggia.Utils.TableData;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -19,7 +21,8 @@ import java.util.List;
  */
 
 
-public class ParseLoggiaEvent extends ParseObject {
+public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
+    private ParseObject event;
    private  List<ParseLoggiaUser> users;
    private List<ParseLoggiaUser> eventRepresentatives;
 
@@ -27,71 +30,85 @@ public class ParseLoggiaEvent extends ParseObject {
         this.users = new ArrayList<ParseLoggiaUser>();
         this.eventRepresentatives = new ArrayList<ParseLoggiaUser>();
     }
+
+
+    public ParseLoggiaEvent(String eventName, Date eventStartDate,
+                            Date eventEndDate, String eventLocation, byte [] eventImage,String
+                                    eventDescription,Constants.FilterOptions eventCategory,
+                            LoggiaUser eventRep){
+        setEventName(eventName);
+    }
+
    // @Override
+    public void setEventName(String eventName){
+        event.put(TableData.EventColumnNames.event_name.toString(), eventName);
+    }
+    public void setEventStartDate(Date eventStartDate){
+        event.put(TableData.EventColumnNames.event_start_date.toString(),eventStartDate);
+    }
+    public void setEventEndDate(Date eventEndDate){
+        event.put(TableData.EventColumnNames.event_end_date.toString(),eventEndDate);
+    }
+
+    public void setEventLocation(String eventLocation){
+        event.put(TableData.EventColumnNames.event_location.toString(),eventLocation);
+    }
+    public void setEventImage(byte [] eventImage){
+        ParseFile imageFile = new ParseFile("Image.jpg", eventImage);
+
+
+    }
     public String getEventName() {
-        return this.getString(TableData.EventColumnNames.event_name.toString());
+        return event.getString(TableData.EventColumnNames.event_name.toString());
     }
 
     public Date getEventStartDate(){
-        return this.getDate(TableData.EventColumnNames.event_start_date.toString());
+        return event.getDate(TableData.EventColumnNames.event_start_date.toString());
     }
 
     public Date getEventEndDate(){
-        return this.getDate(TableData.EventColumnNames.event_end_date.toString());
+        return event.getDate(TableData.EventColumnNames.event_end_date.toString());
     }
    // @Override
     public Date getEventDate() {
-        return this.getDate(TableData.EventColumnNames.event_start_date.toString());
+        return event.getDate(TableData.EventColumnNames.event_start_date.toString());
     }
 
   //  @Override
     public String getEventLocation() {
-        return this.getString(TableData.EventColumnNames.event_location.toString());
+        return event.getString(TableData.EventColumnNames.event_location.toString());
     }
 
    // @Override
     public String getEventImageUrl() {
-        return this.getParseFile(TableData.EventColumnNames.event_image.toString()).getUrl();
+        return event.getParseFile(TableData.EventColumnNames.event_image.toString()).getUrl();
     }
 
    // @Override
     public long getNumEventViews() {
-        return this.getLong(TableData.EventColumnNames.event_views.toString());
+        return event.getLong(TableData.EventColumnNames.event_views.toString());
     }
 
   //  @Override
     public long getNumEventInvites() {
-        return this.getLong(TableData.EventColumnNames.event_num_invites.toString());
-    }
-
-   // @Override
-/*
-    public List<ParseLoggiaUser> getEventUsersInvited() {
-
-        ParseQuery<ParseLoggiaUser> query = ParseQuery.
-                getQuery(TableData.TableNames.EVENT_INVITE.toString());
-        query.whereEqualTo(TableData.EventInviteColumnNames.event.toString(), this);
-        query.findInBackground(new FindCallback<ParseLoggiaUser>() {
-            @Override
-            public void done(List<ParseLoggiaUser> list, ParseException e) {
-                users =  list;
-            }
-        });
-        return  users;
+        return event.getLong(TableData.EventColumnNames.event_num_invites.toString());
     }
 
     @Override
-    public List<ParseLoggiaUser> getEventRepresentatives() {
-        ParseQuery<ParseLoggiaUser> query = ParseQuery.
-                getQuery(TableData.TableNames.EVENT_EVENT_REP.toString());
-        query.whereEqualTo(TableData.EventEventRepColumnNames.event.toString(), this);
-        query.findInBackground(new FindCallback<ParseLoggiaUser>() {
-            @Override
-            public void done(List<ParseLoggiaUser> list, ParseException e) {
-                eventRepresentatives = list;
-            }
-        });
-        return eventRepresentatives;
+    public <T extends LoggiaUser> List<T> getEventUsersInvited() {
+        return null;
     }
-    */
+
+    @Override
+    public <T extends LoggiaUser> List<T> getEventRepresentatives() {
+        return null;
+    }
+
+    @Override
+    public void saveToDb() {
+        this.saveInBackground();
+    }
+
+    // @Override
+
 }

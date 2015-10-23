@@ -111,10 +111,7 @@ public class CreateActivity extends AppCompatActivity {
             mEventTag.setText(Tag);
         }
 
-
-
         backdrop.setImageDrawable(scaler.decodeSampledBitmapFromDrabwable(getResources(), R.drawable.upload));
-
 
         backdrop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +124,6 @@ public class CreateActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
-
 
         //collapsingToolbar.setTitle("Test Name");
 
@@ -145,15 +141,7 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        mEventDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCalendarDialog();
 
-            }
-        });
-        */
 
         mEventStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,8 +166,6 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 
@@ -187,7 +173,8 @@ public class CreateActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null &&
+                data.getData() != null) {
 
             Uri uri = data.getData();
 
@@ -210,7 +197,8 @@ public class CreateActivity extends AppCompatActivity {
     {
         boolean clear = true;
 
-        TextView[] fields = {mEventName, mEventTag, mEventStartTime, mEventEndTime, mEventLocation, mEventDate, mEventDescription};
+        TextView[] fields = {mEventName, mEventTag, mEventStartTime, mEventEndTime, mEventLocation,
+                mEventDate, mEventDescription};
 
         for (int i = 0; i < fields.length; i++) {
             String mTextField = fields[i].getText().toString();
@@ -247,7 +235,8 @@ public class CreateActivity extends AppCompatActivity {
             Log.d("EndTIme: ", endTimeC.getTime().toString());
 
             mParseObject.saveInBackground();
-            //startActivity(new Intent(context, DisplayActivity.class).putExtra("objectID", mParseObject.getObjectId()));
+            //startActivity(new Intent(context, DisplayActivity.class).putExtra("objectID",
+            // mParseObject.getObjectId()));
             finish();
         }
     }

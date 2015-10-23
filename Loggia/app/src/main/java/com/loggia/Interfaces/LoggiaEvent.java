@@ -61,6 +61,10 @@ public interface LoggiaEvent {
      */
 
     <T extends LoggiaUser> List<T> getEventRepresentatives();
+    /**
+     * Saves the event to the db
+     */
+    void saveToDb();
 
 
 }

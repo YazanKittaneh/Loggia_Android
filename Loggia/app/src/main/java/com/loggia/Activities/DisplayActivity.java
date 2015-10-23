@@ -159,7 +159,4 @@ public class DisplayActivity extends AppCompatActivity {
                 .into(imageView);
     }
 
-
-
-
 }

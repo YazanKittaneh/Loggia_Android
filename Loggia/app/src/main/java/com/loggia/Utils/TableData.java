@@ -11,11 +11,10 @@ public class TableData {
     }
     public static enum UserColumnNames {
         firstName,lastName,phoneNumber,password,email,userType,username,objectId;
-
     }
 
     public static enum EventColumnNames {
-        EVENT_TYPE("EVENT_TYPE"),event_name("event_name"),event_start_date("event_start_date"),
+        EVENT_TYPE("EVENT_TYPE"), event_name("event_name"),event_start_date("event_start_date"),
         event_end_date("event_end_date"),
         event_location("event_location"),EVENT_DESCR("EVENT_DESCR"),EVENT_REP_ID("EVENT_REP_ID"),
         event_image("event_image"),event_views("event_views"),EVENT_STATUS("EVENT_STATUS"),
