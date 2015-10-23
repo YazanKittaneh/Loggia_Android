@@ -1,6 +1,7 @@
 package com.loggia.Create;
 
 
+import android.content.res.Resources;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -119,8 +120,10 @@ public class CreateFragment extends Fragment {
         /* Setup view */
         View mView = inflater.inflate(R.layout.fragment_create,container, false);
         setViewItems(mView);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
-        backdrop.setImageDrawable(scaler.decodeSampledBitmapFromDrabwable(getResources(), R.drawable.upload));
+        backdrop = (ImageButton) mView.findViewById(R.id.backdrop);
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha, context.getActivity().getTheme()));
+        backdrop.setImageDrawable(getResources().getDrawable(R.drawable.upload, context.getActivity().getTheme() ));
         collapsingToolbar.setTitle("Upload Image");
 
         /* Setup objects */
@@ -149,7 +152,6 @@ public class CreateFragment extends Fragment {
         createEventEndDate = (TextView) mView.findViewById(R.id.Create_End_Date);
         createEventEndTime = (TextView) mView.findViewById(R.id.Create_End_Time);
         createEventTag = (TextView) mView.findViewById(R.id.Create_Tag);
-        backdrop = (ImageButton) mView.findViewById(R.id.backdrop);
         createButton = (FloatingActionButton) mView.findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) mView.findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
