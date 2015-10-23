@@ -9,10 +9,8 @@ import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 
 
-<<<<<<< HEAD
-=======
 import com.loggia.Fragments.CreateFragment;
->>>>>>> date_fix
+
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 

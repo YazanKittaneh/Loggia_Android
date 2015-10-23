@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         context = this;
-        LoggiaUtils.initializeBackendService(BackendDomain.PARSE,context);
+        LoggiaUtils.initializeBackendService(Constants.currentBackendDomain,context);
         currentUser = new ParseLoggiaUser(ParseUser.getCurrentUser());
 
         if(!currentUser.userActive())

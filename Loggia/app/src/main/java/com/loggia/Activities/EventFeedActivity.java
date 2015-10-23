@@ -139,11 +139,6 @@ public class EventFeedActivity extends AppCompatActivity {
                             R.anim.bottom_slide_up_fast,
                             R.anim.bottom_slide_down_fast)
                             .replace(R.id.drawer_layout, displayFragment).addToBackStack(null).commit();
-                    /*
-                    Intent intent = new Intent(view.getContext(), DisplayActivity.class);
-                    intent.putExtra("objectID", objectID);
-                    startActivity(intent);
-                    */
                 }
             }
 
@@ -273,7 +268,6 @@ public class EventFeedActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
 
@@ -319,6 +313,5 @@ public class EventFeedActivity extends AppCompatActivity {
         for(Constants.FilterOptions option : filters)
             this.filterOptionsMap.put(option,true);
     }
-
 
 }

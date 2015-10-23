@@ -62,7 +62,6 @@ public class LoggiaUtils {
                     //logIn successful
                     Log.d("MyApp", "Anonymous logged in.");
                 } else {
-                    //login not successful
                     //TODO : notification to the UI that anonymous logIn was unsuccesful
                 }
             }
