@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -125,8 +126,8 @@ public class CreateFragment extends Fragment {
         /* Setup view */
         View mView = inflater.inflate(R.layout.fragment_create,container, false);
         setViewItems(mView);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha, context.getActivity().getTheme()));
-        backdrop.setImageDrawable(getResources().getDrawable(R.drawable.upload, context.getActivity().getTheme()));
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(context.getActivity(), R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        backdrop.setImageDrawable(ContextCompat.getDrawable(context.getActivity(), R.drawable.upload));
         collapsingToolbar.setTitle("Upload Image");
 
         /* Setup objects */
