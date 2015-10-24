@@ -125,8 +125,8 @@ public class CreateFragment extends Fragment {
         /* Setup view */
         View mView = inflater.inflate(R.layout.fragment_create,container, false);
         setViewItems(mView);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
-        backdrop.setImageDrawable(scaler.decodeSampledBitmapFromDrabwable(getResources(), R.drawable.upload));
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha, context.getActivity().getTheme()));
+        backdrop.setImageDrawable(getResources().getDrawable(R.drawable.upload, context.getActivity().getTheme()));
         collapsingToolbar.setTitle("Upload Image");
 
         /* Setup objects */
