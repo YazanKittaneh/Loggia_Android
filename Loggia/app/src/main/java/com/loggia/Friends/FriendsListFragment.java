@@ -4,8 +4,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 import com.loggia.R;
 import com.loggia.Utils.Contact_Object;
 import com.loggia.Utils.FlowLayout;
+import com.loggia.Utils.SMStool;
 
 import java.util.ArrayList;
 
@@ -32,13 +37,17 @@ public class FriendsListFragment extends Fragment {
 
 
     private ArrayList<Contact_Object> list = new ArrayList<Contact_Object>();
+    private ArrayList<Contact_Object> selectedContacts = new ArrayList<>();
     private ListView mListView;
-    private ScrollView mScrollViewFilter;
+    private NestedScrollView mScrollViewFilter;
     private Contacts_Adapter mContacts_Adapter;
+    private Toolbar toolbar;
     ContactAdapter contactAdapter;
     String contactName;
     String phoneNumber;
     private FlowLayout mFlowLayoutFilter ;
+    FloatingActionButton sendSMSButton;
+
 
 
     private ListView allContactList;
@@ -81,7 +90,10 @@ public class FriendsListFragment extends Fragment {
 
         mFlowLayoutFilter = (FlowLayout) FriendsListFragmentView.findViewById(R.id.flowLayout);
         mListView = (ListView) FriendsListFragmentView.findViewById(R.id.friendsListViewFilter);
-        mScrollViewFilter = (ScrollView) FriendsListFragmentView.findViewById(R.id.scrollViewFilter);
+        mScrollViewFilter = (NestedScrollView) FriendsListFragmentView.findViewById(R.id.scrollViewFilter);
+        toolbar = (Toolbar) FriendsListFragmentView.findViewById(R.id.tool_bar);
+        sendSMSButton = (FloatingActionButton) FriendsListFragmentView.findViewById(R.id.Send);
+        //getActivity().(Toolbar);
         //allContactList = (ListView) FriendsListFragmentView.findViewById(R.id.friends_list);
 
 
@@ -130,6 +142,15 @@ public class FriendsListFragment extends Fragment {
         //allContactList.setAdapter(contactAdapter);
         mContacts_Adapter = new Contacts_Adapter(list);
         mListView.setAdapter(mContacts_Adapter);
+
+        sendSMSButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * Get the selected tags from the mFlowLayoutFilter
+                 */
+                SMStool.sendSMS(selectedContacts);
+            }});
 
         return FriendsListFragmentView;
     }
@@ -264,7 +285,6 @@ public class FriendsListFragment extends Fragment {
 
                     mService_Object.mIsSelected = !mService_Object.mIsSelected;
                     mScrollViewFilter.setVisibility(View.VISIBLE);
-
                     addFilterTag();
                     notifyDataSetChanged();
                 }
