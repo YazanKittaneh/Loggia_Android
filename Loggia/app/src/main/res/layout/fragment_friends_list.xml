@@ -1,13 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:background="@color/ColorPrimary"
+             android:fitsSystemWindows="true"
              tools:context="com.loggia.Friends.FriendsListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/friends_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_gravity="left|top"/>
 </FrameLayout>

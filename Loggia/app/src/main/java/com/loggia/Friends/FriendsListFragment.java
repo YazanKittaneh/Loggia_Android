@@ -37,6 +37,10 @@ public class FriendsListFragment extends Fragment {
     private ListView allContactList;
 
 
+    public FriendsListFragment() {
+        // Required empty public constructor
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -47,27 +51,26 @@ public class FriendsListFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static FriendsListFragment newInstance() {
         FriendsListFragment fragment = new FriendsListFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
 
 
-    public FriendsListFragment() {
-        // Required empty public constructor
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View FriendsListFragmentView = inflater.inflate(R.layout.fragment_friends_list, container, false);
+        final View FriendsListFragmentView = inflater.inflate(R.layout.fragment_friends_list,
+                container, false);
 
         allContactList = (ListView) FriendsListFragmentView.findViewById(R.id.friends_list);
 

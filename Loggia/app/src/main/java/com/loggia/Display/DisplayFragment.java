@@ -13,6 +13,7 @@ import com.loggia.Friends.FriendsListFragment;
 import com.loggia.R;
 
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,6 +142,7 @@ public class DisplayFragment extends Fragment {
         inviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v("INVITE BUTTON CLICKED: ", "TRUE");
                 FragmentManager fm = context.getFragmentManager();
                 FriendsListFragment friendsListFragment = FriendsListFragment.newInstance();
                 fm.beginTransaction().setCustomAnimations(
