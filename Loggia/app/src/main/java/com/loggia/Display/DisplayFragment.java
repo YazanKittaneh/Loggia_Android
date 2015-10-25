@@ -142,17 +142,17 @@ public class DisplayFragment extends Fragment {
         inviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("INVITE BUTTON CLICKED: ", "TRUE");
-                FragmentManager fm = context.getFragmentManager();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
                 FriendsListFragment friendsListFragment = FriendsListFragment.newInstance();
                 fm.beginTransaction().setCustomAnimations(
                         R.anim.bottom_slide_up_fast,
                         R.anim.bottom_slide_down_fast,
                         R.anim.bottom_slide_up_fast,
                         R.anim.bottom_slide_down_fast)
-                        .replace(R.id.main_content, friendsListFragment).addToBackStack(null).commit();
+                        .replace(R.id.drawer_layout, friendsListFragment).addToBackStack(null).commit();
             }
         });
+
     }
 
     /**

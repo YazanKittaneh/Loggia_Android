@@ -115,22 +115,6 @@ public class EventFeedActivity extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View view) {
-                                          Log.v("INVITE BUTTON CLICKED: ", "1");
-                                          FragmentManager fm = getSupportFragmentManager();
-                                          Log.v("INVITE BUTTON CLICKED: ", "2");
-                                          FriendsListFragment friendsListFragment = FriendsListFragment.newInstance();
-                                          Log.v("INVITE BUTTON CLICKED: ", "3");
-                                          fm.beginTransaction().setCustomAnimations(
-                                                  R.anim.bottom_slide_up_fast,
-                                                  R.anim.bottom_slide_down_fast,
-                                                  R.anim.bottom_slide_up_fast,
-                                                  R.anim.bottom_slide_down_fast)
-                                                  .replace(R.id.drawer_layout, friendsListFragment).addToBackStack(null).commit();
-                                          Log.v("INVITE BUTTON CLICKED: ", "4");
-                                      }
-                                  });
-                /*
-            }
 
                 FragmentManager fm = getSupportFragmentManager();
                 CreateFragment createFragment = CreateFragment.newInstance(currentTAG);
@@ -142,7 +126,7 @@ public class EventFeedActivity extends AppCompatActivity {
                         .replace(R.id.drawer_layout, createFragment).addToBackStack(null).commit();
 
             }
-            /*
+
         });
 
         /* Listener for each event card in the listview */

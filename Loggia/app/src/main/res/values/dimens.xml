@@ -6,4 +6,11 @@
     <dimen name="card_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="list_item_avatar_size">40dp</dimen>
+
+    <declare-styleable name="FilterLayout">
+        <attr name="android:gravity" />
+    </declare-styleable>
+    <declare-styleable name="FilterLayout_Layout">
+        <attr name="android:layout_gravity" />
+    </declare-styleable>
 </resources>
