@@ -9,7 +9,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 
-import com.loggia.Create.CreateFragment;
+
+import com.loggia.Fragments.CreateFragment;
+
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 
@@ -31,7 +33,8 @@ public class ClockDialog extends DialogFragment
         //int zone = c.get(Calendar.AM_PM);
 
         // Create a new instance of DatePickerDialog and return it
-        return new TimePickerDialog(new ContextThemeWrapper(getActivity(), R.style.Theme_Loggia), this, hour, minute, false);
+        return new TimePickerDialog(new ContextThemeWrapper(getActivity(), R.style.Theme_Loggia),
+                this, hour, minute, false);
     }
 
 

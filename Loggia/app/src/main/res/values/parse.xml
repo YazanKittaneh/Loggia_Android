@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="parse_id">pq4DTXVfCwDskh0CBEfBhwkrDLzBqmo0Q0Fqu8Om</string>
-    <string name="parse_client">5mkjDImOD21MhGM6Brzh7lOriLpfrxj9w47FWCL0</string>
+    <string name="PARSE_APP_ID">pq4DTXVfCwDskh0CBEfBhwkrDLzBqmo0Q0Fqu8Om</string>
+    <string name="PARSE_CLIENT_KEY">5mkjDImOD21MhGM6Brzh7lOriLpfrxj9w47FWCL0</string>
 
 </resources>

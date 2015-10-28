@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:background="@color/ColorPrimary"
-             android:fitsSystemWindows="true"
-             tools:context="com.loggia.Friends.FriendsListFragment">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:id="@+id/main_content"
+                                                 android:layout_width="match_parent"
+                                                 android:background="@color/ColorPrimary"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true"
+                                                 android:clickable="true" >
 
 
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tool_bar_top_padding"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
         <include
             android:id="@+id/tool_bar"
             layout="@layout/tool_bar"
             ></include>
+        </android.support.design.widget.AppBarLayout>
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -67,4 +77,4 @@
         android:layout_margin="@dimen/fab_margin" />
 
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

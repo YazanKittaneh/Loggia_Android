@@ -20,13 +20,14 @@
         android:versionName="1.2.2" >
 
         <activity
-            android:name=".Feed.EventFeedActivity"
+            android:name=".Activities.EventFeedActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize"
             >
         </activity>
+
         <activity
-            android:name=".Splash.SplashActivity"
+            android:name=".Activities.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+    </application>
 </manifest>

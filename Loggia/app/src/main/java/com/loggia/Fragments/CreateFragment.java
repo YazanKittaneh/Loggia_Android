@@ -1,4 +1,4 @@
-package com.loggia.Create;
+package com.loggia.Fragments;
 
 
 import android.content.res.Resources;
@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,8 +30,11 @@ import com.loggia.Helpers.ImageScalar;
 import com.loggia.Helpers.ClockDialog;
 import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.Helpers.TagDialog;
+import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.R;
+import com.loggia.Utils.BackendDomain;
 import com.loggia.Utils.Constants;
+import com.loggia.Utils.LoggiaUtils;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -38,6 +42,7 @@ import com.parse.ParseUser;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+
 
 /**
  * TODO: Add user contact info
@@ -70,6 +75,8 @@ public class CreateFragment extends Fragment {
     CreateFragment context = this;
     StockImageRandomizer randomStock;
     ImageScalar scaler;
+    Constants.FilterOptions eventCategory;
+    LoggiaUser currentUser;
 
 
 
@@ -120,10 +127,9 @@ public class CreateFragment extends Fragment {
         /* Setup view */
         View mView = inflater.inflate(R.layout.fragment_create,container, false);
         setViewItems(mView);
-        backdrop = (ImageButton) mView.findViewById(R.id.backdrop);
 
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha, context.getActivity().getTheme()));
-        backdrop.setImageDrawable(getResources().getDrawable(R.drawable.upload, context.getActivity().getTheme() ));
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(context.getActivity(), R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        backdrop.setImageDrawable(ContextCompat.getDrawable(context.getActivity(), R.drawable.upload));
         collapsingToolbar.setTitle("Upload Image");
 
         /* Setup objects */
@@ -155,6 +161,7 @@ public class CreateFragment extends Fragment {
         createButton = (FloatingActionButton) mView.findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) mView.findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
+        backdrop = (ImageButton) mView.findViewById(R.id.backdrop);
     }
 
 
@@ -300,33 +307,18 @@ public class CreateFragment extends Fragment {
     }
 
 
-
-
-
     /**
      * TODO: Refactor to PARSE code
      * Pushes the event to parse
      */
+
     private  void pushEvent()
     {
-
-        if (filledViewItems()) {                                 // if items are filled
-
-            ParseObject mParseObject = new ParseObject(Constants.currentEvents);
-            mParseObject.put("Name", createEventName.getText().toString());
-            mParseObject.put("StartTime", startDate.getTime());
-            mParseObject.put("EndTime", endDate.getTime());
-            mParseObject.put("Location", createEventLocation.getText().toString());
-            mParseObject.put("Description", createEventDescription.getText().toString());
-            mParseObject.put("Tag", createEventTag.getText());
-            mParseObject.put("Owner", ParseUser.getCurrentUser());
-
-            byte[] data = ImageScalar.compressForUpload(image);
-            ParseFile imageFile = new ParseFile("Image.jpg", data);
-
-            mParseObject.put("Image", imageFile);
-            mParseObject.saveInBackground();
-            //startActivity(new Intent(context, DisplayActivity.class).putExtra("objectID", mParseObject.getObjectId()));
+        if(filledViewItems()) {
+            LoggiaUtils.saveEvent(Constants.currentBackendDomain, createEventName.getText().toString(),
+                    startDate.getTime(), endDate.getTime(), createEventLocation.getText().toString(),
+                    ImageScalar.compressForUpload(image), createEventDescription.getText().toString(),
+                    eventCategory,currentUser);
             getActivity().getSupportFragmentManager().popBackStack();
         }
     }
@@ -338,7 +330,6 @@ public class CreateFragment extends Fragment {
      * @param TYPE:
      *            True: End Time clock
      *            False: Start Time clock
-     *
      */
     private void showClockDialog(boolean TYPE){
         FragmentManager fm = context.getActivity().getSupportFragmentManager();

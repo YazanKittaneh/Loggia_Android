@@ -9,7 +9,8 @@ import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 
 
-import com.loggia.Create.CreateFragment;
+import com.loggia.Fragments.CreateFragment;
+
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 

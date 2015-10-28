@@ -11,8 +11,11 @@ import java.util.TimeZone;
  * Created by L7 on 9/23/15.
  */
 public class Constants {
-
     public static String currentEvents = "Events_1_2_1";
+    public static BackendDomain currentBackendDomain = BackendDomain.PARSE;
 
+   public static  enum FilterOptions{
+        CONCERTS,SGA,PARTY,STUDY_SESSION
+    }
 
 }

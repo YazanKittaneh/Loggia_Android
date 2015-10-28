@@ -91,12 +91,11 @@ public class FriendsListFragment extends Fragment {
         mFlowLayoutFilter = (FlowLayout) FriendsListFragmentView.findViewById(R.id.flowLayout);
         mListView = (ListView) FriendsListFragmentView.findViewById(R.id.friendsListViewFilter);
         mScrollViewFilter = (NestedScrollView) FriendsListFragmentView.findViewById(R.id.scrollViewFilter);
-        toolbar = (Toolbar) FriendsListFragmentView.findViewById(R.id.tool_bar);
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        //toolbar = (Toolbar) FriendsListFragmentView.findViewById(R.id.tool_bar);
         sendSMSButton = (FloatingActionButton) FriendsListFragmentView.findViewById(R.id.Send);
-        //getActivity().(Toolbar);
         //allContactList = (ListView) FriendsListFragmentView.findViewById(R.id.friends_list);
-
-
+        
          /*
             ON CLICK LISTENER, PUT ACTION HERE
          */

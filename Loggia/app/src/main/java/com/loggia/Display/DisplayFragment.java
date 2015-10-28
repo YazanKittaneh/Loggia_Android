@@ -8,12 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 
-import com.loggia.Create.CreateFragment;
 import com.loggia.Friends.FriendsListFragment;
 import com.loggia.R;
 
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,7 +147,7 @@ public class DisplayFragment extends Fragment {
                         R.anim.bottom_slide_down_fast,
                         R.anim.bottom_slide_up_fast,
                         R.anim.bottom_slide_down_fast)
-                        .replace(R.id.drawer_layout, friendsListFragment).addToBackStack(null).commit();
+                        .add(R.id.drawer_layout, friendsListFragment).addToBackStack(null).commit();
             }
         });
 
