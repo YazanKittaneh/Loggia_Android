@@ -1,31 +1,30 @@
-package com.loggia.Activities;
+package com.loggia.Fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 
-import com.loggia.Display.DisplayFragment;
+import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
 import com.dexafree.materialList.model.CardItemView;
-import com.loggia.Fragments.CreateFragment;
 import com.loggia.Model.ParseModels.ParseLoggiaEvent;
 import com.dexafree.materialList.view.MaterialListView;
 import com.loggia.Utils.Constants;
@@ -40,6 +39,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 /**
  * TODO: Create organizational system for events
  * TODO: Pull events in an efficient manner ( only pull events not in the system)
@@ -47,59 +48,90 @@ import java.util.Map;
 
 
 
-public class EventFeedActivity extends AppCompatActivity {
+public class EventFeedFragment extends Fragment {
 
-    private Toolbar toolbar;
-    private MaterialListView mListView;
-    private SwipeRefreshLayout swipeLayout;
-    private NavigationView navigationView;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerItems;
-    private FloatingActionButton create;
+    /**************************
+     View Declaration
+     *************************/
+
+
     private String[] TAGS;
     public String currentTAG;
     public Context context;
     public Map<Constants.FilterOptions,Boolean> filterOptionsMap;
+    private  MaterialListView mListView;
+    private FloatingActionButton create;
+    private SwipeRefreshLayout swipeLayout;
 
 
+
+
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public EventFeedFragment() {
+    }
+
+
+    /**
+     * Constructor created by the newInstance and takes in the Item ID
+     */
+    public static EventFeedFragment newInstance() {
+        EventFeedFragment fragment = new EventFeedFragment();
+        return fragment;
+    }
+
+
+
+    /**
+     * OnCreate for the fragment
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_feed);
-        //setupWindowAnimations();
+    }
 
-        /**************************
-         View Declaration
-         *************************/
-        mListView = (MaterialListView) findViewById(R.id.material_listview);
-        create = (FloatingActionButton) findViewById(R.id.create);
-        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+
+
+
+
+    /**
+     * OnCreateView that inflates and sets up the view
+     */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View eventFeedView = inflater.inflate(R.layout.fragment_event_feed,
+                container, false);
+
+        mListView = (MaterialListView) eventFeedView.findViewById(R.id.material_listview);
+        create = (FloatingActionButton) eventFeedView.findViewById(R.id.create);
+        swipeLayout = (SwipeRefreshLayout) eventFeedView.findViewById(R.id.swipe_container);
         swipeLayout.setColorSchemeResources(R.color.ColorPrimary);
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerItems = (ListView) findViewById(R.id.NavBar_List);
         TAGS = getResources().getStringArray(R.array.tag_names);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        mListView.getLayoutManager().offsetChildrenVertical(40);
+
+        /** Navigation declaration **/
+        //navigationView = (NavigationView) findViewById(R.id.nav_view);
 
 
 
         /**************************
          Setup
          *************************/
-        toolbar.setNavigationIcon(R.drawable.ic_menu);
-        setSupportActionBar(toolbar);
-        currentTAG=null;
-        context=this;
-        if (navigationView != null) {
 
-            setupDrawerContent(navigationView);
-        }
+        /** Navigation setup **/
+        //toolbar.setNavigationIcon(R.drawable.ic_menu);
+        //setSupportActionBar(toolbar);
+
+        currentTAG=null;
         setupListeners();
 
         initializeFilterMap();
         selectAllEventFilters();
         queryEvents();
+
+        return eventFeedView;
     }
 
 
@@ -108,38 +140,38 @@ public class EventFeedActivity extends AppCompatActivity {
      * Set up listeners
      */
     private void setupListeners() {
-        /* Listener for the '+' create event button */
+
+        /** Listener for CreateFragment **/
         create.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View view) {
-
-                FragmentManager fm = getSupportFragmentManager();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
                 CreateFragment createFragment = CreateFragment.newInstance(currentTAG);
                 fm.beginTransaction().setCustomAnimations(
                         R.anim.bottom_slide_up_fast,
                         R.anim.bottom_slide_down_fast,
                         R.anim.bottom_slide_up_fast,
                         R.anim.bottom_slide_down_fast)
-                        .replace(R.id.drawer_layout, createFragment).addToBackStack(null).commit();
+                        .replace(R.id.full_screen, createFragment).addToBackStack(null).commit();
 
             }
 
         });
 
-        /* Listener for each event card in the listview */
+        /** Listener for DisplayFragment **/
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(CardItemView view, int position) {
                 if (view.getTag().toString() != null) {
                     ParseObject currentObject = (ParseObject) view.getTag();
-                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
                     DisplayFragment displayFragment = DisplayFragment.newInstance(currentObject);
                     fm.beginTransaction().setCustomAnimations(
                             R.anim.bottom_slide_up_fast,
                             R.anim.bottom_slide_down_fast,
                             R.anim.bottom_slide_up_fast,
                             R.anim.bottom_slide_down_fast)
-                            .replace(R.id.drawer_layout, displayFragment).addToBackStack(null).commit();
+                            .replace(R.id.full_screen, displayFragment).addToBackStack(null).commit();
                 }
             }
 
@@ -149,7 +181,7 @@ public class EventFeedActivity extends AppCompatActivity {
             }
         });
 
-        /* Listener for swiping down on the view */
+        /** Listener for SwipeRefresh **/
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -160,101 +192,34 @@ public class EventFeedActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-
-        View v = getCurrentFocus();
-        boolean ret = super.dispatchTouchEvent(event);
-
-        if (v instanceof EditText) {
-            View w = getCurrentFocus();
-            int scrcoords[] = new int[2];
-            w.getLocationOnScreen(scrcoords);
-            float x = event.getRawX() + w.getLeft() - scrcoords[0];
-            float y = event.getRawY() + w.getTop() - scrcoords[1];
-
-            Log.d("Activity", "Touch event " + event.getRawX() + "," + event.getRawY() + " " + x + "," + y + " rect " + w.getLeft() + "," + w.getTop() + "," + w.getRight() + "," + w.getBottom() + " coords " + scrcoords[0] + "," + scrcoords[1]);
-            if (event.getAction() == MotionEvent.ACTION_UP && (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w.getBottom()) ) {
-
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
-            }
-        }
-        return ret;
-    }
-    /**
-     * sets up the view inside the drawer
-     * @param navigationView
-     *      the navigation drawer that the view will be inserted into
-     */
-    private void setupDrawerContent(final NavigationView navigationView) {
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, TAGS);
-        mDrawerItems.setAdapter(mAdapter);
-        //registerForContextMenu(mDrawerItems);
-        //navigationView.inflateMenu(mDrawerItems);
-
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        //String clicked = menuItem.toString();
-
-                        currentTAG = menuItem.toString();
-                        queryEvents();
-                       // updateEvents(currentTAG);
-                        mDrawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
-
-        mDrawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentTAG = mDrawerItems.getItemAtPosition(position).toString();
-                List<Constants.FilterOptions> filters = new ArrayList<Constants.FilterOptions>();
-                    filters.add(Constants.FilterOptions.SGA);
-                filters.add(Constants.FilterOptions.PARTY);
-
-                selectEventFilters(filters);
-                queryEvents();
-                //updateEvents(currentTAG);
-                mDrawerLayout.closeDrawers();
-            }
-        });
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDrawerLayout.openDrawer(navigationView);
-            }
-        });
-    }
 
 
     /**
+     *  TODO: Have the ListView only clear once cards are created
      *  Updates the events according to the filters specified in filterOptionsMap
      */
     private void queryEvents(){
         mListView.clear();
-        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery(TableData.TableNames.EVENT.toString());
+        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery(Constants.currentEvents);//TableData.TableNames.EVENT.toString());
         event_query.whereGreaterThanOrEqualTo(TableData.EventColumnNames.event_end_date.toString(),
                 EventDateFormat.getCurrentDate());
 
         // Additional queries depending on the tag that was chosen.
-        for(Map.Entry<Constants.FilterOptions,Boolean> entry : filterOptionsMap.entrySet()){
-            if(entry.getValue()){
-                event_query.whereEqualTo(TableData.EventColumnNames.event_tag.toString(),
-                        entry.getKey().toString());
-            }
-        }
+        //for(Map.Entry<Constants.FilterOptions,Boolean> entry : filterOptionsMap.entrySet()){
+        //    if(entry.getValue()){
+        //        event_query.whereEqualTo(TableData.EventColumnNames.event_tag.toString(),
+        //                entry.getKey().toString());
+        //    }
+        //}
         event_query.addAscendingOrder(TableData.EventColumnNames.event_start_date.toString());
-
+        Log.e("Before ERROR", "Could possibly work");
         event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
             @Override
             public void done(List<ParseLoggiaEvent> events, com.parse.ParseException e) {
                 if (e == null) {
-                    for(ParseLoggiaEvent event : events){
+                    Log.e("DONE AND IT WORKS", "DOES WORK");
+
+                    for (ParseLoggiaEvent event : events) {
                         createCard(event.getEventName(),
                                 EventDateFormat.formatTime(event.getEventStartDate()),
                                 EventDateFormat.formatDate((event.getEventStartDate())),
@@ -269,6 +234,16 @@ public class EventFeedActivity extends AppCompatActivity {
                 }
             }
         });
+        Log.e("DONE ERROR", "DOES NOT WORK");
+
+
+        int drawable = new StockImageRandomizer().getRandomStockDrawable();
+        BigImageCard card = new BigImageCard(context);
+        card.setTitle("Test");
+        card.setDescription("TUES" + " at " + "10:30 pm");
+        card.setDrawable(getResources().getDrawable(R.drawable.stock_1, null));
+        //card.setTag(objectID);
+        mListView.add(card);
     }
 
 

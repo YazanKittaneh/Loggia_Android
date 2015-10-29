@@ -1,4 +1,4 @@
-package com.loggia.Display;
+package com.loggia.Fragments;
 
 
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 
-import com.loggia.Friends.FriendsListFragment;
 import com.loggia.R;
 
 import android.support.v7.widget.Toolbar;

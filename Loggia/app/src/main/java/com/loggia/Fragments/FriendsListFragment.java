@@ -1,4 +1,4 @@
-package com.loggia.Friends;
+package com.loggia.Fragments;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.loggia.Friends.ContactAdapter;
 import com.loggia.R;
 import com.loggia.Utils.Contact_Object;
 import com.loggia.Utils.FlowLayout;
@@ -91,7 +90,7 @@ public class FriendsListFragment extends Fragment {
         mFlowLayoutFilter = (FlowLayout) FriendsListFragmentView.findViewById(R.id.flowLayout);
         mListView = (ListView) FriendsListFragmentView.findViewById(R.id.friendsListViewFilter);
         mScrollViewFilter = (NestedScrollView) FriendsListFragmentView.findViewById(R.id.scrollViewFilter);
-        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar = (Toolbar) getActivity().findViewById(R.id.tool_bar);
         //toolbar = (Toolbar) FriendsListFragmentView.findViewById(R.id.tool_bar);
         sendSMSButton = (FloatingActionButton) FriendsListFragmentView.findViewById(R.id.Send);
         //allContactList = (ListView) FriendsListFragmentView.findViewById(R.id.friends_list);

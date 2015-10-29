@@ -4,25 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.loggia.Activities.EventFeedActivity;
+import com.loggia.Fragments.EventFeedFragment;
 import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.Model.ParseModels.ParseLoggiaUser;
 import com.loggia.R;
-import com.loggia.Utils.BackendDomain;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.LoggiaUtils;
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseAnonymousUtils;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import android.telephony.SmsManager;
-import android.widget.Toast;
 
 /**
  *  This activity allows functionality for user login and anonymous user log in
@@ -72,7 +64,7 @@ public class SplashActivity extends AppCompatActivity {
     public void loadEventFeed()
     {
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-        startActivity(new Intent(context, EventFeedActivity.class));
+        startActivity(new Intent(context, EventFeedFragment.class));
         finish();
     }
 
