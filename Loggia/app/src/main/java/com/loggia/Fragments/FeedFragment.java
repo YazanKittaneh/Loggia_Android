@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 
 import com.loggia.Helpers.StockImageRandomizer;
+import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.controller.RecyclerItemClickListener;
@@ -149,7 +150,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onItemClick(CardItemView view, int position) {
                 //if (view.getTag().toString() != null) {
-                    ParseObject currentObject = (ParseObject) view.getTag();
+                    LoggiaEvent currentObject = (LoggiaEvent) view.getTag();
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     DisplayFragment displayFragment = DisplayFragment.newInstance(currentObject);
                     fm.beginTransaction().setCustomAnimations(
@@ -210,7 +211,8 @@ public class FeedFragment extends Fragment {
                         createCard(event.getEventName(),
                                 EventDateFormat.formatTime(event.getEventStartDate()),
                                 EventDateFormat.formatDate((event.getEventStartDate())),
-                                event.getEventImageUrl());
+                                event.getEventImageUrl(),
+                                event);
                     }
                 } else {
                     //TODO : SEND MESSAGE TO THE UI FOR A RESPONSE
@@ -227,13 +229,13 @@ public class FeedFragment extends Fragment {
 
 
 
-    private void createCard(String name, String startTime, String date, String imageURL){
+    private void createCard(String name, String startTime, String date, String imageURL, LoggiaEvent event){
 
         BigImageCard card = new BigImageCard(context);
         card.setTitle(name);
         card.setDescription(date + " at " + startTime);
         card.setDrawable(imageURL);
-        card.setTag(objectID);
+        card.setTag(event);
         mListView.add(card);
 
     }

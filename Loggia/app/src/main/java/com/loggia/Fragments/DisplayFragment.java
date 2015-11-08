@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 
+import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.R;
 
 import android.support.v7.widget.Toolbar;
@@ -43,7 +44,7 @@ public class DisplayFragment extends Fragment {
     FloatingActionButton inviteButton;
 
 
-    static ParseObject currentParseObject;
+    static LoggiaEvent currentEvent;
 
     DisplayFragment context = this;
 
@@ -59,9 +60,9 @@ public class DisplayFragment extends Fragment {
     /**
      * Constructor created by the newInstance and takes in the Item ID
      */
-    public static DisplayFragment newInstance(ParseObject currentObject) {
+    public static DisplayFragment newInstance(LoggiaEvent currentObject) {
         DisplayFragment fragment = new DisplayFragment();
-        currentParseObject = currentObject;
+        currentEvent = currentObject;
         return fragment;
     }
 
@@ -88,7 +89,7 @@ public class DisplayFragment extends Fragment {
         /* Setup view */
         setViewItems(DisplayFragmentView);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
-        loadData(currentParseObject);
+        loadData(currentEvent);
 
         /* logic setters */
         setOnClickListeners();
@@ -156,14 +157,14 @@ public class DisplayFragment extends Fragment {
      * TODO: Refactor into PARSE implementatoin code
      * loads the data from the parseObject loaded from the EventFeedActivity
      */
-    private void loadData(ParseObject parseObject){
+    private void loadData(LoggiaEvent event){
                     setContent(
-                            parseObject.getString("Name"),
-                            parseObject.getDate("StartTime"),
-                            parseObject.getDate("EndTime"),
-                            parseObject.getParseFile("Image").getUrl(),
-                            parseObject.getString("Description"),
-                            parseObject.getString("Location")
+                            event.getEventName(),
+                            event.getEventStartDate(),
+                            event.getEventEndDate(),
+                            event.getEventImageUrl(),
+                            event.getEventDescription(),
+                            event.getEventLocation()
                     );
     }
 
@@ -177,7 +178,6 @@ public class DisplayFragment extends Fragment {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels/4;
         int height = dm.heightPixels/10;
-        EventDateFormat format = new EventDateFormat();
 
         collapsingToolbar.setTitle(name);
         displayEventStartTime.setText(EventDateFormat.formatTime(startDate));

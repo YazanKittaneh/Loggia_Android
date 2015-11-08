@@ -19,47 +19,50 @@ public interface LoggiaEvent {
     String getEventName();
 
     /**
-     * @return the date of commencement for this event
+     * @return the Start Date of commencement for this event
      */
+    Date getEventStartDate();
 
-    Date getEventDate();
+    /**
+     * @return the End Date of commencement for this event
+     */
+    Date getEventEndDate();
 
     /**
      * @return the location of this event
      */
-
     String getEventLocation();
 
     /**
      * @return the url of the image corresponding to this event
      */
-
     String getEventImageUrl();
+
+    /**
+     * @return the Description to this event
+     */
+    String getEventDescription();
 
     /**
      * @return the number of views for this event
      */
-
     long getNumEventViews();
 
     /**
      * @return the number of invites for this event
      */
-
     long getNumEventInvites();
 
     /**
      * TODO : check how to prevent parametized return type
      * @return the users that have been invited to this event
      */
-
     <T extends LoggiaUser> List<T> getEventUsersInvited();
 
     /**
      * @return a list of the users who are representatives for this event. If an organisation is
      * hosting this event, the representatives will be admins of this organisation.
      */
-
     <T extends LoggiaUser> List<T> getEventRepresentatives();
 
     /**

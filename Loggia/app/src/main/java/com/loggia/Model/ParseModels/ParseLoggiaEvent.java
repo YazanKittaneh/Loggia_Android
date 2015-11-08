@@ -76,10 +76,6 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
     public Date getEventEndDate(){
         return event.getDate(TableData.EventColumnNames.event_end_date.toString());
     }
-   // @Override
-    public Date getEventDate() {
-        return event.getDate(TableData.EventColumnNames.event_start_date.toString());
-    }
 
   //  @Override
     public String getEventLocation() {
@@ -91,7 +87,12 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
         return event.getParseFile(TableData.EventColumnNames.event_image.toString()).getUrl();
     }
 
-   // @Override
+    @Override
+    public String getEventDescription() {
+        return event.getParseFile(TableData.EventColumnNames.event_description.toString()).getUrl();
+    }
+
+    // @Override
     public long getNumEventViews() {
         return event.getLong(TableData.EventColumnNames.event_views.toString());
     }

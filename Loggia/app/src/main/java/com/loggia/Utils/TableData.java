@@ -14,19 +14,19 @@ public class TableData {
     }
 
     public static enum EventColumnNames {
-        EVENT_TYPE("EVENT_TYPE"),
+        event_type("event_type"),
         event_name("event_name"),
         event_start_date("event_start_date"),
         event_end_date("event_end_date"),
         event_location("event_location"),
-        EVENT_DESCR("EVENT_DESCR"),
-        EVENT_REP_ID("EVENT_REP_ID"),
+        event_description("EVENT_DESCR"),
+        event_rep_id("event_rep_id"),
         event_image("event_image"),
         event_views("event_views"),
-        EVENT_STATUS("EVENT_STATUS"),
+        event_status("event_status"),
         event_num_invites("event_num_invites"),
         event_tag("event_tag"),
-        EVENT_APPROVAL_STATUS("EVENT_APPROVAL_STATUS");
+        event_approval_status("event_approval_status");
 
 
         private  String name;
