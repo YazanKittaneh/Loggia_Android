@@ -19,9 +19,9 @@ import android.widget.TextView;
 
 import com.loggia.Friends.ContactAdapter;
 import com.loggia.R;
-import com.loggia.Utils.Contact_Object;
+import com.loggia.Utils.SMS.Contact_Object;
 import com.loggia.Utils.FlowLayout;
-import com.loggia.Utils.SMStool;
+import com.loggia.Utils.SMS.SMStool;
 
 import java.util.ArrayList;
 

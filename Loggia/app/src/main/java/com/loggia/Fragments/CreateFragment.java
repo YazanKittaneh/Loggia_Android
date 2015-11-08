@@ -1,7 +1,6 @@
 package com.loggia.Fragments;
 
 
-import android.content.res.Resources;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -25,19 +24,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.loggia.Helpers.CalendarDialog;
+import com.loggia.Dialogs.CalendarDialog;
 import com.loggia.Helpers.ImageScalar;
-import com.loggia.Helpers.ClockDialog;
+import com.loggia.Dialogs.ClockDialog;
 import com.loggia.Helpers.StockImageRandomizer;
-import com.loggia.Helpers.TagDialog;
+import com.loggia.Dialogs.TagDialog;
 import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.R;
-import com.loggia.Utils.BackendDomain;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.LoggiaUtils;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.util.Calendar;

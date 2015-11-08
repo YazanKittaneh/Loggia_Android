@@ -1,4 +1,4 @@
-package com.loggia.Utils;
+package com.loggia.Utils.SMS;
 
 /**
  * Created by parag.chauhan on 7/28/2015.

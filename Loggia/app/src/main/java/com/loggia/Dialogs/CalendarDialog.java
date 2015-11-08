@@ -1,4 +1,4 @@
-package com.loggia.Helpers;
+package com.loggia.Dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

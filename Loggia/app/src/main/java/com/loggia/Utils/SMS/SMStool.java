@@ -1,7 +1,9 @@
-package com.loggia.Utils;
+package com.loggia.Utils.SMS;
 
 import android.telephony.SmsManager;
 import android.util.Log;
+
+import com.loggia.Utils.SMS.Contact_Object;
 
 import java.util.ArrayList;
 

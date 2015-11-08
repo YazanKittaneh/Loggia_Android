@@ -1,23 +1,15 @@
 package com.loggia.Fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ListView;
 
 
 import com.loggia.Helpers.StockImageRandomizer;
@@ -39,12 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-/**
- * TODO: Create organizational system for events
- * TODO: Pull events in an efficient manner ( only pull events not in the system)
- */
 
 
 
@@ -199,7 +185,7 @@ public class EventFeedFragment extends Fragment {
      *  Updates the events according to the filters specified in filterOptionsMap
      */
     private void queryEvents(){
-        mListView.clear();
+        mListView.clear(); //clears the cards
         ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery(Constants.currentEvents);//TableData.TableNames.EVENT.toString());
         event_query.whereGreaterThanOrEqualTo(TableData.EventColumnNames.event_end_date.toString(),
                 EventDateFormat.getCurrentDate());
