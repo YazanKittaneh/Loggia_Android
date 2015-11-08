@@ -39,10 +39,16 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
             String eventLocation,
             byte [] eventImage,
             String eventDescription,
-            Constants.FilterOptions eventCategory,
+            
             LoggiaUser eventRep
     ){
         setEventName(eventName);
+        setEventStartDate(eventStartDate);
+        setEventEndDate(eventEndDate);
+        setEventLocation(eventLocation);
+        setEventImage(eventImage);
+        setEventDescription(eventDescription);
+        setEventRepresentative(eventRep);
     }
 
    /** SETTERS **/
@@ -61,6 +67,14 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
     }
     public void setEventImage(byte [] eventImage){
         ParseFile imageFile = new ParseFile("Image.jpg", eventImage);
+        event.put(TableData.EventColumnNames.event_image.toString(), imageFile);
+    }
+    public void setEventDescription(String eventDescription){
+        event.put(TableData.EventColumnNames.event_description.toString(),eventDescription);
+    }
+    public void setEventRepresentative(LoggiaUser eventRep){
+        event.put(TableData.EventColumnNames.event_rep_id.toString(),eventRep);
+
     }
     /** SETTERS **/
 
