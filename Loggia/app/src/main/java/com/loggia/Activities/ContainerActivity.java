@@ -1,9 +1,7 @@
 package com.loggia.Activities;
 
-import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,10 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
-import com.loggia.Fragments.CreateFragment;
-import com.loggia.Fragments.EventFeedFragment;
+import com.loggia.Fragments.FeedFragment;
+import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.Model.ParseModels.ParseLoggiaUser;
 import com.loggia.R;
@@ -36,6 +33,7 @@ public Context context = this;
     @Bind(R.id.tool_bar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     LoggiaUser currentUser;
+    LoggiaEvent currentEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +52,13 @@ public Context context = this;
             LoggiaUtils.anonymousUserLogIn(Constants.currentBackendDomain);
 
         FragmentManager fm = getSupportFragmentManager();
-        EventFeedFragment eventFeedFragment = EventFeedFragment.newInstance();
+        FeedFragment feedFragment = FeedFragment.newInstance();
         fm.beginTransaction().setCustomAnimations(
                 R.anim.bottom_slide_up_fast,
                 R.anim.bottom_slide_down_fast,
                 R.anim.bottom_slide_up_fast,
                 R.anim.bottom_slide_down_fast)
-                .replace(R.id.drawer_layout, eventFeedFragment).addToBackStack(null).commit();
+                .replace(R.id.drawer_layout, feedFragment).addToBackStack(null).commit();
     }
 
 

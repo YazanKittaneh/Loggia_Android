@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.loggia.Fragments.EventFeedFragment;
+import com.loggia.Fragments.FeedFragment;
 import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.Model.ParseModels.ParseLoggiaUser;
 import com.loggia.R;
@@ -64,7 +64,7 @@ public class SplashActivity extends AppCompatActivity {
     public void loadEventFeed()
     {
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-        startActivity(new Intent(context, EventFeedFragment.class));
+        startActivity(new Intent(context, FeedFragment.class));
         finish();
     }
 

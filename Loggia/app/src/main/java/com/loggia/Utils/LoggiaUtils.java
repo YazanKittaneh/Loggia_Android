@@ -91,11 +91,18 @@ public class LoggiaUtils {
     /**
      * Pushes an event to the database
      */
-    public static void saveEvent(BackendDomain domain,String eventName, Date eventStartDate,
-                                 Date eventEndDate, String eventLocation, byte []  eventImage,String
-                                 eventDescription,Constants.FilterOptions eventCategory,LoggiaUser eventRep){
+    public static void saveEvent(BackendDomain domain,
+                                 String eventName,
+                                 Date eventStartDate,
+                                 Date eventEndDate,
+                                 String eventLocation,
+                                 byte []  eventImage,
+                                 String eventDescription,
+                                 Constants.FilterOptions eventCategory,
+                                 LoggiaUser eventRep)
+    {
         LoggiaEvent event = null;
-       if(domain.equals(BackendDomain.PARSE)){
+        if(domain.equals(BackendDomain.PARSE)){
           event = new ParseLoggiaEvent(eventName, eventStartDate,eventEndDate,eventLocation,eventImage,
                   eventDescription, eventCategory, eventRep);
         }

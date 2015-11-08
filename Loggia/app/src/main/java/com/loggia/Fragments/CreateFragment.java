@@ -132,7 +132,7 @@ public class CreateFragment extends Fragment {
         scaler = new ImageScalar(context.getActivity());
 
         /* logic setters */
-        setTag(currentTag);
+        //setTag(currentTag); TODO: Reimplement
         setOnClickListeners();
 
         return mView;
@@ -152,7 +152,7 @@ public class CreateFragment extends Fragment {
         createEventStartTime = (TextView) mView.findViewById(R.id.Create_Start_Time);
         createEventEndDate = (TextView) mView.findViewById(R.id.Create_End_Date);
         createEventEndTime = (TextView) mView.findViewById(R.id.Create_End_Time);
-        createEventTag = (TextView) mView.findViewById(R.id.Create_Tag);
+        //createEventTag = (TextView) mView.findViewById(R.id.Create_Tag); TODO: reimplement
         createButton = (FloatingActionButton) mView.findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) mView.findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
@@ -223,27 +223,32 @@ public class CreateFragment extends Fragment {
             }
         });
 
+        /**
+         * TODO:
+         *
         createEventTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTagDialog();
             }
         });
+    **/
     }
 
 
 
     /**
+     * TODO: Reimplement
      * SETUP METHOD:
      * Handles logic for object tagging
-     */
+
     public void setTag(String currentTag){
         if(currentTag == null || !currentTag.equals("All"))
         {
             createEventTag.setText(currentTag);
         }
     }
-
+*/
 
 
     /**
@@ -282,7 +287,14 @@ public class CreateFragment extends Fragment {
      * Display a UI error if there are emtpy fields
      */
     private boolean filledViewItems(){
-        TextView[] fields = {createEventName, createEventTag, createEventStartTime, createEventEndTime, createEventStartDate, createEventEndDate, createEventLocation, createEventDescription};
+        TextView[] fields = {createEventName,
+                createEventStartTime,
+                createEventEndTime,
+                createEventStartDate,
+                createEventEndDate,
+                createEventLocation,
+                //TODO: reimplement createEventTag
+                createEventDescription};
         boolean clear = true;
 
         for (int i = 0; i < fields.length; i++) {
@@ -310,10 +322,17 @@ public class CreateFragment extends Fragment {
     private  void pushEvent()
     {
         if(filledViewItems()) {
-            LoggiaUtils.saveEvent(Constants.currentBackendDomain, createEventName.getText().toString(),
-                    startDate.getTime(), endDate.getTime(), createEventLocation.getText().toString(),
-                    ImageScalar.compressForUpload(image), createEventDescription.getText().toString(),
-                    eventCategory,currentUser);
+            LoggiaUtils.saveEvent(
+                    Constants.currentBackendDomain,
+                    createEventName.getText().toString(),
+                    startDate.getTime(),
+                    endDate.getTime(),
+                    createEventLocation.getText().toString(),
+                    ImageScalar.compressForUpload(image),
+                    createEventDescription.getText().toString(),
+                    eventCategory,
+                    currentUser
+            );
             getActivity().getSupportFragmentManager().popBackStack();
         }
     }
@@ -354,12 +373,13 @@ public class CreateFragment extends Fragment {
     /**
      * TODO: Further abstract the dialogs into a single method
      * Brings the TagDialog to choose the event tag
-     */
+
     private void showTagDialog(){
         FragmentManager fm = context.getActivity().getSupportFragmentManager();
         TagDialog tagDialog = new TagDialog();
         tagDialog.show(fm, "tag_dialog");
     }
+     **/
 
 
 

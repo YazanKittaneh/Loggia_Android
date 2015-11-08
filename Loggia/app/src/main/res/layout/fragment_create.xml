@@ -120,6 +120,7 @@
                         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
                     </RelativeLayout>
+                    <!--
                     <RelativeLayout
                         android:layout_below="@id/Name"
                         android:paddingTop="-24dp"
@@ -146,6 +147,7 @@
                             android:id="@+id/Create_Tag"/>
 
                     </RelativeLayout>
+                    -->
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

@@ -15,6 +15,7 @@ import com.loggia.R;
 public class TagDialog extends DialogFragment{
 
 
+    /**
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final CharSequence eventTags[] = getResources().getStringArray(R.array.tag_names);
@@ -29,9 +30,8 @@ public class TagDialog extends DialogFragment{
             }
         });
         return builder.show();
-
     }
 
-
+**/
 
 }

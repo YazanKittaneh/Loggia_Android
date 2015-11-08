@@ -34,7 +34,7 @@ import java.util.Map;
 
 
 
-public class EventFeedFragment extends Fragment {
+public class FeedFragment extends Fragment {
 
     /**************************
      View Declaration
@@ -56,15 +56,15 @@ public class EventFeedFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public EventFeedFragment() {
+    public FeedFragment() {
     }
 
 
     /**
      * Constructor created by the newInstance and takes in the Item ID
      */
-    public static EventFeedFragment newInstance() {
-        EventFeedFragment fragment = new EventFeedFragment();
+    public static FeedFragment newInstance() {
+        FeedFragment fragment = new FeedFragment();
         return fragment;
     }
 
@@ -88,7 +88,7 @@ public class EventFeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View eventFeedView = inflater.inflate(R.layout.fragment_event_feed,
+        final View eventFeedView = inflater.inflate(R.layout.fragment_feed,
                 container, false);
 
         mListView = (MaterialListView) eventFeedView.findViewById(R.id.material_listview);
@@ -148,7 +148,7 @@ public class EventFeedFragment extends Fragment {
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(CardItemView view, int position) {
-                if (view.getTag().toString() != null) {
+                //if (view.getTag().toString() != null) {
                     ParseObject currentObject = (ParseObject) view.getTag();
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     DisplayFragment displayFragment = DisplayFragment.newInstance(currentObject);
@@ -158,7 +158,7 @@ public class EventFeedFragment extends Fragment {
                             R.anim.bottom_slide_up_fast,
                             R.anim.bottom_slide_down_fast)
                             .replace(R.id.full_screen, displayFragment).addToBackStack(null).commit();
-                }
+                //}
             }
 
             @Override
@@ -186,10 +186,11 @@ public class EventFeedFragment extends Fragment {
      */
     private void queryEvents(){
         mListView.clear(); //clears the cards
-        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery(Constants.currentEvents);//TableData.TableNames.EVENT.toString());
+        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery(TableData.TableNames.EVENT.toString());
         event_query.whereGreaterThanOrEqualTo(TableData.EventColumnNames.event_end_date.toString(),
                 EventDateFormat.getCurrentDate());
 
+        //TODO: Put in filtering functianlity
         // Additional queries depending on the tag that was chosen.
         //for(Map.Entry<Constants.FilterOptions,Boolean> entry : filterOptionsMap.entrySet()){
         //    if(entry.getValue()){
@@ -212,7 +213,6 @@ public class EventFeedFragment extends Fragment {
                                 event.getEventImageUrl());
                     }
                 } else {
-
                     //TODO : SEND MESSAGE TO THE UI FOR A RESPONSE
                     //Log.e("DONE ERROR", "DOES NOT WORK");
                     Log.e("DONE ERROR", "DOES NOT WORK");
@@ -223,13 +223,6 @@ public class EventFeedFragment extends Fragment {
         Log.e("DONE ERROR", "DOES NOT WORK");
 
 
-        int drawable = new StockImageRandomizer().getRandomStockDrawable();
-        BigImageCard card = new BigImageCard(context);
-        card.setTitle("Test");
-        card.setDescription("TUES" + " at " + "10:30 pm");
-        card.setDrawable(getResources().getDrawable(R.drawable.stock_1, null));
-        //card.setTag(objectID);
-        mListView.add(card);
     }
 
 
@@ -240,7 +233,7 @@ public class EventFeedFragment extends Fragment {
         card.setTitle(name);
         card.setDescription(date + " at " + startTime);
         card.setDrawable(imageURL);
-        //card.setTag(objectID);
+        card.setTag(objectID);
         mListView.add(card);
 
     }
