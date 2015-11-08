@@ -39,7 +39,7 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
             String eventLocation,
             byte [] eventImage,
             String eventDescription,
-            
+            Constants.FilterOptions eventCategory,
             LoggiaUser eventRep
     ){
         setEventName(eventName);
@@ -56,7 +56,7 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
         event.put(TableData.EventColumnNames.event_name.toString(), eventName);
     }
     public void setEventStartDate(Date eventStartDate){
-        event.put(TableData.EventColumnNames.event_start_date.toString(),eventStartDate);
+        event.put(TableData.EventColumnNames.event_start_date.toString(), eventStartDate);
     }
     public void setEventEndDate(Date eventEndDate){
         event.put(TableData.EventColumnNames.event_end_date.toString(),eventEndDate);

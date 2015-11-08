@@ -330,7 +330,7 @@ public class CreateFragment extends Fragment {
                     createEventLocation.getText().toString(),
                     ImageScalar.compressForUpload(image),
                     createEventDescription.getText().toString(),
-                    //eventCategory,
+                    eventCategory,
                     currentUser
             );
             getActivity().getSupportFragmentManager().popBackStack();
