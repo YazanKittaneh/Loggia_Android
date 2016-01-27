@@ -46,6 +46,8 @@ public Context context = this;
         context = this;
         LoggiaUtils.initializeBackendService(Constants.currentBackendDomain, context);
         currentUser = new ParseLoggiaUser(ParseUser.getCurrentUser());
+        Constants.FilterOptions eventCategory;
+
 
 
         if(!currentUser.userActive())

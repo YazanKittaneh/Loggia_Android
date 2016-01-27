@@ -32,6 +32,5 @@ public class ParseLoggiaOrg extends ParseObject implements LoggiaOrganisation {
 
     @Override
     public void addNewAdmin(LoggiaUser admin) {
-
     }
 }

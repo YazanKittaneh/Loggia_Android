@@ -39,7 +39,7 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
             String eventLocation,
             byte [] eventImage,
             String eventDescription,
-            Constants.FilterOptions eventCategory,
+            //Constants.FilterOptions eventCategory,
             LoggiaUser eventRep
     ){
         setEventName(eventName);
@@ -75,6 +75,10 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
     public void setEventRepresentative(LoggiaUser eventRep){
         event.put(TableData.EventColumnNames.event_rep_id.toString(),eventRep);
 
+    }
+
+    public void setEventCategory(){
+        event.put(TableData.EventColumnNames.event_tag.toString(),eventRep);
     }
     /** SETTERS **/
 
