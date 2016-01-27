@@ -152,7 +152,7 @@ public class CreateFragment extends Fragment {
         createEventStartTime = (TextView) mView.findViewById(R.id.Create_Start_Time);
         createEventEndDate = (TextView) mView.findViewById(R.id.Create_End_Date);
         createEventEndTime = (TextView) mView.findViewById(R.id.Create_End_Time);
-        //createEventTag = (TextView) mView.findViewById(R.id.Create_Tag); TODO: reimplement
+        createEventTag = (TextView) mView.findViewById(R.id.Create_Tag);
         createButton = (FloatingActionButton) mView.findViewById(R.id.accept);
         collapsingToolbar =(CollapsingToolbarLayout) mView.findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
