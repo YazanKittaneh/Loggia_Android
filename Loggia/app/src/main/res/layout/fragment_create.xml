@@ -120,6 +120,33 @@
                         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
                     </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_below="@id/Name"
+                        android:paddingTop="-24dp"
+                        android:id="@+id/Tag"
+                        style="@style/Widget.CardContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/Tag_Icon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            />
+
+                        <TextView
+                            android:layout_toRightOf="@id/Tag_Icon"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="16dp"
+                            android:hint="Event Type"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:id="@+id/Create_Tag"/>
+
+                    </RelativeLayout>
+
                     <!--
                     <RelativeLayout
                         android:layout_below="@id/Name"

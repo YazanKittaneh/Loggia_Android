@@ -225,14 +225,14 @@ public class CreateFragment extends Fragment {
 
         /**
          * TODO:
-         *
+         * */
         createEventTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTagDialog();
             }
         });
-    **/
+
     }
 
 
@@ -373,13 +373,13 @@ public class CreateFragment extends Fragment {
     /**
      * TODO: Further abstract the dialogs into a single method
      * Brings the TagDialog to choose the event tag
-
+     * */
     private void showTagDialog(){
         FragmentManager fm = context.getActivity().getSupportFragmentManager();
         TagDialog tagDialog = new TagDialog();
         tagDialog.show(fm, "tag_dialog");
     }
-     **/
+
 
 
 
