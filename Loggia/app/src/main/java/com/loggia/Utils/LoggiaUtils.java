@@ -98,13 +98,20 @@ public class LoggiaUtils {
                                  String eventLocation,
                                  byte []  eventImage,
                                  String eventDescription,
-                                 Constants.FilterOptions eventCategory,
+                                 CategoryMap eventCategory,
                                  LoggiaUser eventRep)
     {
         LoggiaEvent event = null;
         if(domain.equals(BackendDomain.PARSE)){
-          event = new ParseLoggiaEvent(eventName, eventStartDate,eventEndDate,eventLocation,eventImage,
-                  eventDescription,eventCategory, eventRep); //TODO: reintegrate eventCategory
+          event = new ParseLoggiaEvent(
+                  eventName,
+                  eventStartDate,
+                  eventEndDate,
+                  eventLocation,
+                  eventImage,
+                  eventDescription,
+                  eventCategory,
+                  eventRep); //TODO: reintegrate eventCategory
         }
         event.saveToDb();
     }

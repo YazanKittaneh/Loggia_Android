@@ -31,6 +31,7 @@ import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.Dialogs.TagDialog;
 import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.R;
+import com.loggia.Utils.CategoryMap;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.LoggiaUtils;
 
@@ -43,7 +44,7 @@ import java.util.Date;
  * TODO: Add user contact info
  */
 
-public class CreateFragment extends Fragment {
+public class CreateFragment extends Fragment implements TagDialog.DialogListenter{
 
     /** Declarations **/
     EditText createEventName;
@@ -70,8 +71,8 @@ public class CreateFragment extends Fragment {
     CreateFragment context = this;
     StockImageRandomizer randomStock;
     ImageScalar scaler;
-    Constants.FilterOptions eventCategory;
     LoggiaUser currentUser;
+    CategoryMap eventCategory;
 
 
 
@@ -89,6 +90,7 @@ public class CreateFragment extends Fragment {
     public static CreateFragment newInstance(String tag) {
         CreateFragment fragment = new CreateFragment();
         currentTag = tag;  //Sets the currentTag to the tag passed in
+
 
         /* Setting current times */
         calendarDate = Calendar.getInstance().getTime();
@@ -314,6 +316,7 @@ public class CreateFragment extends Fragment {
     }
 
 
+
     /**
      * TODO: Refactor to PARSE code
      * Pushes the event to parse
@@ -381,7 +384,8 @@ public class CreateFragment extends Fragment {
     }
 
 
-
-
-
+    @Override
+    public void bullshit(int option) {
+        eventCategory.put(Constants.FilterOptions.values()[option], true);
+    }
 }

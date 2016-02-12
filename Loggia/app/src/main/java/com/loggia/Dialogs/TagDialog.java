@@ -15,6 +15,11 @@ import com.loggia.R;
 public class TagDialog extends DialogFragment{
 
 
+    public interface DialogListenter {
+        public void  bullshit(int option);
+    }
+
+    DialogListenter mDialogListener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -27,10 +32,14 @@ public class TagDialog extends DialogFragment{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mEventTag.setText(eventTags[which]);
+                mDialogListener.bullshit(which);
             }
         });
         return builder.show();
     }
+
+
+
 
 
 }

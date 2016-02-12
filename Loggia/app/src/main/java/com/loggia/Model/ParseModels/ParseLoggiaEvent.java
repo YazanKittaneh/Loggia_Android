@@ -2,6 +2,7 @@ package com.loggia.Model.ParseModels;
 
 import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaUser;
+import com.loggia.Utils.CategoryMap;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.TableData;
 import com.parse.FindCallback;
@@ -12,6 +13,7 @@ import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,7 +41,7 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
             String eventLocation,
             byte [] eventImage,
             String eventDescription,
-            //Constants.FilterOptions eventCategory,
+            CategoryMap eventCategory,
             LoggiaUser eventRep
     ){
         setEventName(eventName);
@@ -49,6 +51,7 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
         setEventImage(eventImage);
         setEventDescription(eventDescription);
         setEventRepresentative(eventRep);
+        setEventCategory(eventCategory);
     }
 
    /** SETTERS **/
@@ -76,9 +79,8 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
         event.put(TableData.EventColumnNames.event_rep_id.toString(),eventRep);
 
     }
-
-    public void setEventCategory(){
-        event.put(TableData.EventColumnNames.event_tag.toString(),eventRep);
+    public void setEventCategory(CategoryMap eventCategory){
+        event.put(TableData.EventColumnNames.event_tag.toString(), eventCategory);
     }
     /** SETTERS **/
 
@@ -137,6 +139,5 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
         this.saveInBackground();
     }
 
-    // @Override
 
 }

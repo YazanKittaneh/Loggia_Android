@@ -18,6 +18,7 @@ import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.Model.ParseModels.ParseLoggiaUser;
 import com.loggia.R;
+import com.loggia.Utils.CategoryMap;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.LoggiaUtils;
 import com.parse.ParseUser;
@@ -34,6 +35,7 @@ public Context context = this;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     LoggiaUser currentUser;
     LoggiaEvent currentEvent;
+    CategoryMap eventCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,8 @@ public Context context = this;
         context = this;
         LoggiaUtils.initializeBackendService(Constants.currentBackendDomain, context);
         currentUser = new ParseLoggiaUser(ParseUser.getCurrentUser());
-        Constants.FilterOptions eventCategory;
+
+
 
 
 
