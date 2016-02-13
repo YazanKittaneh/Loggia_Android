@@ -44,7 +44,7 @@ import java.util.Date;
  * TODO: Add user contact info
  */
 
-public class CreateFragment extends Fragment implements TagDialog.DialogListenter{
+public class CreateFragment extends Fragment implements TagDialog.DialogListener {
 
     /** Declarations **/
     EditText createEventName;
@@ -380,12 +380,13 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListente
     private void showTagDialog(){
         FragmentManager fm = context.getActivity().getSupportFragmentManager();
         TagDialog tagDialog = new TagDialog();
+        tagDialog.setTargetFragment(this, 0);
         tagDialog.show(fm, "tag_dialog");
     }
 
 
     @Override
-    public void bullshit(int option) {
-        eventCategory.put(Constants.FilterOptions.values()[option], true);
+    public void setFilterOption(int filterItem) {
+        eventCategory.put(Constants.FilterOptions.values()[filterItem], true);
     }
 }

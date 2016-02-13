@@ -12,7 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.loggia.Dialogs.TagDialog;
 import com.loggia.Fragments.FeedFragment;
 import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaUser;
@@ -102,6 +104,7 @@ public Context context = this;
         }
         return ret;
     }
+
 
     /**   Navigation Setup
      * sets up the view inside the drawer

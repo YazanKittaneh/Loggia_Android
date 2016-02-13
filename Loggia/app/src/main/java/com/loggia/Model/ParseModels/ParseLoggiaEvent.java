@@ -28,6 +28,7 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
    private  List<ParseLoggiaUser> users;
    private List<ParseLoggiaUser> eventRepresentatives;
 
+
     public ParseLoggiaEvent(){
         this.users = new ArrayList<ParseLoggiaUser>();
         this.eventRepresentatives = new ArrayList<ParseLoggiaUser>();

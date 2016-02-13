@@ -2,12 +2,11 @@
 <resources>
 
     <string-array name="tag_names">
-        <item>All</item>
         <item>Art</item>
         <item>Food</item>
         <item>Music</item>
         <item>Parties</item>
         <item>Sports</item>
-        <item>Student Groups"</item>
+        <item>Student</item>
     </string-array>
 </resources>

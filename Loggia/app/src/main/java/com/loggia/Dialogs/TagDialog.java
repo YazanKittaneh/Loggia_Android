@@ -15,24 +15,23 @@ import com.loggia.R;
 public class TagDialog extends DialogFragment{
 
 
-    public interface DialogListenter {
-        public void  bullshit(int option);
+    public interface DialogListener {
+        void setFilterOption(int filterNumber);
     }
 
-    DialogListenter mDialogListener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final DialogListener mDialogListener = (DialogListener) getTargetFragment();
         final CharSequence eventTags[] = getResources().getStringArray(R.array.tag_names);
         final TextView mEventTag = (TextView) getActivity().findViewById(R.id.Create_Tag);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("What type of event ");
         builder.setItems(R.array.tag_names, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mEventTag.setText(eventTags[which]);
-                mDialogListener.bullshit(which);
+                mDialogListener.setFilterOption(which);
             }
         });
         return builder.show();

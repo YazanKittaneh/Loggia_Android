@@ -114,8 +114,8 @@ public class FeedFragment extends Fragment {
         currentTAG=null;
         setupListeners();
 
-        initializeFilterMap();
-        selectAllEventFilters();
+        //initializeFilterMap();
+        //selectAllEventFilters();
         queryEvents();
 
         return eventFeedView;
@@ -242,7 +242,7 @@ public class FeedFragment extends Fragment {
 
     /**
      * Initialises the map structure for event filter Options
-     */
+
     private  void initializeFilterMap(){
         this.filterOptionsMap = new HashMap();
         this.filterOptionsMap.put(Constants.FilterOptions.CONCERTS, false);
@@ -252,7 +252,7 @@ public class FeedFragment extends Fragment {
 
     /**
      * Selects all the filters for events
-     */
+
     private void selectAllEventFilters(){
         List<Constants.FilterOptions> filterOptions = new ArrayList();
         filterOptions.add(Constants.FilterOptions.CONCERTS);
@@ -261,6 +261,7 @@ public class FeedFragment extends Fragment {
         filterOptions.add(Constants.FilterOptions.STUDY_SESSION);
         selectEventFilters(filterOptions);
     }
+     **/
 
     /**
      * selects the filters for events as supplied by the options in filters

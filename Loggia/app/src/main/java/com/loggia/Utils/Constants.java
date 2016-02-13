@@ -13,11 +13,14 @@ import java.util.logging.Filter;
  * Created by L7 on 9/23/15.
  */
 public class Constants {
-    public static String currentEvents = "Events_1_2_1";
     public static BackendDomain currentBackendDomain = BackendDomain.PARSE;
-    public static Boolean value;
+
+    /**
+     * Enum list of all filter options
+     * ADD ADDITIONAL FILTERS HERE
+     */
     public enum FilterOptions{
-        CONCERTS,SGA,PARTY,STUDY_SESSION
+        ART,FOOD,MUSIC,PARTIES,SPORTS,STUDENT
     }
 
 
