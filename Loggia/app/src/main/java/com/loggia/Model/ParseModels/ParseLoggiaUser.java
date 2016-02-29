@@ -33,16 +33,19 @@ public class ParseLoggiaUser implements LoggiaUser {
         this.parseUser = user;
     }
 
+    /** Gets first name of the ParseLoggiaUser **/
     @Override
     public String getFirstName() {
         return parseUser.getString(TableData.UserColumnNames.firstName.toString());
     }
 
+    /** Gets last name of the ParseLoggiaUser **/
     @Override
     public String getLastName() {
         return parseUser.getString(TableData.UserColumnNames.lastName.toString());
     }
 
+    /** Gets list of organizations that the ParseLoggiaUser is tied too **/
     @Override
     public List<ParseLoggiaOrg> getOrganisations() {
         ParseQuery<ParseLoggiaOrg> query = ParseQuery.
@@ -57,6 +60,7 @@ public class ParseLoggiaUser implements LoggiaUser {
         return userOrganisations;
     }
 
+    /** Gets list of upcoming events the ParseLoggiaUser is going to attend **/
     @Override
     public List<ParseLoggiaEvent> getUpcomingEvents() {
         ParseQuery<ParseLoggiaEvent> query = ParseQuery.

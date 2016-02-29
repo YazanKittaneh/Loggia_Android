@@ -19,7 +19,7 @@ public class TableData {
         event_start_date("event_start_date"),
         event_end_date("event_end_date"),
         event_location("event_location"),
-        event_description("EVENT_DESCR"),
+        event_description("event_descr"),
         event_rep_id("event_rep_id"),
         event_image("event_image"),
         event_views("event_views"),

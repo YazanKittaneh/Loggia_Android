@@ -8,10 +8,10 @@ import java.util.HashMap;
  * Created by L7 on 2/11/16.
  * A class to handle the catagory hashmap for the filters.
  */
-public class CategoryMap {
-    //TODO: extend a hashmap and make this a polymorphic object
+public class CategoryMap extends HashMap{
 
     HashMap<Enum, Boolean> CategoryMap;
+
 
     /** Constructor of the CatagoryMap. Defults all filter options to false **/
     public CategoryMap() {
