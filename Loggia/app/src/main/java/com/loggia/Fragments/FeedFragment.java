@@ -27,9 +27,12 @@ import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -87,11 +90,10 @@ public class FeedFragment extends Fragment {
      * OnCreateView that inflates and sets up the view
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View eventFeedView = inflater.inflate(R.layout.fragment_feed,
-                container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        final View eventFeedView = inflater.inflate(R.layout.fragment_feed,container, false);
 
+        /** Declarations **/
         mListView = (MaterialListView) eventFeedView.findViewById(R.id.material_listview);
         create = (FloatingActionButton) eventFeedView.findViewById(R.id.create);
         swipeLayout = (SwipeRefreshLayout) eventFeedView.findViewById(R.id.swipe_container);
@@ -124,7 +126,7 @@ public class FeedFragment extends Fragment {
 
 
     /**
-     * Set up listeners
+     * Set up listeners for the UI
      */
     private void setupListeners() {
 
@@ -151,6 +153,7 @@ public class FeedFragment extends Fragment {
             public void onItemClick(CardItemView view, int position) {
                 //if (view.getTag().toString() != null) {
                     LoggiaEvent currentObject = (LoggiaEvent) view.getTag();
+                    //TODO: Make LoggiaEvent an instance variable
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     DisplayFragment displayFragment = DisplayFragment.newInstance(currentObject);
                     fm.beginTransaction().setCustomAnimations(
@@ -187,9 +190,18 @@ public class FeedFragment extends Fragment {
      */
     private void queryEvents(){
         mListView.clear(); //clears the cards
-        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery(TableData.TableNames.EVENT.toString());
-        event_query.whereGreaterThanOrEqualTo(TableData.EventColumnNames.event_end_date.toString(),
-                EventDateFormat.getCurrentDate());
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy kk-mm", Locale.US);
+
+
+        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery("Email_test");//TableData.TableNames.EVENT.toString());
+
+        try {
+            event_query.whereGreaterThanOrEqualTo(
+                    formatter.parse(TableData.EventColumnNames.event_end_date.toString()).toString(),
+                    EventDateFormat.getCurrentDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         //TODO: Put in filtering functianlity
         // Additional queries depending on the tag that was chosen.
@@ -199,7 +211,11 @@ public class FeedFragment extends Fragment {
         //                entry.getKey().toString());
         //    }
         //}
-        event_query.addAscendingOrder(TableData.EventColumnNames.event_start_date.toString());
+        try {
+            event_query.addAscendingOrder(formatter.parse(TableData.EventColumnNames.event_start_date.toString()).toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Log.e("Before ERROR", "Could possibly work");
         event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
             @Override

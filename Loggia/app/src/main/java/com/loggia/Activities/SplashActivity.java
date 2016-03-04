@@ -18,6 +18,8 @@ import com.parse.ParseUser;
 
 /**
  *  This activity allows functionality for user login and anonymous user log in
+ *  Current creates anonymous user if user is not already present. If user is there, then moves on
+ *  to container activity
  */
 public class SplashActivity extends AppCompatActivity {
 
@@ -29,12 +31,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         context = this;
-        LoggiaUtils.initializeBackendService(Constants.currentBackendDomain,context);
-        currentUser = new ParseLoggiaUser(ParseUser.getCurrentUser());
-
-
-        if(!currentUser.userActive())
-            LoggiaUtils.anonymousUserLogIn(Constants.currentBackendDomain);
         loadEventFeed();
     }
 

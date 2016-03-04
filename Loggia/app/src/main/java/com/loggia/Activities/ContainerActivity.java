@@ -28,6 +28,9 @@ import com.parse.ParseUser;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * The containing activity to make transition and pages faster
+ */
 public class ContainerActivity extends AppCompatActivity {
 
 public Context context = this;
@@ -39,6 +42,7 @@ public Context context = this;
     LoggiaEvent currentEvent;
     CategoryMap eventCategory;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +50,26 @@ public Context context = this;
         ButterKnife.bind(this);
         toolbar.setNavigationIcon(R.drawable.ic_menu);
         setSupportActionBar(toolbar);
-
         context = this;
+
+        /** initialize backend and service **/
+        initializeBackend();
+        startupEventFeed();
+    }
+
+
+
+    /** Initialize the backend for the app **/
+    private void initializeBackend(){
         LoggiaUtils.initializeBackendService(Constants.currentBackendDomain, context);
         currentUser = new ParseLoggiaUser(ParseUser.getCurrentUser());
 
-
-
-
-
         if(!currentUser.userActive())
             LoggiaUtils.anonymousUserLogIn(Constants.currentBackendDomain);
+    }
 
+    /** Starts the event feed fragment **/
+    private void startupEventFeed(){
         FragmentManager fm = getSupportFragmentManager();
         FeedFragment feedFragment = FeedFragment.newInstance();
         fm.beginTransaction().setCustomAnimations(
@@ -68,7 +80,6 @@ public Context context = this;
                 .replace(R.id.drawer_layout, feedFragment).addToBackStack(null).commit();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -77,10 +88,11 @@ public Context context = this;
     }
 
 
+
+
     /**
      * Handles off screen gestures when in a textview
-     * @param event
-     * @return
+     * Exists out of the textview and minimizes keyboard when user touches outside of view box
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {

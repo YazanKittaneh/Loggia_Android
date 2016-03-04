@@ -56,7 +56,7 @@ public class DisplayFragment extends Fragment {
     public DisplayFragment() {
     }
 
-
+    //fragmentmanager.findfragmentbyid
     /**
      * Constructor created by the newInstance and takes in the Item ID
      */
