@@ -62,17 +62,17 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
 
     /** Global Variables **/
     private int PICK_IMAGE_REQUEST = 1;
-    public static Date calendarDate;
-    public static Calendar startDate;
-    public static Calendar endDate;
-    static String currentTag;
-    Bitmap image;
-    boolean imgLoaded = false;
-    CreateFragment context = this;
-    StockImageRandomizer randomStock;
-    ImageScalar scaler;
-    LoggiaUser currentUser;
-    CategoryMap eventCategory;
+    protected static Date calendarDate;
+    protected static Calendar startDate;
+    protected static Calendar endDate;
+    protected static String currentTag;
+    protected Bitmap image;
+    protected boolean imgLoaded = false;
+    private CreateFragment context = this;
+    protected  StockImageRandomizer randomStock;
+    protected ImageScalar scaler;
+    protected LoggiaUser currentUser;
+    protected CategoryMap eventCategory;
 
 
 

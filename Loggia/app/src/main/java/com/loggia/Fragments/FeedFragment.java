@@ -2,6 +2,7 @@ package com.loggia.Fragments;
 
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -36,15 +37,15 @@ import java.util.Locale;
 import java.util.Map;
 
 
-
+/**
+ * The Feed, considered the "homepage". Show each object in the database for the user and
+ * branch out to all different fragements
+ */
 
 public class FeedFragment extends Fragment {
 
-    /**************************
-     View Declaration
-     *************************/
 
-
+    /** Declarations **/
     private String[] TAGS;
     public String currentTAG;
     public Context context;
@@ -56,34 +57,24 @@ public class FeedFragment extends Fragment {
 
 
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    /** Mandatory empty constructor for the fragment manager to instantiate the
+     *  fragment (e.g. upon screen orientation changes). **/
     public FeedFragment() {
     }
 
 
-    /**
-     * Constructor created by the newInstance and takes in the Item ID
-     */
+    /** Constructor created by the newInstance and takes in the Item ID **/
     public static FeedFragment newInstance() {
         FeedFragment fragment = new FeedFragment();
         return fragment;
     }
 
 
-
-    /**
-     * OnCreate for the fragment
-     */
+    /** OnCreate for the fragment **/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-
-
 
 
     /**
@@ -103,21 +94,20 @@ public class FeedFragment extends Fragment {
         /** Navigation declaration **/
         //navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-
-
-        /**************************
-         Setup
-         *************************/
-
-        /** Navigation setup **/
+        /** Navigation setup
+         * Commented out because it's unfinished
+         * **/
         //toolbar.setNavigationIcon(R.drawable.ic_menu);
         //setSupportActionBar(toolbar);
 
         currentTAG=null;
+
+        /** setup all listeners  **/
         setupListeners();
 
         //initializeFilterMap();
         //selectAllEventFilters();
+        /** Sets up query to populate the feed **/
         queryEvents();
 
         return eventFeedView;
@@ -126,14 +116,14 @@ public class FeedFragment extends Fragment {
 
 
     /**
-     * Set up listeners for the UI
+     * Set up listeners
      */
     private void setupListeners() {
 
         /** Listener for CreateFragment **/
         create.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 CreateFragment createFragment = CreateFragment.newInstance(currentTAG);
                 fm.beginTransaction().setCustomAnimations(
@@ -151,18 +141,17 @@ public class FeedFragment extends Fragment {
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(CardItemView view, int position) {
-                //if (view.getTag().toString() != null) {
-                    LoggiaEvent currentObject = (LoggiaEvent) view.getTag();
-                    //TODO: Make LoggiaEvent an instance variable
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    DisplayFragment displayFragment = DisplayFragment.newInstance(currentObject);
-                    fm.beginTransaction().setCustomAnimations(
-                            R.anim.bottom_slide_up_fast,
-                            R.anim.bottom_slide_down_fast,
-                            R.anim.bottom_slide_up_fast,
-                            R.anim.bottom_slide_down_fast)
-                            .replace(R.id.full_screen, displayFragment).addToBackStack(null).commit();
-                //}
+                LoggiaEvent currentObject = (LoggiaEvent) view.getTag();
+                //TODO: Make LoggiaEvent an instance variable
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                DisplayFragment displayFragment = DisplayFragment.newInstance(currentObject);
+                fm.beginTransaction().setCustomAnimations(
+                        R.anim.bottom_slide_up_fast,
+                        R.anim.bottom_slide_down_fast,
+                        R.anim.bottom_slide_up_fast,
+                        R.anim.bottom_slide_down_fast)
+                        .replace(R.id.full_screen, displayFragment).addToBackStack(null).commit();
+
             }
 
             @Override
@@ -176,6 +165,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onRefresh() {
                 swipeLayout.setRefreshing(true);
+
                 queryEvents();
                 swipeLayout.setRefreshing(false);
             }
@@ -189,19 +179,15 @@ public class FeedFragment extends Fragment {
      *  Updates the events according to the filters specified in filterOptionsMap
      */
     private void queryEvents(){
+        //TODO: Only add items that you don't have in the list view
         mListView.clear(); //clears the cards
-        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy kk-mm", Locale.US);
+        //SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy kk-mm", Locale.US);
 
+        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery(TableData.TableNames.EVENT.toString());
 
-        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery("Email_test");//TableData.TableNames.EVENT.toString());
-
-        try {
-            event_query.whereGreaterThanOrEqualTo(
-                    formatter.parse(TableData.EventColumnNames.event_end_date.toString()).toString(),
-                    EventDateFormat.getCurrentDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        event_query.whereGreaterThanOrEqualTo(
+                TableData.EventColumnNames.event_end_date.toString(),
+                EventDateFormat.getCurrentDate());
 
         //TODO: Put in filtering functianlity
         // Additional queries depending on the tag that was chosen.
@@ -211,11 +197,8 @@ public class FeedFragment extends Fragment {
         //                entry.getKey().toString());
         //    }
         //}
-        try {
-            event_query.addAscendingOrder(formatter.parse(TableData.EventColumnNames.event_start_date.toString()).toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        event_query.addAscendingOrder(TableData.EventColumnNames.event_start_date.toString());
+
         Log.e("Before ERROR", "Could possibly work");
         event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
             @Override
@@ -231,29 +214,24 @@ public class FeedFragment extends Fragment {
                                 event);
                     }
                 } else {
-                    //TODO : SEND MESSAGE TO THE UI FOR A RESPONSE
+                    Snackbar.make(getView(), "Feed failed to load", Snackbar.LENGTH_SHORT);
                     //Log.e("DONE ERROR", "DOES NOT WORK");
                     Log.e("DONE ERROR", "DOES NOT WORK");
                     Log.e("Error", e.toString());
                 }
             }
         });
-        Log.e("DONE ERROR", "DOES NOT WORK");
-
-
     }
 
 
 
     private void createCard(String name, String startTime, String date, String imageURL, LoggiaEvent event){
-
         BigImageCard card = new BigImageCard(context);
         card.setTitle(name);
         card.setDescription(date + " at " + startTime);
         card.setDrawable(imageURL);
         card.setTag(event);
         mListView.add(card);
-
     }
 
     /**

@@ -19,12 +19,14 @@
 /**
  * Created by L7 on 8/23/15.
  */
-public class ImageScalar extends Activity {
+public class ImageScalar{
 
     int width;
     int height;
     DisplayMetrics dm;
 
+
+    /** constructor takes in the activity and gets the eight and width from that activity **/
     public ImageScalar(Activity activity) {
         this.dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -33,9 +35,8 @@ public class ImageScalar extends Activity {
 
     }
 
+
     public BitmapDrawable decodeSampledBitmapFromDrabwable(Resources res, int drawable) {
-
-
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
 
@@ -109,6 +110,7 @@ public class ImageScalar extends Activity {
     }
 
 
+    /** compresses a given bitmap to 70% and send byte[] back **/
     public static byte[] compressForUpload(Bitmap bitmap) {
         byte[] data;
 

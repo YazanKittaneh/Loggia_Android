@@ -38,7 +38,7 @@ public Context context = this;
 
     @Bind(R.id.tool_bar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
-    LoggiaUser currentUser;
+    protected LoggiaUser currentUser;
     LoggiaEvent currentEvent;
     CategoryMap eventCategory;
 
@@ -80,6 +80,8 @@ public Context context = this;
                 .replace(R.id.drawer_layout, feedFragment).addToBackStack(null).commit();
     }
 
+
+    /** Creates the menue drawer hamberger button **/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

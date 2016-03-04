@@ -34,14 +34,14 @@ public class DisplayFragment extends Fragment {
     CollapsingToolbarLayout collapsingToolbar;
     Toolbar toolbar;
 
-    TextView displayEventStartTime;
-    TextView displayEventStartDate;
-    TextView displayEventEndTime;
-    TextView displayEventEndDate;
-    TextView displayEventDescription;
-    TextView displayEventLocation;
-    ImageView imageView;
-    FloatingActionButton inviteButton;
+    private TextView displayEventStartTime;
+    private TextView displayEventStartDate;
+    private TextView displayEventEndTime;
+    private TextView displayEventEndDate;
+    private TextView displayEventDescription;
+    private TextView displayEventLocation;
+    private ImageView imageView;
+    private FloatingActionButton inviteButton;
 
 
     static LoggiaEvent currentEvent;
@@ -60,9 +60,9 @@ public class DisplayFragment extends Fragment {
     /**
      * Constructor created by the newInstance and takes in the Item ID
      */
-    public static DisplayFragment newInstance(LoggiaEvent currentObject) {
+    public static DisplayFragment newInstance(LoggiaEvent eventObject) {
         DisplayFragment fragment = new DisplayFragment();
-        currentEvent = currentObject;
+        currentEvent = eventObject;
         return fragment;
     }
 
@@ -81,8 +81,6 @@ public class DisplayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        /* Initialize setup */
         final View DisplayFragmentView = inflater.inflate(R.layout.fragment_display,
                 container, false);
 
@@ -93,10 +91,6 @@ public class DisplayFragment extends Fragment {
 
         /* logic setters */
         setOnClickListeners();
-
-
-
-
 
         return DisplayFragmentView;
     }
