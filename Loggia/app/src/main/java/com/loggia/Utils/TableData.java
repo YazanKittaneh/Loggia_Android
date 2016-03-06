@@ -2,18 +2,38 @@ package com.loggia.Utils;
 
 /**
  * Created by albertowusu-asare on 9/23/15.
+ * A way of having consistant variables for tables, colomns, etc
  */
 public class TableData {
 
-    public static enum TableNames {
-        LOGGIA_USER,EVENT,EVENT_INVITE,EVENT_HOST,USER_CONNECT,EVENT_ATTENDANT,event,EVENT_EVENT_REP,
-        USER_ORGANISATION,EVENT_ATTENDEE
-    }
-    public static enum UserColumnNames {
-        firstName,lastName,phoneNumber,password,email,userType,username,objectId;
+    /** Names of tables in the backend **/
+    public enum TableNames {
+        LOGGIA_USER,
+        EVENT,
+        EVENT_INVITE,
+        EVENT_HOST,
+        USER_CONNECT,
+        EVENT_ATTENDANT,
+        event,
+        EVENT_EVENT_REP,
+        USER_ORGANISATION,
+        EVENT_ATTENDEE
     }
 
-    public static enum EventColumnNames {
+    /** Column names for the User Table **/
+    public enum UserColumnNames {
+        firstName,
+        lastName,
+        phoneNumber,
+        password,
+        email,
+        userType,
+        username,
+        objectId
+    }
+
+    /** Column names for the Event Table **/
+    public enum EventColumnNames {
         event_type("Title"),
         event_name("Title"),
         event_start_date("Start"),
@@ -35,6 +55,7 @@ public class TableData {
             this.name = name;
         }
 
+        /**  **/
         public boolean equalsName(String otherName) {
             return (otherName == null) ? false : name.equals(otherName);
         }

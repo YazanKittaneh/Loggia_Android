@@ -1,5 +1,5 @@
 
-        package com.loggia.Helpers;
+        package com.loggia.Utils;
 
         import android.app.Activity;
         import android.content.Context;
@@ -18,8 +18,9 @@
 
 /**
  * Created by L7 on 8/23/15.
+ * An Image compressing utility
  */
-public class ImageScalar{
+public class ImageCompressor {
 
     int width;
     int height;
@@ -27,7 +28,7 @@ public class ImageScalar{
 
 
     /** constructor takes in the activity and gets the eight and width from that activity **/
-    public ImageScalar(Activity activity) {
+    public ImageCompressor(Activity activity) {
         this.dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
         this.width = dm.widthPixels;
@@ -45,11 +46,9 @@ public class ImageScalar{
         options.inJustDecodeBounds = false;
 
         return new BitmapDrawable(res, BitmapFactory.decodeResource(res, drawable));
-
-
     }
 
-
+    /*
     public BitmapDrawable decodeSampledBitmapFromParse(Resources res, ParseObject mParseObject) {
 
         StockImageRandomizer randomStock;
@@ -84,9 +83,11 @@ public class ImageScalar{
         }
 
     }
+     */
 
 
-    public static int calculateInSampleSize(
+    /** helper function to that calculates an image size based on the screen size **/
+    private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;

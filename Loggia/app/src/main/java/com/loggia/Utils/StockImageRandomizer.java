@@ -1,4 +1,4 @@
-package com.loggia.Helpers;
+package com.loggia.Utils;
 
 import java.util.Random;
 import com.loggia.R;

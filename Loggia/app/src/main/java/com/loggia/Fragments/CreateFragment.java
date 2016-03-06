@@ -25,9 +25,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.loggia.Dialogs.CalendarDialog;
-import com.loggia.Helpers.ImageScalar;
+import com.loggia.Utils.ImageCompressor;
 import com.loggia.Dialogs.ClockDialog;
-import com.loggia.Helpers.StockImageRandomizer;
+import com.loggia.Utils.StockImageRandomizer;
 import com.loggia.Dialogs.TagDialog;
 import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.R;
@@ -62,15 +62,15 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
 
     /** Global Variables **/
     private int PICK_IMAGE_REQUEST = 1;
-    protected static Date calendarDate;
-    protected static Calendar startDate;
-    protected static Calendar endDate;
+    public static Date calendarDate;  //TODO: Create private variables and pass them as arguments
+    public static Calendar startDate;
+    public static Calendar endDate;
     protected static String currentTag;
     protected Bitmap image;
     protected boolean imgLoaded = false;
     private CreateFragment context = this;
     protected  StockImageRandomizer randomStock;
-    protected ImageScalar scaler;
+    protected ImageCompressor scaler;
     protected LoggiaUser currentUser;
     protected CategoryMap eventCategory;
 
@@ -131,7 +131,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
 
         /* Setup objects */
         randomStock = new StockImageRandomizer();
-        scaler = new ImageScalar(context.getActivity());
+        scaler = new ImageCompressor(context.getActivity());
 
         /* logic setters */
         //setTag(currentTag); TODO: Reimplement
@@ -331,7 +331,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
                     startDate.getTime(),
                     endDate.getTime(),
                     createEventLocation.getText().toString(),
-                    ImageScalar.compressForUpload(image),
+                    ImageCompressor.compressForUpload(image),
                     createEventDescription.getText().toString(),
                     eventCategory,
                     currentUser

@@ -23,6 +23,7 @@ import java.util.List;
 
 /**
  * Created by albertowusu-asare on 10/19/15.
+ * Util static method used in the system
  */
 public class LoggiaUtils {
 

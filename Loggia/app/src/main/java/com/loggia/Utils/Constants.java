@@ -11,8 +11,12 @@ import java.util.logging.Filter;
 
 /**
  * Created by L7 on 9/23/15.
+ * Constants that are used throughout the system
  */
 public class Constants {
+
+    /** Constant for current backend used. Changing this value should introduce those changes to the
+     * rest of the system **/
     public static BackendDomain currentBackendDomain = BackendDomain.PARSE;
 
     /**

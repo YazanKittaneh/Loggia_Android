@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.loggia.Helpers.StockImageRandomizer;
 import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.R;
 import com.dexafree.materialList.cards.BigImageCard;
@@ -25,15 +24,9 @@ import com.loggia.Utils.Constants;
 import com.loggia.Utils.EventDateFormat;
 import com.loggia.Utils.TableData;
 import com.parse.FindCallback;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 
