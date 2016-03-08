@@ -19,6 +19,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+/**
+ * Calendar Dialog for UI
+ */
 public class CalendarDialog extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
@@ -78,7 +81,7 @@ public class CalendarDialog extends DialogFragment
         display_time.setText(sDay + ", " + sMonth + " " + day );
     */
         mCreateFragment.calendarDate = thisDate.getTime();
-
+        
         if(isEndTime) {
             mEventEndDate.setText(EventDateFormat.formatDate(thisDate.getTime()));
             mCreateFragment.endDate.set(year, month, day);
