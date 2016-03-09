@@ -22,13 +22,13 @@ public interface LoggiaUser {
     /**
      * @return a list of all the organisations this Loggia User belongs to.
      */
-   <T extends LoggiaOrganisation>  List<T> getOrganisations();
+     List<? extends LoggiaOrganisation>  getOrganisations();
 
     /**
      * @return the upcoming events for this Loggia User. Upcoming is defined for events >=
      * current time. These are events that
      */
-    < T extends LoggiaEvent>  List<T> getUpcomingEvents();
+    List<? extends LoggiaEvent> getUpcomingEvents();
 
     /**
      * @return the list of topics (trends) that this user cares about. eg. #music, #harris

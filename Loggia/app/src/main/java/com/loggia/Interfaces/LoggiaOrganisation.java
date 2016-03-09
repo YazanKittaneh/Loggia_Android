@@ -15,22 +15,22 @@ public interface LoggiaOrganisation {
      * @return a list of all the admins for this organisation.
      * the size of this list >=1
      */
-    List<LoggiaUser> getAdministrators();
+    abstract public List<LoggiaUser> getAdministrators();
 
     /**
      * @return the name of this organisation.
      */
-    String getOrganisationName();
+    abstract public String getOrganisationName();
 
     /**
      * @return a list of all the upcoming events affiliated to this organisation.
      */
-    List<LoggiaEvent> getUpcomingEvents();
+    abstract public List<LoggiaEvent> getUpcomingEvents();
 
     /**
      * Adds a new administrator to this organisation.
      * @param admin
      */
-    void addNewAdmin(LoggiaUser admin);
+    abstract public void addNewAdmin(LoggiaUser admin);
 
 }

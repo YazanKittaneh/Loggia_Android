@@ -57,13 +57,13 @@ public interface LoggiaEvent {
      * TODO : check how to prevent parametized return type
      * @return the users that have been invited to this event
      */
-    <T extends LoggiaUser> List<T> getEventUsersInvited();
+     List<LoggiaUser> getEventUsersInvited();
 
     /**
      * @return a list of the users who are representatives for this event. If an organisation is
      * hosting this event, the representatives will be admins of this organisation.
      */
-    <T extends LoggiaUser> List<T> getEventRepresentatives();
+     List<LoggiaUser> getEventRepresentatives();
 
     /**
      * Saves the event to the db
