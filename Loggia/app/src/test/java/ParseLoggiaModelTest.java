@@ -1,5 +1,6 @@
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 
 import com.loggia.Activities.ContainerActivity;
@@ -13,6 +14,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import android.content.Context;
+import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
+import android.test.mock.MockContext;
 
 
 import java.util.ArrayList;
@@ -30,10 +35,11 @@ import static junit.framework.Assert.assertTrue;
  */
 
 
-public class ParseLoggiaModelTest {
+public class ParseLoggiaModelTest extends AndroidTestCase{
     @Before
     public void initialize(){
-        LoggiaUtils.initializeBackendService(BackendDomain.PARSE, new ContainerActivity().context);
+        Context context = this.getContext();
+        LoggiaUtils.initializeBackendService(BackendDomain.PARSE, context);
     }
     @Test
     public void parseLoggiaEventTest(){
