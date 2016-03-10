@@ -40,5 +40,12 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.wrapp.floatlabelededittext:library:0.0.6'
     compile 'com.jakewharton:butterknife:7.0.1'
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:1.9.5"
+    testCompile('org.robolectric:robolectric:3.0-rc2') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
 
 }

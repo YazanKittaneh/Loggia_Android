@@ -6,8 +6,10 @@ import android.util.Log;
 import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.Model.ParseModels.ParseLoggiaEvent;
+import com.loggia.Model.ParseModels.ParseLoggiaUser;
 import com.loggia.R;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseAnonymousUtils;
@@ -97,34 +99,42 @@ public class LoggiaUtils {
     }
 
     /**
-     * Pushes an event to the database
+     * Pushes an event to a set database according to the domain
      */
-    public static void saveEvent(BackendDomain domain,
-                                 String eventName,
+    public static <T extends LoggiaUser>  void saveEvent(BackendDomain domain, String eventName,
                                  Date eventStartDate,
                                  Date eventEndDate,
                                  String eventLocation,
                                  byte []  eventImage,
                                  String eventDescription,
                                  CategoryMap eventCategory,
-                                 LoggiaUser eventRep)
+                                 T eventRep)
     {
         LoggiaEvent event = null;
         if(domain.equals(BackendDomain.PARSE)){
-          event = new ParseLoggiaEvent(
-                  eventName,
-                  eventStartDate,
-                  eventEndDate,
-                  eventLocation,
-                  eventImage,
-                  eventDescription,
-                  eventCategory,
-                  eventRep); //TODO: reintegrate eventCategory
+            ParseLoggiaUser parseEventRep = (ParseLoggiaUser) eventRep;
+            event = new ParseLoggiaEvent(eventName, eventStartDate, eventEndDate, eventLocation,
+                    eventImage, eventDescription, eventCategory, parseEventRep);
+                    //TODO: reintegrate eventCategory
         }
         event.saveToDb();
     }
 
-    private static void saveParseEvent(ParseLoggiaEvent parseLoggiaEvent){
-        parseLoggiaEvent.saveInBackground();
+    /**
+     * Queries the Counter table according to the given parameter, counter name
+     */
+
+    public static void querryCounterTable(final String counterName){
+        ParseQuery<ParseObject> counter_query = new ParseQuery(TableData.TableNames.COUNTER.toString());
+        counter_query.whereEqualTo(TableData.CounterColumnNames.counter_name.toString(),counterName);
+        counter_query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                   parseObject.getInt(counterName);
+
+                }
+            }
+        });
     }
 }

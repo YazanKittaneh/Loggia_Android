@@ -17,7 +17,8 @@ public class TableData {
         event,
         EVENT_EVENT_REP,
         USER_ORGANISATION,
-        EVENT_ATTENDEE
+        EVENT_ATTENDEE,
+        COUNTER
     }
 
     /** Column names for the User Table **/
@@ -72,7 +73,13 @@ public class TableData {
     }
 
     public enum EventHostColumnNames{
-        USER_ID,UPDATE_FREQUENCY;
+        USER_ID,
+        UPDATE_FREQUENCY;
+    }
+    public enum CounterColumnNames{
+        counter_name,
+        counter_frequency,
+
     }
 
     public enum UserConnectColumNames {
