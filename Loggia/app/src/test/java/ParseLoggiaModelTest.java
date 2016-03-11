@@ -16,6 +16,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import android.content.Context;
 import android.test.AndroidTestCase;
+import android.test.ApplicationTestCase;
 import android.test.InstrumentationTestCase;
 import android.test.mock.MockContext;
 
@@ -27,6 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -34,12 +36,12 @@ import static junit.framework.Assert.assertTrue;
  * Created by albertowusu-asare on 3/9/16.
  */
 
+public class ParseLoggiaModelTest  {
 
-public class ParseLoggiaModelTest extends AndroidTestCase{
     @Before
     public void initialize(){
-        Context context = this.getContext();
-        LoggiaUtils.initializeBackendService(BackendDomain.PARSE, context);
+       MockContext context = new MockContext();
+        LoggiaUtils.initializeBackendService(BackendDomain.PARSE, context.getApplicationContext());
     }
     @Test
     public void parseLoggiaEventTest(){
@@ -60,7 +62,6 @@ public class ParseLoggiaModelTest extends AndroidTestCase{
         List<ParseLoggiaEvent> events = new ArrayList<>();
         for(int i = 0; i< numberEvents; i++)
             events.add(generateParseEvent());
-
         return events;
     }
 
@@ -91,7 +92,6 @@ public class ParseLoggiaModelTest extends AndroidTestCase{
                     int actualCount = parseObject.getInt(counterName);
                     assertTrue("Expected count of " +
                             counterName + " equals actual count :",actualCount == expectedCount);
-
                 }
             }
         });

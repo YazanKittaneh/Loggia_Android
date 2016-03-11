@@ -3,9 +3,12 @@ package com.loggia.Utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.loggia.Interfaces.LoggiaCategory;
 import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaUser;
+import com.loggia.Model.ParseModels.ParseLoggiaCategory;
 import com.loggia.Model.ParseModels.ParseLoggiaEvent;
+import com.loggia.Model.ParseModels.ParseLoggiaOrg;
 import com.loggia.Model.ParseModels.ParseLoggiaUser;
 import com.loggia.R;
 import com.parse.FindCallback;
@@ -21,7 +24,9 @@ import com.parse.ParseUser;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by albertowusu-asare on 10/19/15.
@@ -29,6 +34,15 @@ import java.util.List;
  */
 public class LoggiaUtils {
 
+    /*
+      Constants
+     */
+
+    Map<Integer, String> initialCategoryMap;
+
+    public LoggiaUtils(){
+        this.initialCategoryMap = new HashMap<>();
+    }
     /**
      * Performs initialisations of the backend Service in use
      * @param domain define the domain in use for the backend as a service
@@ -40,6 +54,10 @@ public class LoggiaUtils {
     }
 
     private static void initializeParseBackendService(Context context){
+        ParseObject.registerSubclass(ParseLoggiaEvent.class);
+        ParseObject.registerSubclass(ParseLoggiaUser.class);
+        ParseObject.registerSubclass(ParseLoggiaOrg.class);
+        ParseObject.registerSubclass(ParseLoggiaCategory.class);
         Parse.enableLocalDatastore(context);
         Parse.initialize(context,context.getResources().getString(R.string.PARSE_APP_ID),
                 context.getResources().getString(R.string.PARSE_CLIENT_KEY));
@@ -101,20 +119,20 @@ public class LoggiaUtils {
     /**
      * Pushes an event to a set database according to the domain
      */
-    public static <T extends LoggiaUser>  void saveEvent(BackendDomain domain, String eventName,
+    public static   void saveEvent(BackendDomain domain, String eventName,
                                  Date eventStartDate,
                                  Date eventEndDate,
                                  String eventLocation,
                                  byte []  eventImage,
                                  String eventDescription,
-                                 CategoryMap eventCategory,
-                                 T eventRep)
+                                 List<Integer> eventCategory,
+                                 List<String> eventRep)
     {
         LoggiaEvent event = null;
         if(domain.equals(BackendDomain.PARSE)){
             ParseLoggiaUser parseEventRep = (ParseLoggiaUser) eventRep;
             event = new ParseLoggiaEvent(eventName, eventStartDate, eventEndDate, eventLocation,
-                    eventImage, eventDescription, eventCategory, parseEventRep);
+                    eventImage, eventDescription, eventCategory, eventRep);
                     //TODO: reintegrate eventCategory
         }
         event.saveToDb();
@@ -132,9 +150,30 @@ public class LoggiaUtils {
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
                    parseObject.getInt(counterName);
-
                 }
             }
         });
     }
+
+
+
+    public void getCategories(){
+        ParseQuery<ParseLoggiaCategory> categoryQuery =
+                new ParseQuery(TableData.TableNames.CATEGORY.toString());
+        categoryQuery.findInBackground(new FindCallback<ParseLoggiaCategory>() {
+            @Override
+            public void done(List<ParseLoggiaCategory> list, ParseException e) {
+                if (list != null){
+                    for (ParseLoggiaCategory category : list)
+                        populateInitialCategoryMap(category);
+                }
+            }
+        });
+
+    }
+
+    private <T extends LoggiaCategory> void populateInitialCategoryMap(T category){
+        this.initialCategoryMap.put(category.getCategoryId(),category.getCategoryName());
+    }
+
 }

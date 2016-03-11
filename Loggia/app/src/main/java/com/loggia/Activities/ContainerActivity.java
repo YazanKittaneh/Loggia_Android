@@ -18,12 +18,19 @@ import com.loggia.Dialogs.TagDialog;
 import com.loggia.Fragments.FeedFragment;
 import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaUser;
+import com.loggia.Model.ParseModels.ParseLoggiaEvent;
 import com.loggia.Model.ParseModels.ParseLoggiaUser;
 import com.loggia.R;
 import com.loggia.Utils.CategoryMap;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.LoggiaUtils;
+import com.loggia.Utils.TableData;
+import com.loggia.Utils.TestUtils;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,9 +62,18 @@ public Context context = this;
         /** initialize backend and service **/
         initializeBackend();
         startupEventFeed();
+        ParseObject obj = new ParseObject("USER_INVITE");
+        List<ParseLoggiaEvent> events = TestUtils.generateParseEvents(20);
+
+        for (ParseLoggiaEvent event : events){
+            event.setEventImage(TestUtils.getRandomImage(this));
+            event.saveToDb();
+        }
+       /* obj.put("user_id", 123456);
+        obj.put("events", events);
+        obj.saveInBackground();
+        */
     }
-
-
 
     /** Initialize the backend for the app **/
     private void initializeBackend(){
@@ -88,8 +104,6 @@ public Context context = this;
         getMenuInflater().inflate(R.menu.drawer_view, menu);
         return true;
     }
-
-
 
 
     /**

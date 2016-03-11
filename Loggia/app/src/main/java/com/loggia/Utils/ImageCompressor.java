@@ -25,6 +25,7 @@ public class ImageCompressor {
     int width;
     int height;
     DisplayMetrics dm;
+    Resources res;
 
 
     /** constructor takes in the activity and gets the eight and width from that activity **/
@@ -33,11 +34,23 @@ public class ImageCompressor {
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
         this.width = dm.widthPixels;
         this.height = dm.heightPixels;
+        this.res = activity.getResources();
 
     }
 
 
     public BitmapDrawable decodeSampledBitmapFromDrabwable(Resources res, int drawable) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+        BitmapFactory.decodeResource(res, drawable, options);
+        options.inSampleSize = calculateInSampleSize(options, this.width / 4, this.height / 4);
+        options.inJustDecodeBounds = false;
+
+        return new BitmapDrawable(res, BitmapFactory.decodeResource(res, drawable));
+    }
+
+    public BitmapDrawable decodeSampledBitmapFromDrawable( int drawable) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
 
@@ -114,11 +127,8 @@ public class ImageCompressor {
     /** compresses a given bitmap to 70% and send byte[] back **/
     public static byte[] compressForUpload(Bitmap bitmap) {
         byte[] data;
-
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-
-
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
         data = stream.toByteArray();

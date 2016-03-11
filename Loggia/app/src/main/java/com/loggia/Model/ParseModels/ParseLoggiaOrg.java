@@ -4,6 +4,7 @@ import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaOrganisation;
 import com.loggia.Interfaces.LoggiaUser;
 import com.parse.Parse;
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  *
  * An implementation of Loggia Organisation using Parse
  */
+@ParseClassName("ParseLoggiaOrg")
 public class ParseLoggiaOrg extends ParseObject implements LoggiaOrganisation {
 
 

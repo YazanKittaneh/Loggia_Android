@@ -325,7 +325,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
     private  void pushEvent()
     {
         if(filledViewItems()) {
-            LoggiaUtils.saveEvent(
+          /*  LoggiaUtils.saveEvent(
                     Constants.currentBackendDomain,
                     createEventName.getText().toString(),
                     startDate.getTime(),
@@ -336,6 +336,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
                     eventCategory,
                     currentUser
             );
+            */
             getActivity().getSupportFragmentManager().popBackStack();
         }
     }

@@ -18,7 +18,8 @@ public class TableData {
         EVENT_EVENT_REP,
         USER_ORGANISATION,
         EVENT_ATTENDEE,
-        COUNTER
+        COUNTER,
+        CATEGORY
     }
 
     /** Column names for the User Table **/
@@ -36,18 +37,20 @@ public class TableData {
     /** Column names for the Event Table **/
     public enum EventColumnNames {
         event_type("Title"),
-        event_name("Title"),
-        event_start_date("Start"),
-        event_end_date("End"),
-        event_location("Where"),
-        event_description("Description"),
+        event_name("event_title"),
+        event_start_date("event_start"),
+        event_end_date("event_end"),
+        event_location("event_location"),
+        event_description("event_description"),
         event_rep_id("event_rep_id"),
-        event_image("Title"),
+        event_image("event_image"),
         event_views("Title"),
         event_status("Title"),
         event_num_invites("Title"),
         event_tag("Title"),
-        event_approval_status("Title");
+        event_approval_status("Title"),
+        event_category_ids("event_category_ids"),
+        event_rep_ids("event_rep_ids");
 
 
         private  String name;
@@ -67,6 +70,10 @@ public class TableData {
         }
     }
 
+    public enum CategoryColumnNames {
+        category_id,
+        category_name,
+    }
     public enum EventInviteColumnNames {
         EVENT_INVITE_ID,EVENT_INVITED_ID,EVENT_INVITEE_ID,EVENT_ID,EVENT_INVITE_FROM,
         EVENT_INVITE_TO, event;

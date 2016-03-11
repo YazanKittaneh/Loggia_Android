@@ -49,6 +49,11 @@ public interface LoggiaEvent {
     long getNumEventViews();
 
     /**
+     * @return a list of the categories that the event belongs to
+     */
+    List<String> getEventCategories();
+
+    /**
      * @return the number of invites for this event
      */
     long getNumEventInvites();
