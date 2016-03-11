@@ -62,14 +62,14 @@ public Context context = this;
         /** initialize backend and service **/
         initializeBackend();
         startupEventFeed();
-        ParseObject obj = new ParseObject("USER_INVITE");
+      /*  ParseObject obj = new ParseObject("USER_INVITE");
         List<ParseLoggiaEvent> events = TestUtils.generateParseEvents(20);
 
         for (ParseLoggiaEvent event : events){
             event.setEventImage(TestUtils.getRandomImage(this));
             event.saveToDb();
         }
-       /* obj.put("user_id", 123456);
+       obj.put("user_id", 123456);
         obj.put("events", events);
         obj.saveInBackground();
         */
