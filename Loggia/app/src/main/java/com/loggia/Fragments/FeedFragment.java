@@ -193,7 +193,7 @@ public class FeedFragment extends Fragment {
         event_query.addAscendingOrder(TableData.EventColumnNames.event_start_date.toString());
 
         Log.e("Before ERROR", "Could possibly work");
-        event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
+ /*       event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
             @Override
             public void done(List<ParseLoggiaEvent> events, com.parse.ParseException e) {
                 if (e == null) {
@@ -213,7 +213,7 @@ public class FeedFragment extends Fragment {
                     Log.e("Error", e.toString());
                 }
             }
-        });
+        });*/
     }
 
 

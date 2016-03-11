@@ -25,6 +25,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.loggia.Dialogs.CalendarDialog;
+import com.loggia.Interfaces.LoggiaEvent;
+import com.loggia.Model.ParseModels.ParseLoggiaEvent;
 import com.loggia.Utils.ImageCompressor;
 import com.loggia.Dialogs.ClockDialog;
 import com.loggia.Utils.StockImageRandomizer;
@@ -34,10 +36,14 @@ import com.loggia.R;
 import com.loggia.Utils.CategoryMap;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.LoggiaUtils;
+import com.loggia.Utils.TestUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -59,6 +65,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
     ImageButton backdrop;
     FloatingActionButton createButton;
     Toolbar toolbar;
+    List<Integer> eventRepIds;
 
     /** Global Variables **/
     private int PICK_IMAGE_REQUEST = 1;
@@ -81,6 +88,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
      * fragment (e.g. upon screen orientation changes).
      */
     public CreateFragment() {
+        eventRepIds = new ArrayList<>();
     }
 
 
@@ -325,6 +333,14 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
     private  void pushEvent()
     {
         if(filledViewItems()) {
+            byte [] imageBytes = ImageCompressor.compressForUpload(image);
+            Random random = new Random();
+            int randomNumber = random.nextInt(3);
+            List<Integer> categoryIds = TestUtils.generateRandomCategoryIds(randomNumber,random);
+            List<String> eventRepIds = TestUtils.generateRandomEventRepIds(randomNumber,random);
+            LoggiaEvent event = new ParseLoggiaEvent(createEventName.getText().toString(),
+                    startDate.getTime(),endDate.getTime(),createEventLocation.getText().toString(),
+                    imageBytes, createEventDescription.getText().toString(),categoryIds,eventRepIds);
           /*  LoggiaUtils.saveEvent(
                     Constants.currentBackendDomain,
                     createEventName.getText().toString(),
@@ -337,6 +353,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
                     currentUser
             );
             */
+            event.saveToDb();
             getActivity().getSupportFragmentManager().popBackStack();
         }
     }
@@ -388,6 +405,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
 
     @Override
     public void setFilterOption(int filterItem) {
-        eventCategory.put(Constants.FilterOptions.values()[filterItem], true);
+        eventRepIds.add(filterItem);
+        //eventCategory.put(Constants.FilterOptions.values()[filterItem], true);
     }
 }

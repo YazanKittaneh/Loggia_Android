@@ -41,7 +41,7 @@ public class TestUtils {
         return event;
     }
 
-    private static List<String> generateRandomEventRepIds(int numReps,Random random){
+    public static List<String> generateRandomEventRepIds(int numReps,Random random){
         List<String> eventReps = new ArrayList<>();
         String base = "EventRep ";
         for (int i = 0; i< numReps ; i++){
@@ -50,7 +50,7 @@ public class TestUtils {
         return eventReps;
     }
 
-    private static List<Integer> generateRandomCategoryIds(int numCategories, Random random){
+    public static List<Integer> generateRandomCategoryIds(int numCategories, Random random){
         List<Integer> categoryIds = new ArrayList<>();
         for(int i = 0 ; i< numCategories; i++){
             categoryIds.add(random.nextInt(numCategories));

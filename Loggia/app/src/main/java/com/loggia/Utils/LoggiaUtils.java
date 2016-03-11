@@ -38,7 +38,7 @@ public class LoggiaUtils {
       Constants
      */
 
-    Map<Integer, String> initialCategoryMap;
+    public static Map<Integer, String> initialCategoryMap;
 
     public LoggiaUtils(){
         this.initialCategoryMap = new HashMap<>();
@@ -175,5 +175,7 @@ public class LoggiaUtils {
     private <T extends LoggiaCategory> void populateInitialCategoryMap(T category){
         this.initialCategoryMap.put(category.getCategoryId(),category.getCategoryName());
     }
+
+
 
 }

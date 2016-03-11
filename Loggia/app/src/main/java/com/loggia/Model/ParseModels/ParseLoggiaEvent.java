@@ -142,6 +142,4 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
         event.put(TableData.EventColumnNames.event_category_ids.toString(), this.eventCategoryIds);
         event.saveInBackground();
     }
-
-
 }
