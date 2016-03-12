@@ -21,6 +21,7 @@ import com.loggia.Interfaces.LoggiaUser;
 import com.loggia.Model.ParseModels.ParseLoggiaEvent;
 import com.loggia.Model.ParseModels.ParseLoggiaUser;
 import com.loggia.R;
+import com.loggia.Utils.BackendDomain;
 import com.loggia.Utils.CategoryMap;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.LoggiaUtils;
@@ -48,6 +49,7 @@ public Context context = this;
     protected LoggiaUser currentUser;
     LoggiaEvent currentEvent;
     CategoryMap eventCategory;
+    final BackendDomain BACKEND_DOMAIN = BackendDomain.PARSE;
 
 
     @Override
@@ -58,21 +60,13 @@ public Context context = this;
         toolbar.setNavigationIcon(R.drawable.ic_menu);
         setSupportActionBar(toolbar);
         context = this;
-
-        /** initialize backend and service **/
-        initializeBackend();
-        startupEventFeed();
-      /*  ParseObject obj = new ParseObject("USER_INVITE");
-        List<ParseLoggiaEvent> events = TestUtils.generateParseEvents(20);
-
-        for (ParseLoggiaEvent event : events){
-            event.setEventImage(TestUtils.getRandomImage(this));
-            event.saveToDb();
+        if(savedInstanceState == null) {
+            savedInstanceState = new Bundle();
         }
-       obj.put("user_id", 123456);
-        obj.put("events", events);
-        obj.saveInBackground();
-        */
+        /* Pass the domain to the next fragment / activity */
+        //savedInstanceState.putSerializable("BACKEND_DOMAIN", BACKEND_DOMAIN);
+        initializeBackend();
+        startupEventFeed(savedInstanceState);
     }
 
     /** Initialize the backend for the app **/
@@ -85,9 +79,10 @@ public Context context = this;
     }
 
     /** Starts the event feed fragment **/
-    private void startupEventFeed(){
+    private void startupEventFeed(Bundle args){
         FragmentManager fm = getSupportFragmentManager();
         FeedFragment feedFragment = FeedFragment.newInstance();
+        feedFragment.setArguments(args);
         fm.beginTransaction().setCustomAnimations(
                 R.anim.bottom_slide_up_fast,
                 R.anim.bottom_slide_down_fast,

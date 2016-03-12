@@ -1,8 +1,13 @@
 package com.loggia.Utils;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 
+import com.dexafree.materialList.cards.BigImageCard;
+import com.dexafree.materialList.view.MaterialListView;
 import com.loggia.Interfaces.LoggiaCategory;
 import com.loggia.Interfaces.LoggiaEvent;
 import com.loggia.Interfaces.LoggiaUser;
@@ -38,7 +43,7 @@ public class LoggiaUtils {
       Constants
      */
 
-    public static Map<Integer, String> initialCategoryMap;
+    public static Map<Integer, CharSequence> initialCategoryMap = new HashMap<>();
 
     public LoggiaUtils(){
         this.initialCategoryMap = new HashMap<>();
@@ -149,7 +154,7 @@ public class LoggiaUtils {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
-                   parseObject.getInt(counterName);
+                    parseObject.getInt(counterName);
                 }
             }
         });
@@ -157,24 +162,95 @@ public class LoggiaUtils {
 
 
 
-    public void getCategories(){
+    public static Map<Integer,CharSequence> getCategories(){
+        Log.i("get Categories :", "Inside getCategoriees: ");
         ParseQuery<ParseLoggiaCategory> categoryQuery =
                 new ParseQuery(TableData.TableNames.CATEGORY.toString());
         categoryQuery.findInBackground(new FindCallback<ParseLoggiaCategory>() {
-            @Override
-            public void done(List<ParseLoggiaCategory> list, ParseException e) {
-                if (list != null){
-                    for (ParseLoggiaCategory category : list)
-                        populateInitialCategoryMap(category);
+                                           @Override
+                                           public void done(List<ParseLoggiaCategory> list, ParseException e) {
+                                               Log.e("Done get categorries", "inside");
+                                               if (e == null) {
+                                                   Log.e("No exception", list.toString());
+                                                   if (list == null) {
+                                                       Log.e("List result", "is null");
+                                                   }
+                                               } else {
+                                                   Log.e("Error Done", e.getMessage());
+                                               }
+                                           }
+                                       }
+        );
+        return initialCategoryMap;
+    }
+
+    private static  <T extends LoggiaCategory> void populateInitialCategoryMap(T category){
+        initialCategoryMap.put(category.getCategoryId(), category.getCategoryName());
+    }
+
+    public static void initializeCategoryTable(){
+        ParseObject obj = new ParseObject(TableData.TableNames.CATEGORY.toString());
+        obj.put(TableData.CategoryColumnNames.category_id.toString(),1);
+        obj.put(TableData.CategoryColumnNames.category_name.toString(), "Art");
+        obj.saveInBackground();
+        obj = new ParseObject(TableData.TableNames.CATEGORY.toString());
+        obj.put(TableData.CategoryColumnNames.category_id.toString(), 2);
+        obj.put(TableData.CategoryColumnNames.category_name.toString(),"Food");
+        obj.saveInBackground();
+        obj = new ParseObject(TableData.TableNames.CATEGORY.toString());
+        obj.put(TableData.CategoryColumnNames.category_id.toString(), 3);
+        obj.put(TableData.CategoryColumnNames.category_name.toString(),"Parties");
+        obj.saveInBackground();
+        obj = new ParseObject(TableData.TableNames.CATEGORY.toString());
+        obj.put(TableData.CategoryColumnNames.category_id.toString(), 4);
+        obj.put(TableData.CategoryColumnNames.category_name.toString(),"Sports");
+        obj.saveInBackground();
+        obj = new ParseObject(TableData.TableNames.CATEGORY.toString());
+        obj.put(TableData.CategoryColumnNames.category_id.toString(),5);
+        obj.put(TableData.CategoryColumnNames.category_name.toString(),"Student");
+        obj.saveInBackground();
+    }
+
+    public  static void queryAndPopulateEvents(BackendDomain domain,final Context context,final View view,
+                             final MaterialListView listView){
+
+        if(domain.equals(BackendDomain.PARSE)) {
+            ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery<>(ParseLoggiaEvent.class);
+            event_query.whereGreaterThanOrEqualTo(
+                    TableData.EventColumnNames.event_end_date.toString(),
+                    EventDateFormat.getCurrentDate());
+            event_query.addAscendingOrder(TableData.EventColumnNames.event_start_date.toString());
+            event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
+                @Override
+                public void done(List<ParseLoggiaEvent> events, com.parse.ParseException e) {
+                    if (e == null) {
+                        Log.e("DONE AND IT WORKS", "DOES WORK");
+
+                        for (ParseLoggiaEvent event : events) {
+                            createCard(event.getEventName(),
+                                    EventDateFormat.formatTime(event.getEventStartDate()),
+                                    EventDateFormat.formatDate((event.getEventStartDate())),
+                                    event.getEventImageUrl(),event,context,listView);
+                        }
+                    } else {
+                        Snackbar.make(view, "Feed failed to load", Snackbar.LENGTH_SHORT);
+                    }
                 }
-            }
-        });
+            });
+        }
 
     }
 
-    private <T extends LoggiaCategory> void populateInitialCategoryMap(T category){
-        this.initialCategoryMap.put(category.getCategoryId(),category.getCategoryName());
+    private static void createCard(String name, String startTime, String date, String imageURL,
+                            LoggiaEvent event, Context context, MaterialListView listView){
+        BigImageCard card = new BigImageCard(context);
+        card.setTitle(name);
+        card.setDescription(date + " at " + startTime);
+        card.setDrawable(imageURL);
+        card.setTag(event);
+        listView.add(card);
     }
+
 
 
 

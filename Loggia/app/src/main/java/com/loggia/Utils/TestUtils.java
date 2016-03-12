@@ -95,4 +95,13 @@ public class TestUtils {
                 return R.drawable.stock_3;
         }
     }
+
+    public static void  testEventAdd(Activity activity){
+        List<ParseLoggiaEvent> events = TestUtils.generateParseEvents(5);
+        for (ParseLoggiaEvent event :events){
+            byte [] image = TestUtils.getRandomImage(activity);
+            event.setEventImage(image);
+            event.saveToDb();
+        }
+    }
 }

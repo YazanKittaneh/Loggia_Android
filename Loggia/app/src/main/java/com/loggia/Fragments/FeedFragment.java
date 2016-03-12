@@ -20,10 +20,13 @@ import com.dexafree.materialList.controller.RecyclerItemClickListener;
 import com.dexafree.materialList.model.CardItemView;
 import com.loggia.Model.ParseModels.ParseLoggiaEvent;
 import com.dexafree.materialList.view.MaterialListView;
+import com.loggia.Utils.BackendDomain;
 import com.loggia.Utils.Constants;
 import com.loggia.Utils.EventDateFormat;
+import com.loggia.Utils.LoggiaUtils;
 import com.loggia.Utils.TableData;
 import com.parse.FindCallback;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
@@ -46,15 +49,12 @@ public class FeedFragment extends Fragment {
     private  MaterialListView mListView;
     private FloatingActionButton create;
     private SwipeRefreshLayout swipeLayout;
-
-
-
+    final BackendDomain backendDomain = Constants.currentBackendDomain;
 
     /** Mandatory empty constructor for the fragment manager to instantiate the
      *  fragment (e.g. upon screen orientation changes). **/
     public FeedFragment() {
     }
-
 
     /** Constructor created by the newInstance and takes in the Item ID **/
     public static FeedFragment newInstance() {
@@ -62,13 +62,12 @@ public class FeedFragment extends Fragment {
         return fragment;
     }
 
-
     /** OnCreate for the fragment **/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //backendDomain = (BackendDomain) this.getArguments().getSerializable("BACKEND_DOMAIN");
     }
-
 
     /**
      * OnCreateView that inflates and sets up the view
@@ -76,37 +75,17 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         final View eventFeedView = inflater.inflate(R.layout.fragment_feed,container, false);
-
         /** Declarations **/
         mListView = (MaterialListView) eventFeedView.findViewById(R.id.material_listview);
         create = (FloatingActionButton) eventFeedView.findViewById(R.id.create);
         swipeLayout = (SwipeRefreshLayout) eventFeedView.findViewById(R.id.swipe_container);
         swipeLayout.setColorSchemeResources(R.color.ColorPrimary);
         TAGS = getResources().getStringArray(R.array.tag_names);
-
-        /** Navigation declaration **/
-        //navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-        /** Navigation setup
-         * Commented out because it's unfinished
-         * **/
-        //toolbar.setNavigationIcon(R.drawable.ic_menu);
-        //setSupportActionBar(toolbar);
-
         currentTAG=null;
-
-        /** setup all listeners  **/
         setupListeners();
-
-        //initializeFilterMap();
-        //selectAllEventFilters();
-        /** Sets up query to populate the feed **/
-        queryEvents();
-
+        LoggiaUtils.queryAndPopulateEvents(backendDomain, this.context, this.getView(), mListView);
         return eventFeedView;
     }
-
-
 
     /**
      * Set up listeners
@@ -146,26 +125,21 @@ public class FeedFragment extends Fragment {
                         .replace(R.id.full_screen, displayFragment).addToBackStack(null).commit();
 
             }
-
             @Override
             public void onItemLongClick(CardItemView view, int position) {
 
             }
         });
-
         /** Listener for SwipeRefresh **/
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeLayout.setRefreshing(true);
-
                 queryEvents();
                 swipeLayout.setRefreshing(false);
             }
         });
     }
-
-
 
     /**
      *  TODO: Have the ListView only clear once cards are created
@@ -174,26 +148,16 @@ public class FeedFragment extends Fragment {
     private void queryEvents(){
         //TODO: Only add items that you don't have in the list view
         mListView.clear(); //clears the cards
-        //SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy kk-mm", Locale.US);
-
-        ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery(TableData.TableNames.EVENT.toString());
+       ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery<>(ParseLoggiaEvent.class);
 
         event_query.whereGreaterThanOrEqualTo(
                 TableData.EventColumnNames.event_end_date.toString(),
                 EventDateFormat.getCurrentDate());
 
-        //TODO: Put in filtering functianlity
-        // Additional queries depending on the tag that was chosen.
-        //for(Map.Entry<Constants.FilterOptions,Boolean> entry : filterOptionsMap.entrySet()){
-        //    if(entry.getValue()){
-        //        event_query.whereEqualTo(TableData.EventColumnNames.event_tag.toString(),
-        //                entry.getKey().toString());
-        //    }
-        //}
         event_query.addAscendingOrder(TableData.EventColumnNames.event_start_date.toString());
 
         Log.e("Before ERROR", "Could possibly work");
- /*       event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
+         event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
             @Override
             public void done(List<ParseLoggiaEvent> events, com.parse.ParseException e) {
                 if (e == null) {
@@ -213,10 +177,9 @@ public class FeedFragment extends Fragment {
                     Log.e("Error", e.toString());
                 }
             }
-        });*/
+        });
+
     }
-
-
 
     private void createCard(String name, String startTime, String date, String imageURL, LoggiaEvent event){
         BigImageCard card = new BigImageCard(context);
@@ -226,29 +189,6 @@ public class FeedFragment extends Fragment {
         card.setTag(event);
         mListView.add(card);
     }
-
-    /**
-     * Initialises the map structure for event filter Options
-
-    private  void initializeFilterMap(){
-        this.filterOptionsMap = new HashMap();
-        this.filterOptionsMap.put(Constants.FilterOptions.CONCERTS, false);
-        this.filterOptionsMap.put(Constants.FilterOptions.PARTY, false);
-        this.filterOptionsMap.put(Constants.FilterOptions.STUDY_SESSION, false);
-    }
-
-    /**
-     * Selects all the filters for events
-
-    private void selectAllEventFilters(){
-        List<Constants.FilterOptions> filterOptions = new ArrayList();
-        filterOptions.add(Constants.FilterOptions.CONCERTS);
-        filterOptions.add(Constants.FilterOptions.PARTY);
-        filterOptions.add(Constants.FilterOptions.SGA);
-        filterOptions.add(Constants.FilterOptions.STUDY_SESSION);
-        selectEventFilters(filterOptions);
-    }
-     **/
 
     /**
      * selects the filters for events as supplied by the options in filters

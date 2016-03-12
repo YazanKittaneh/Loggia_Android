@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -66,6 +67,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
     FloatingActionButton createButton;
     Toolbar toolbar;
     List<Integer> eventRepIds;
+    Map<Integer, CharSequence> categoryMap;
 
     /** Global Variables **/
     private int PICK_IMAGE_REQUEST = 1;
@@ -89,6 +91,7 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
      */
     public CreateFragment() {
         eventRepIds = new ArrayList<>();
+        this.categoryMap = LoggiaUtils.getCategories();
     }
 
 
@@ -341,18 +344,6 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
             LoggiaEvent event = new ParseLoggiaEvent(createEventName.getText().toString(),
                     startDate.getTime(),endDate.getTime(),createEventLocation.getText().toString(),
                     imageBytes, createEventDescription.getText().toString(),categoryIds,eventRepIds);
-          /*  LoggiaUtils.saveEvent(
-                    Constants.currentBackendDomain,
-                    createEventName.getText().toString(),
-                    startDate.getTime(),
-                    endDate.getTime(),
-                    createEventLocation.getText().toString(),
-                    ImageCompressor.compressForUpload(image),
-                    createEventDescription.getText().toString(),
-                    eventCategory,
-                    currentUser
-            );
-            */
             event.saveToDb();
             getActivity().getSupportFragmentManager().popBackStack();
         }

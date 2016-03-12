@@ -93,6 +93,7 @@ public class DisplayFragment extends Fragment {
         setOnClickListeners();
 
         return DisplayFragmentView;
+
     }
 
 
@@ -187,7 +188,6 @@ public class DisplayFragment extends Fragment {
                 .centerCrop()
                 .into(imageView);
     }
-
 
 
 }

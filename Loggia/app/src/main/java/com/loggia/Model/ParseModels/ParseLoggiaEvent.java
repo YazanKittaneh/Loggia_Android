@@ -23,7 +23,7 @@ import java.util.List;
  * An implementation of LoggiaEvent using Parse
  */
 
-@ParseClassName("ParseLoggiaEvent")
+@ParseClassName("EVENT")
 public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
     private ParseObject event;
     private List<LoggiaUser> users;
@@ -44,6 +44,10 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
         this.eventRepresentatives = new ArrayList<LoggiaUser>();
     }
 
+    public ParseLoggiaEvent(ParseObject event){
+        this.event = event;
+    }
+
     public ParseLoggiaEvent(String eventName, Date eventStartDate, Date eventEndDate,
                             String eventLocation, byte [] eventImage, String eventDescription,
                             List<Integer> eventCategoryIds, List<String> eventRepIds)
@@ -56,7 +60,7 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
         this.eventDescription = eventDescription;
         this.eventCategoryIds = eventCategoryIds;
         this.eventRepIds = eventRepIds;
-        this.event =  new ParseObject(TableData.TableNames.EVENT.toString());
+        this.event =  this;
     }
 
 

@@ -16,6 +16,7 @@ public class ParseLoggiaCategory extends ParseObject implements LoggiaCategory {
     ParseLoggiaCategory category;
     public ParseLoggiaCategory(){
         super();
+        category = this;
     }
 
     @Override

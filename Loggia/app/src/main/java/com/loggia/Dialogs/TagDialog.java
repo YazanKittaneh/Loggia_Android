@@ -31,8 +31,8 @@ public class TagDialog extends DialogFragment{
         final TextView mEventTag = (TextView) getActivity().findViewById(R.id.Create_Tag);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("What type of event ");
-       // final  Collection<String> tags =   LoggiaUtils.initialCategoryMap.values();
-        //final CharSequence [] tagsSeq = (CharSequence[]) tags.toArray();
+        final  Collection<CharSequence> tags =   LoggiaUtils.initialCategoryMap.values();
+        final CharSequence [] tagsSeq = (CharSequence[]) tags.toArray();
        builder.setItems(R.array.tag_names, new DialogInterface.OnClickListener(){
       //  builder.setItems(tagsSeq, new DialogInterface.OnClickListener() {
             @Override

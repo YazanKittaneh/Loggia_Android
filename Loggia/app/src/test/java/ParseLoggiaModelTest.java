@@ -76,8 +76,9 @@ public class ParseLoggiaModelTest  {
         Date startDate = new Date();
         long startDateTime = startDate.getTime();
         Date endDate = new Date(startDateTime + randLong(MILLI_SEC_1_WK,MILLI_SEC_2_WKS));
-        ParseLoggiaEvent event = new ParseLoggiaEvent(eventName,startDate,endDate,location,null,
-                description,null,currentUser);
+        //ParseLoggiaEvent event = new ParseLoggiaEvent(eventName,startDate,endDate,location,null,
+             //   description,null,currentUser);
+        ParseLoggiaEvent event  = null; //TODO: fix
         return event;
     }
 
