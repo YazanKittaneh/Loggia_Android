@@ -48,6 +48,7 @@ public class LoggiaUtils {
     public LoggiaUtils(){
         this.initialCategoryMap = new HashMap<>();
     }
+
     /**
      * Performs initialisations of the backend Service in use
      * @param domain define the domain in use for the backend as a service
@@ -84,7 +85,6 @@ public class LoggiaUtils {
         ParseAnonymousUtils.logIn(new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-
                 if (e == null && user != null) {
                     //logIn successful
                     Log.d("MyApp", "Anonymous logged in.");
@@ -122,28 +122,6 @@ public class LoggiaUtils {
     }
 
     /**
-     * Pushes an event to a set database according to the domain
-     */
-    public static   void saveEvent(BackendDomain domain, String eventName,
-                                 Date eventStartDate,
-                                 Date eventEndDate,
-                                 String eventLocation,
-                                 byte []  eventImage,
-                                 String eventDescription,
-                                 List<Integer> eventCategory,
-                                 List<String> eventRep)
-    {
-        LoggiaEvent event = null;
-        if(domain.equals(BackendDomain.PARSE)){
-            ParseLoggiaUser parseEventRep = (ParseLoggiaUser) eventRep;
-            event = new ParseLoggiaEvent(eventName, eventStartDate, eventEndDate, eventLocation,
-                    eventImage, eventDescription, eventCategory, eventRep);
-                    //TODO: reintegrate eventCategory
-        }
-        event.saveToDb();
-    }
-
-    /**
      * Queries the Counter table according to the given parameter, counter name
      */
 
@@ -160,8 +138,9 @@ public class LoggiaUtils {
         });
     }
 
-
-
+    /**
+     * @return a Map of all the categories
+     */
     public static Map<Integer,CharSequence> getCategories(){
         Log.i("get Categories :", "Inside getCategoriees: ");
         ParseQuery<ParseLoggiaCategory> categoryQuery =
@@ -184,10 +163,18 @@ public class LoggiaUtils {
         return initialCategoryMap;
     }
 
+    /**
+     * Adds an element to the category map
+     * @param category the category to add to the Map
+     * @param <T>
+     */
     private static  <T extends LoggiaCategory> void populateInitialCategoryMap(T category){
         initialCategoryMap.put(category.getCategoryId(), category.getCategoryName());
     }
 
+    /**
+     * Helper method for the initialization of the categories
+     */
     public static void initializeCategoryTable(){
         ParseObject obj = new ParseObject(TableData.TableNames.CATEGORY.toString());
         obj.put(TableData.CategoryColumnNames.category_id.toString(),1);
@@ -211,6 +198,13 @@ public class LoggiaUtils {
         obj.saveInBackground();
     }
 
+    /**
+     * Queries the database and populates a list view with the results of the query
+     * @param domain the backend service in session
+     * @param context the context from which the call was mad
+     * @param view the view to which failure message is printed
+     * @param listView the view to populate with events
+     */
     public  static void queryAndPopulateEvents(BackendDomain domain,final Context context,final View view,
                              final MaterialListView listView){
 
@@ -241,6 +235,9 @@ public class LoggiaUtils {
 
     }
 
+    /**
+     * Helper method for creating a card. A structure used in the news feed implementation
+     */
     private static void createCard(String name, String startTime, String date, String imageURL,
                             LoggiaEvent event, Context context, MaterialListView listView){
         BigImageCard card = new BigImageCard(context);
@@ -250,8 +247,4 @@ public class LoggiaUtils {
         card.setTag(event);
         listView.add(card);
     }
-
-
-
-
 }

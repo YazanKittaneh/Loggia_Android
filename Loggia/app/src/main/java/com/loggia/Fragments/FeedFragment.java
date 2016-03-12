@@ -40,7 +40,6 @@ import java.util.Map;
 
 public class FeedFragment extends Fragment {
 
-
     /** Declarations **/
     private String[] TAGS;
     public String currentTAG;
@@ -125,6 +124,7 @@ public class FeedFragment extends Fragment {
                         .replace(R.id.full_screen, displayFragment).addToBackStack(null).commit();
 
             }
+
             @Override
             public void onItemLongClick(CardItemView view, int position) {
 
@@ -135,50 +135,10 @@ public class FeedFragment extends Fragment {
             @Override
             public void onRefresh() {
                 swipeLayout.setRefreshing(true);
-                queryEvents();
+                LoggiaUtils.queryAndPopulateEvents(backendDomain, context, getView(), mListView);
                 swipeLayout.setRefreshing(false);
             }
         });
-    }
-
-    /**
-     *  TODO: Have the ListView only clear once cards are created
-     *  Updates the events according to the filters specified in filterOptionsMap
-     */
-    private void queryEvents(){
-        //TODO: Only add items that you don't have in the list view
-        mListView.clear(); //clears the cards
-       ParseQuery<ParseLoggiaEvent> event_query = new ParseQuery<>(ParseLoggiaEvent.class);
-
-        event_query.whereGreaterThanOrEqualTo(
-                TableData.EventColumnNames.event_end_date.toString(),
-                EventDateFormat.getCurrentDate());
-
-        event_query.addAscendingOrder(TableData.EventColumnNames.event_start_date.toString());
-
-        Log.e("Before ERROR", "Could possibly work");
-         event_query.findInBackground(new FindCallback<ParseLoggiaEvent>() {
-            @Override
-            public void done(List<ParseLoggiaEvent> events, com.parse.ParseException e) {
-                if (e == null) {
-                    Log.e("DONE AND IT WORKS", "DOES WORK");
-
-                    for (ParseLoggiaEvent event : events) {
-                        createCard(event.getEventName(),
-                                EventDateFormat.formatTime(event.getEventStartDate()),
-                                EventDateFormat.formatDate((event.getEventStartDate())),
-                                event.getEventImageUrl(),
-                                event);
-                    }
-                } else {
-                    Snackbar.make(getView(), "Feed failed to load", Snackbar.LENGTH_SHORT);
-                    //Log.e("DONE ERROR", "DOES NOT WORK");
-                    Log.e("DONE ERROR", "DOES NOT WORK");
-                    Log.e("Error", e.toString());
-                }
-            }
-        });
-
     }
 
     private void createCard(String name, String startTime, String date, String imageURL, LoggiaEvent event){

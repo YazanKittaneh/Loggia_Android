@@ -63,8 +63,6 @@ public Context context = this;
         if(savedInstanceState == null) {
             savedInstanceState = new Bundle();
         }
-        /* Pass the domain to the next fragment / activity */
-        //savedInstanceState.putSerializable("BACKEND_DOMAIN", BACKEND_DOMAIN);
         initializeBackend();
         startupEventFeed(savedInstanceState);
     }
@@ -127,59 +125,4 @@ public Context context = this;
         }
         return ret;
     }
-
-
-    /**   Navigation Setup
-     * sets up the view inside the drawer
-     * @param navigationView
-     *      the navigation drawer that the view will be inserted into
-     *
-     */
-    /*
-    private void setupDrawerContent(final NavigationView navigationView) {
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, TAGS);
-        mDrawerItems.setAdapter(mAdapter);
-        //registerForContextMenu(mDrawerItems);
-        //navigationView.inflateMenu(mDrawerItems);
-
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        //String clicked = menuItem.toString();
-
-                        currentTAG = menuItem.toString();
-                        queryEvents();
-                       // updateEvents(currentTAG);
-                        mDrawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
-
-        mDrawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentTAG = mDrawerItems.getItemAtPosition(position).toString();
-                List<Constants.FilterOptions> filters = new ArrayList<Constants.FilterOptions>();
-                    filters.add(Constants.FilterOptions.SGA);
-                filters.add(Constants.FilterOptions.PARTY);
-
-                selectEventFilters(filters);
-                queryEvents();
-                //updateEvents(currentTAG);
-                mDrawerLayout.closeDrawers();
-            }
-        });
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDrawerLayout.openDrawer(navigationView);
-            }
-        });
-    }
-    */
-
-
 }

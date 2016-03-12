@@ -83,8 +83,6 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
     protected LoggiaUser currentUser;
     protected CategoryMap eventCategory;
 
-
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -93,7 +91,6 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
         eventRepIds = new ArrayList<>();
         this.categoryMap = LoggiaUtils.getCategories();
     }
-
 
     /**
      * Constructor created by the newInstance and takes in the Item ID
@@ -111,7 +108,6 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
         return fragment;
     }
 
-
     /**
      * OnCreate for the fragment
      */
@@ -120,7 +116,6 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
         super.onCreate(savedInstanceState);
 
     }
-
 
     /**
      * OnCreateView, handles setup and returns the fragment view
@@ -171,7 +166,6 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
         toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
         backdrop = (ImageButton) mView.findViewById(R.id.backdrop);
     }
-
 
 
     /**
@@ -249,21 +243,6 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
     }
 
 
-
-    /**
-     * TODO: Reimplement
-     * SETUP METHOD:
-     * Handles logic for object tagging
-
-    public void setTag(String currentTag){
-        if(currentTag == null || !currentTag.equals("All"))
-        {
-            createEventTag.setText(currentTag);
-        }
-    }
-*/
-
-
     /**
      * Handles the result from the imagepicker intent.
      * If the image is sucessfully loaded => load in backdrop
@@ -329,7 +308,6 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
 
 
     /**
-     * TODO: Refactor to PARSE code
      * Pushes the event to parse
      */
 
@@ -363,7 +341,6 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
         clockDialog.isEndTime = TYPE;
         clockDialog.show(fm, "fragment_clock_dialog");
     }
-
 
 
     /**

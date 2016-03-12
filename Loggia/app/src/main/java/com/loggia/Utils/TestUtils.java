@@ -20,6 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by albertowusu-asare on 3/10/16.
+ * Contains functions that are useful for unit testing
  */
 public class TestUtils {
     public static  ParseLoggiaEvent generateParseEvent(){
