@@ -144,18 +144,15 @@ public class LoggiaUtils {
     public static Map<Integer,CharSequence> getCategories(){
         Log.i("get Categories :", "Inside getCategoriees: ");
         ParseQuery<ParseLoggiaCategory> categoryQuery =
-                new ParseQuery(TableData.TableNames.CATEGORY.toString());
+                new ParseQuery(ParseLoggiaCategory.class);
         categoryQuery.findInBackground(new FindCallback<ParseLoggiaCategory>() {
                                            @Override
                                            public void done(List<ParseLoggiaCategory> list, ParseException e) {
-                                               Log.e("Done get categorries", "inside");
-                                               if (e == null) {
-                                                   Log.e("No exception", list.toString());
-                                                   if (list == null) {
-                                                       Log.e("List result", "is null");
+                                               if( e == null){
+                                                   if(list !=null){
+                                                       for(ParseLoggiaCategory cat : list)
+                                                           populateInitialCategoryMap(cat);
                                                    }
-                                               } else {
-                                                   Log.e("Error Done", e.getMessage());
                                                }
                                            }
                                        }

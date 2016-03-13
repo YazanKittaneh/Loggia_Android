@@ -82,7 +82,7 @@ public class FeedFragment extends Fragment {
         TAGS = getResources().getStringArray(R.array.tag_names);
         currentTAG=null;
         setupListeners();
-        LoggiaUtils.queryAndPopulateEvents(backendDomain, this.context, this.getView(), mListView);
+        //LoggiaUtils.queryAndPopulateEvents(backendDomain, this.context, this.getView(), mListView);
         return eventFeedView;
     }
 

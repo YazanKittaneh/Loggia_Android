@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by albertowusu-asare on 3/10/16.
  */
-@ParseClassName("ParseLoggiaCategory")
+@ParseClassName("CATEGORY")
 public class ParseLoggiaCategory extends ParseObject implements LoggiaCategory {
     ParseLoggiaCategory category;
     public ParseLoggiaCategory(){

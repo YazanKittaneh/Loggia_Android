@@ -32,12 +32,13 @@ public class TagDialog extends DialogFragment{
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("What type of event ");
         final  Collection<CharSequence> tags =   LoggiaUtils.initialCategoryMap.values();
-        final CharSequence [] tagsSeq = (CharSequence[]) tags.toArray();
-       builder.setItems(R.array.tag_names, new DialogInterface.OnClickListener(){
+        int length  = tags.size();
+        final CharSequence [] tagsSeq =  tags.toArray(new CharSequence [length]);
+       builder.setItems(tagsSeq, new DialogInterface.OnClickListener(){
       //  builder.setItems(tagsSeq, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mEventTag.setText(eventTags[which]);
+                mEventTag.setText(tagsSeq[which]);
                 mDialogListener.setFilterOption(which);
             }
         });

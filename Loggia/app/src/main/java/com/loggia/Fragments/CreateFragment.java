@@ -374,6 +374,5 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
     @Override
     public void setFilterOption(int filterItem) {
         eventRepIds.add(filterItem);
-        //eventCategory.put(Constants.FilterOptions.values()[filterItem], true);
     }
 }
