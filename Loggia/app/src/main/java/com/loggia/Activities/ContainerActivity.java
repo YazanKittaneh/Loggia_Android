@@ -57,7 +57,7 @@ public Context context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
         ButterKnife.bind(this);
-        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        //toolbar.setNavigationIcon(R.drawable.ic_menu);
         setSupportActionBar(toolbar);
         context = this;
         if(savedInstanceState == null) {

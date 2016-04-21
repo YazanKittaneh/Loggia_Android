@@ -15,6 +15,8 @@ import java.util.logging.Filter;
  */
 public class Constants {
 
+    public static enum community;
+
     /** Constant for current backend used. Changing this value should introduce those changes to the
      * rest of the system **/
     public static BackendDomain currentBackendDomain = BackendDomain.PARSE;

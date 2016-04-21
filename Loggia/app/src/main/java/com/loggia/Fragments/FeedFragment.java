@@ -135,6 +135,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onRefresh() {
                 swipeLayout.setRefreshing(true);
+                mListView.clear();
                 LoggiaUtils.queryAndPopulateEvents(backendDomain, context, getView(), mListView);
                 swipeLayout.setRefreshing(false);
             }

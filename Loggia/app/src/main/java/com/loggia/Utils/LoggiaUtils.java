@@ -49,6 +49,8 @@ public class LoggiaUtils {
         this.initialCategoryMap = new HashMap<>();
     }
 
+    public static String backend_table_name;
+
     /**
      * Performs initialisations of the backend Service in use
      * @param domain define the domain in use for the backend as a service
@@ -96,6 +98,20 @@ public class LoggiaUtils {
     }
 
 
+    public static void setBackendTable(String backendResponse) throws Exception {
+        switch (backendResponse){
+            case "1871":
+                backend_table_name = "1871";
+                break;
+            case "Budapest":
+                backend_table_name = "Budapest";
+                break;
+            default:
+                backend_table_name = "Email_test";
+                //throw new Exception("No backend selected");
+        }
+    }
+
     /**
      * @param startDateTime determines the lowerbound date to query from.
      * @return a list of all the events starting from 'startDateTime'. List is returned by default
@@ -105,7 +121,7 @@ public class LoggiaUtils {
 
         final List<ParseLoggiaEvent> events;
 
-        ParseQuery<ParseObject> event_query = new ParseQuery("Email_test");//TableData.TableNames.EVENT.toString());
+        ParseQuery<ParseObject> event_query = new ParseQuery(backend_table_name);//TableData.TableNames.EVENT.toString());
 
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy kk-mm");
         //04/22/2016 11:30

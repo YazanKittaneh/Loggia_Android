@@ -179,41 +179,6 @@
             </android.support.v7.widget.CardView>
 
 
-            <!-- Description -->
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin">
-
-                <RelativeLayout
-                    style="@style/Widget.CardContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/Description_Icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/desc"/>
-                    <com.wrapp.floatlabelededittext.FloatLabeledEditText
-                        android:layout_width="match_parent"
-                        android:paddingLeft="28dp"
-                        android:layout_height="wrap_content">
-                        <EditText
-                            android:layout_toRightOf="@id/Description_Icon"
-                            android:layout_width="match_parent"
-                            android:hint="Description"
-                            android:textSize="16sp"
-                            android:imeOptions="actionDone"
-                            android:singleLine="true"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/Create_Event_Description"/>
-                    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
             <!-- Date -->
 
             <android.support.v7.widget.CardView

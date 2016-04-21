@@ -3,7 +3,8 @@
     <color name="window_background">#FFF5F5F5</color>
     <color name="ColorPrimary">#F44336</color>
     <color name="ColorPrimaryDark">#b71c1c</color>
-    <color name="ColorAccent">#ff9f00</color>
+    <!--<color name="ColorAccent">#ff9f00</color>-->
+    <color name="ColorAccent">#34daab</color>
     <color name="TextWhite">#ffebee</color>
     <color name="Transparent">#00000000</color>
 
