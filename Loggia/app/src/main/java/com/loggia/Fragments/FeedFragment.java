@@ -41,6 +41,7 @@ import java.util.Map;
 public class FeedFragment extends Fragment {
 
     /** Declarations **/
+    public static final String TAG = "feed_fragment";
     private String[] TAGS;
     public String currentTAG;
     public Context context;
@@ -82,7 +83,7 @@ public class FeedFragment extends Fragment {
         TAGS = getResources().getStringArray(R.array.tag_names);
         currentTAG=null;
         setupListeners();
-        //LoggiaUtils.queryAndPopulateEvents(backendDomain, this.context, this.getView(), mListView);
+        LoggiaUtils.queryAndPopulateEvents(backendDomain, context, getView(), mListView);
         return eventFeedView;
     }
 

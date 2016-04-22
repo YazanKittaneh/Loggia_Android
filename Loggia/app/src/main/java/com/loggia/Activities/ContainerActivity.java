@@ -1,6 +1,7 @@
 package com.loggia.Activities;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -58,6 +59,7 @@ public Context context = this;
         setContentView(R.layout.activity_container);
         ButterKnife.bind(this);
         //toolbar.setNavigationIcon(R.drawable.ic_menu);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         setSupportActionBar(toolbar);
         context = this;
         if(savedInstanceState == null) {
@@ -79,7 +81,10 @@ public Context context = this;
     /** Starts the event feed fragment **/
     private void startupEventFeed(Bundle args){
         FragmentManager fm = getSupportFragmentManager();
-        FeedFragment feedFragment = FeedFragment.newInstance();
+        Fragment feedFragment = fm.findFragmentByTag("feed_fragment");
+        if(feedFragment==null) {
+            feedFragment = FeedFragment.newInstance();
+        } //if can't find fragment by tag, create new instance
         feedFragment.setArguments(args);
         fm.beginTransaction().setCustomAnimations(
                 R.anim.bottom_slide_up_fast,
@@ -87,7 +92,8 @@ public Context context = this;
                 R.anim.bottom_slide_up_fast,
                 R.anim.bottom_slide_down_fast)
                 .replace(R.id.drawer_layout, feedFragment).addToBackStack(null).commit();
-    }
+    } //TODO: Make abstraction of this to handle all fragments
+
 
 
     /** Creates the menue drawer hamberger button **/

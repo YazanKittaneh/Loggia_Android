@@ -367,12 +367,16 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
         FragmentManager fm = context.getActivity().getSupportFragmentManager();
         TagDialog tagDialog = new TagDialog();
         tagDialog.setTargetFragment(this, 0);
-        tagDialog.show(fm, "tag_dialog");
+        tagDialog.show(fm, "create_fragment");
     }
 
 
     @Override
     public void setFilterOption(int filterItem) {
         eventRepIds.add(filterItem);
+    }
+
+    @Override
+    public void setCommunity(int filterItem) {
     }
 }

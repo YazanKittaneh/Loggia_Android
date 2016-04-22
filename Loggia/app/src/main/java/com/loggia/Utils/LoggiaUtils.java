@@ -44,6 +44,8 @@ public class LoggiaUtils {
      */
 
     public static Map<Integer, CharSequence> initialCategoryMap = new HashMap<>();
+    public static Map<Integer, CharSequence> initialCommunityMap = new HashMap<>();
+
 
     public LoggiaUtils(){
         this.initialCategoryMap = new HashMap<>();
@@ -107,7 +109,7 @@ public class LoggiaUtils {
                 backend_table_name = "Budapest";
                 break;
             default:
-                backend_table_name = "Email_test";
+                backend_table_name = "EVENT";
                 //throw new Exception("No backend selected");
         }
     }

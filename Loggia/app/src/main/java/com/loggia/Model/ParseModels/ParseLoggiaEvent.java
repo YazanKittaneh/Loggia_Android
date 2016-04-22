@@ -105,9 +105,8 @@ public class ParseLoggiaEvent extends ParseObject implements LoggiaEvent{
 
     @Override
     public String getEventDescription() {
-        return event.getParseFile(TableData.EventColumnNames.event_description.toString()).getUrl();
+        return event.getString(TableData.EventColumnNames.event_description.toString());
     }
-
     @Override
     public long getNumEventViews() {
         return event.getLong(TableData.EventColumnNames.event_views.toString());
