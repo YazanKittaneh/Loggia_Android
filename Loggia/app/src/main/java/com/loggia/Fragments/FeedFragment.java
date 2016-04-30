@@ -143,14 +143,6 @@ public class FeedFragment extends Fragment {
         });
     }
 
-    private void createCard(String name, String startTime, String date, String imageURL, LoggiaEvent event){
-        BigImageCard card = new BigImageCard(context);
-        card.setTitle(name);
-        card.setDescription(date + " at " + startTime);
-        card.setDrawable(imageURL);
-        card.setTag(event);
-        mListView.add(card);
-    }
 
     /**
      * selects the filters for events as supplied by the options in filters
