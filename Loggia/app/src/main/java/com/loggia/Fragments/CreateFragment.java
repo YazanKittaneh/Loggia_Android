@@ -314,14 +314,20 @@ public class CreateFragment extends Fragment implements TagDialog.DialogListener
     private  void pushEvent()
     {
         if(filledViewItems()) {
-            byte [] imageBytes = ImageCompressor.compressForUpload(image);
+            byte [] imageBytes = ImageCompressor.compressForUpload(image); //compress the image
             Random random = new Random();
-            int randomNumber = random.nextInt(3);
-            List<Integer> categoryIds = TestUtils.generateRandomCategoryIds(randomNumber,random);
-            List<String> eventRepIds = TestUtils.generateRandomEventRepIds(randomNumber,random);
-            LoggiaEvent event = new ParseLoggiaEvent(createEventName.getText().toString(),
-                    startDate.getTime(),endDate.getTime(),createEventLocation.getText().toString(),
-                    imageBytes, createEventDescription.getText().toString(),categoryIds,eventRepIds);
+            int randomNumber = random.nextInt(3); //pick a random # for stock image
+            List<Integer> categoryIds = TestUtils.generateRandomCategoryIds(randomNumber,random); //temporary solution while these paramters arent being used
+            List<String> eventRepIds = TestUtils.generateRandomEventRepIds(randomNumber,random); //^
+            LoggiaEvent event = new ParseLoggiaEvent(
+                    createEventName.getText().toString(),
+                    startDate.getTime(),endDate.getTime(),
+                    createEventLocation.getText().toString(),
+                    imageBytes,
+                    createEventDescription.getText().toString(),
+                    categoryIds,
+                    eventRepIds
+            );
             event.saveToDb();
             getActivity().getSupportFragmentManager().popBackStack();
         }

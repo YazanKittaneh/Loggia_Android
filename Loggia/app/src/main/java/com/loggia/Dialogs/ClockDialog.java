@@ -15,8 +15,10 @@ import com.loggia.Fragments.CreateFragment;
 import com.loggia.R;
 import com.loggia.Utils.EventDateFormat;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class ClockDialog extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
