@@ -54,8 +54,8 @@ public class CalendarDialog extends DialogFragment
         else {
             mTimeZone = TimeZone.getTimeZone("GMT-6");
         }
-        thisDate.setTimeZone(mTimeZone);
-
+        thisDate.setTimeZone(mTimeZone); //i'm setting up the wrong timezone here
+        //TODO: Create global timezone
         /*
         // String pattern = "LLLL-EEEE-yyyy";
         String pattern = "EEEE"+", " + "LLLL dd";

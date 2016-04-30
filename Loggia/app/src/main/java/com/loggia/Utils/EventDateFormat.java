@@ -22,52 +22,56 @@ public class EventDateFormat {
 
     private static String FORMAT_TIME = "h:mm a";
     private static String FORMAT_DATE = "EE"+", " + "LLLL dd";
-    
+
 
     /** Takes time and makes it standard to timezone
-     * TODO: Sync timezone based on system clock
      **/
     public Date standardTime(int hourOfDay, int minute){
         Calendar thisDate = new GregorianCalendar();
         thisDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
         thisDate.set(Calendar.MINUTE, minute);
 
-        TimeZone mTimeZone;
+
+        /* //legacy way of handling timezone only in CST
         if (thisDate.getTimeZone().inDaylightTime(new Date())) {
             mTimeZone = TimeZone.getTimeZone("GMT-5");
         }
         else {
             mTimeZone = TimeZone.getTimeZone("GMT-6");
         }
-        thisDate.setTimeZone(mTimeZone);
+        */
+
+        TimeZone currentTimezone = TimeZone.getDefault();
+        thisDate.setTimeZone(currentTimezone);
 
         return thisDate.getTime();
     }
 
+
+
+    /** Gets current date based on phone **/
+    public static Date getCurrentDate(){
+        Calendar todayCalendar = new GregorianCalendar();
+        todayCalendar.setTimeZone(TimeZone.getDefault());
+        Date today = todayCalendar.getTime();
+        return today;
+    }
+
+
+    /** Simply formats the date object given into the h-mm format
+     *  return:
+     *      String, the h-mm representation of the data object
+     */
+    public static String formatDate(Date date){
+        SimpleDateFormat format = new SimpleDateFormat(FORMAT_DATE);
+        return format.format(date);
+    }
 
     /**
      * Formats the date given to Loggia's standard time format
      */
     static public String formatTime(Date date){
         SimpleDateFormat format = new SimpleDateFormat(FORMAT_TIME);
-        return format.format(date);
-    }
-
-    /** Gets current date based on phone **/
-    public static Date getCurrentDate(){
-        Calendar todayCalendar = new GregorianCalendar();
-        //TimeZone timeZone;
-        //timeZone = TimeZone.getDefault();
-        todayCalendar.setTimeZone(TimeZone.getTimeZone("GMT-0"));
-
-        Date today = todayCalendar.getTime();
-        Log.d("CURRENT TIME: ", today.toString());
-
-        return today;
-    }
-
-    public static String formatDate(Date date){
-        SimpleDateFormat format = new SimpleDateFormat(FORMAT_DATE);
         return format.format(date);
     }
 
